@@ -12,9 +12,7 @@ public class Producto {
 	
 	public Producto() {}
 	
-	public Producto(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
-		
-		this.idProducto = idProducto;
+	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
@@ -25,7 +23,7 @@ public class Producto {
 		return idProducto;
 	}
 
-	public void setIdProducto(int idProducto) {
+	protected void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
 

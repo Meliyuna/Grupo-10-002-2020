@@ -12,9 +12,8 @@ public class SolicitudStock {
 	
 	public SolicitudStock() {}
 	
-	public SolicitudStock(int idSolicitudStock, LocalDate fecha, boolean aceptado, Pedido pedido, Local local) {
+	public SolicitudStock(LocalDate fecha, boolean aceptado, Pedido pedido, Local local) {
 		super();
-		this.idSolicitudStock = idSolicitudStock;
 		this.fecha = fecha;
 		this.aceptado = aceptado;
 		this.pedido = pedido;
@@ -25,7 +24,7 @@ public class SolicitudStock {
 		return idSolicitudStock;
 	}
 
-	public void setIdSolicitudStock(int idSolicitudStock) {
+	protected void setIdSolicitudStock(int idSolicitudStock) {
 		this.idSolicitudStock = idSolicitudStock;
 	}
 
