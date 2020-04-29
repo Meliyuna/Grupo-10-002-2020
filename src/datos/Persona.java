@@ -10,6 +10,10 @@ public class Persona {
 	protected LocalDate fechaNacimiento;
 	protected long dni;
 	
+	public Persona(){
+		
+	}
+	
 	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
 		super();
 		this.apellido = apellido;

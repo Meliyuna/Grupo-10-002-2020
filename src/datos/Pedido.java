@@ -11,6 +11,10 @@ public class Pedido {
 	private float subtotal;
 	private boolean aceptado;
 	
+	public Pedido(){
+		
+	}
+	
 	public Pedido(Producto producto, int cantidad, Local local, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
 			float subtotal, boolean aceptado) {
 		super();

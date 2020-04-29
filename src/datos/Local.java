@@ -14,6 +14,10 @@ public class Local {
 	private Set<SolicitudStock> listaSolicitudStock;
 	private Set<Lote> listaLote;
 	
+	public Local(){
+		
+	}
+	
 	public Local(String direccion, double latitud, double longitud, double telefono, Set<Empleado> listaEmpleado,
 			Set<Factura> listaFactura, Set<SolicitudStock> listaSolicitudStock, Set<Lote> listaLote) {
 		super();
