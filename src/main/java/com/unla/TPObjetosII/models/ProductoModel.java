@@ -1,8 +1,8 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
-public class Producto {
+public class ProductoModel {
 	
 	private int idProducto;
 	private String nombre;
@@ -10,9 +10,9 @@ public class Producto {
 	private float precio;
 	private LocalDate fechaAlta;
 	
-	public Producto() {}
+	public ProductoModel() {}
 	
-	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+	public ProductoModel(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;

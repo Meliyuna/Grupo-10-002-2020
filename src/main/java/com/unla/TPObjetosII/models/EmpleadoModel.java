@@ -1,14 +1,14 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
-public class Empleado extends Persona{
+public class EmpleadoModel extends PersonaModel{
 	
 	private String franjaHoraria;
 	private boolean tipoEmpleado;
-	private Local local;
+	private LocalModel local;
 	
-	public Empleado(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,Local local) {
+	public EmpleadoModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {
 		super(apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.franjaHoraria=franjaHoraria;
@@ -32,11 +32,11 @@ public class Empleado extends Persona{
 		this.tipoEmpleado = tipoEmpleado;
 	}
 
-	public Local getLocal() {
+	public LocalModel getLocal() {
 		return local;
 	}
 
-	public void setLocal(Local local) {
+	public void setLocal(LocalModel local) {
 		this.local = local;
 	}
 

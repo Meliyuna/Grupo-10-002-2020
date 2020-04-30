@@ -1,7 +1,17 @@
-package datos;
+package com.unla.TPObjetosII.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name="factura")
 public class Factura {
-	 
+	@Id
+	@GeneratedValue
+	@Column(name="idFactura")
 	private int idFactura;
 	private Local local;
 	private Carrito carrito;

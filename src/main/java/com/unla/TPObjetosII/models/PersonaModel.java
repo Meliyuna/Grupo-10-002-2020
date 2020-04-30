@@ -1,8 +1,8 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
-public class Persona {
+public class PersonaModel {
 
 	protected int idPersona;
 	protected String apellido;
@@ -10,7 +10,7 @@ public class Persona {
 	protected LocalDate fechaNacimiento;
 	protected long dni;
 	
-	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
+	public PersonaModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
 		super();
 		this.apellido = apellido;
 		this.nombre = nombre;
