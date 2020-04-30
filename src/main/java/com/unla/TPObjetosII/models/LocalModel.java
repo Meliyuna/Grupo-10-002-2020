@@ -1,25 +1,21 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
 import java.util.Set;
 
-public class Local {
+public class LocalModel {
 	
 	private int idLocal;
 	private String direccion;
 	private double latitud;
 	private double longitud;
 	private double telefono;
-	private Set<Empleado> listaEmpleado;
-	private Set<Factura> listaFactura;
-	private Set<SolicitudStock> listaSolicitudStock;
-	private Set<Lote> listaLote;
+	private Set<EmpleadoModel> listaEmpleado;
+	private Set<FacturaModel> listaFactura;
+	private Set<SolicitudStockModel> listaSolicitudStock;
+	private Set<LoteModel> listaLote;
 	
-	public Local(){
-		
-	}
-	
-	public Local(String direccion, double latitud, double longitud, double telefono, Set<Empleado> listaEmpleado,
-			Set<Factura> listaFactura, Set<SolicitudStock> listaSolicitudStock, Set<Lote> listaLote) {
+	public LocalModel(String direccion, double latitud, double longitud, double telefono, Set<EmpleadoModel> listaEmpleado,
+			Set<FacturaModel> listaFactura, Set<SolicitudStockModel> listaSolicitudStock, Set<LoteModel> listaLote) {
 		super();
 		this.direccion = direccion;
 		this.latitud = latitud;
@@ -71,35 +67,35 @@ public class Local {
 		this.telefono = telefono;
 	}
 
-	public Set<Empleado> getListaEmpleado() {
+	public Set<EmpleadoModel> getListaEmpleado() {
 		return listaEmpleado;
 	}
 
-	public void setListaEmpleado(Set<Empleado> listaEmpleado) {
+	public void setListaEmpleado(Set<EmpleadoModel> listaEmpleado) {
 		this.listaEmpleado = listaEmpleado;
 	}
 
-	public Set<Factura> getListaFactura() {
+	public Set<FacturaModel> getListaFactura() {
 		return listaFactura;
 	}
 
-	public void setListaFactura(Set<Factura> listaFactura) {
+	public void setListaFactura(Set<FacturaModel> listaFactura) {
 		this.listaFactura = listaFactura;
 	}
 
-	public Set<SolicitudStock> getListaSolicitudStock() {
+	public Set<SolicitudStockModel> getListaSolicitudStock() {
 		return listaSolicitudStock;
 	}
 
-	public void setListaSolicitudStock(Set<SolicitudStock> listaSolicitudStock) {
+	public void setListaSolicitudStock(Set<SolicitudStockModel> listaSolicitudStock) {
 		this.listaSolicitudStock = listaSolicitudStock;
 	}
 
-	public Set<Lote> getListaLote() {
+	public Set<LoteModel> getListaLote() {
 		return listaLote;
 	}
 
-	public void setListaLote(Set<Lote> listaLote) {
+	public void setListaLote(Set<LoteModel> listaLote) {
 		this.listaLote = listaLote;
 	}
 

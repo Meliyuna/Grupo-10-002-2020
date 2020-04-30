@@ -1,10 +1,16 @@
-package datos;
+package com.unla.TPObjetosII.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+@Entity
+@Table (name="empleado")
 public class Empleado extends Persona{
 	
 	private String franjaHoraria;
+	@Column(name="tipoEmpleado")
 	private boolean tipoEmpleado;
 	private Local local;
 	

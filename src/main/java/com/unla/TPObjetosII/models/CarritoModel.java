@@ -1,20 +1,21 @@
-package datos;
+package com.unla.TPObjetosII.models;
+
 
 import java.time.LocalDate;
 import java.util.Set;
 
-public class Carrito {
+public class CarritoModel {
 
 	private int idCarrito;
-	private Set<Pedido> listaPedido;
+	private Set<PedidoModel> listaPedido;
 	private LocalDate fecha;
 	private float total;
-	private Cliente cliente;
+	private ClienteModel cliente;
 
-	public Carrito() {
+	public CarritoModel() {
 	}
 
-	public Carrito(Set<Pedido> listaPedido, LocalDate fecha, float total, Cliente cliente) {
+	public CarritoModel(Set<PedidoModel> listaPedido, LocalDate fecha, float total, ClienteModel cliente) {
 		super();
 		this.listaPedido = listaPedido;
 		this.fecha = fecha;
@@ -30,11 +31,11 @@ public class Carrito {
 		this.idCarrito = idCarrito;
 	}
 
-	public Set<Pedido> getListaPedido() {
+	public Set<PedidoModel> getListaPedido() {
 		return listaPedido;
 	}
 
-	public void setListaPedido(Set<Pedido> listaPedido) {
+	public void setListaPedido(Set<PedidoModel> listaPedido) {
 		this.listaPedido = listaPedido;
 	}
 
@@ -54,11 +55,11 @@ public class Carrito {
 		this.total = total;
 	}
 
-	public Cliente getCliente() {
+	public ClienteModel getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
+	public void setCliente(ClienteModel cliente) {
 		this.cliente = cliente;
 	}
 

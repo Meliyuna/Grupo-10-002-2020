@@ -1,14 +1,14 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
-public class Lote {
+public class LoteModel {
 	
 	private int idLote;
 	private int cantidadInicial;
 	private int cantidadActual;
 	private LocalDate fechaIngreso;
-	private Producto producto;
+	private ProductoModel producto;
 	private boolean estado;
 	
 	public Lote(){
@@ -54,10 +54,10 @@ public class Lote {
 	public void setFechaIngreso(LocalDate fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
-	public Producto getProducto() {
+	public ProductoModel getProducto() {
 		return producto;
 	}
-	public void setProducto(Producto producto) {
+	public void setProducto(ProductoModel producto) {
 		this.producto = producto;
 	}
 	public boolean isEstado() {

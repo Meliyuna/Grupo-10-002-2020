@@ -1,16 +1,12 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
-public class Cliente extends Persona{
+public class ClienteModel extends PersonaModel{
 	
 	private String email;
-	
-	public Cliente(){
-		
-	}
 
-	public Cliente(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
+	public ClienteModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
 		super(apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.email=email;

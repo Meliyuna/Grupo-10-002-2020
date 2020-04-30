@@ -1,16 +1,12 @@
-package datos;
+package com.unla.TPObjetosII.models;
 
-public class Factura {
+public class FacturaModel {
 	 
 	private int idFactura;
-	private Local local;
-	private Carrito carrito;
+	private LocalModel local;
+	private CarritoModel carrito;
 	
-	public Factura(){
-		
-	}
-	
-	public Factura(Local local, Carrito carrito) {
+	public FacturaModel(LocalModel local, CarritoModel carrito) {
 		super();
 		this.local = local;
 		this.carrito = carrito;
@@ -24,19 +20,19 @@ public class Factura {
 		this.idFactura = idFactura;
 	}
 
-	public Local getLocal() {
+	public LocalModel getLocal() {
 		return local;
 	}
 
-	public void setLocal(Local local) {
+	public void setLocal(LocalModel local) {
 		this.local = local;
 	}
 
-	public Carrito getCarrito() {
+	public CarritoModel getCarrito() {
 		return carrito;
 	}
 
-	public void setCarrito(Carrito carrito) {
+	public void setCarrito(CarritoModel carrito) {
 		this.carrito = carrito;
 	}
 
