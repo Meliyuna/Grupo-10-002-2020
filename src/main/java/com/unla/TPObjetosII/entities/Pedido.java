@@ -24,6 +24,10 @@ public class Pedido {
 	@Column(name="aceptado")
 	private boolean aceptado;
 	
+	public Pedido(){
+		
+	}
+	
 	public Pedido(Producto producto, int cantidad, Local local, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
 			float subtotal, boolean aceptado) {
 		super();

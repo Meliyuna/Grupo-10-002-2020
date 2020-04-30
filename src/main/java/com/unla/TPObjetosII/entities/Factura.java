@@ -16,6 +16,10 @@ public class Factura {
 	private Local local;
 	private Carrito carrito;
 	
+	public Factura(){
+		
+	}
+	
 	public Factura(Local local, Carrito carrito) {
 		super();
 		this.local = local;

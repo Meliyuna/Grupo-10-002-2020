@@ -14,6 +14,10 @@ public class Empleado extends Persona{
 	private boolean tipoEmpleado;
 	private Local local;
 	
+	public Empleado(){
+		
+	}
+	
 	public Empleado(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,Local local) {
 		super(apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub

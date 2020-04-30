@@ -10,7 +10,12 @@ public class PersonaModel {
 	protected LocalDate fechaNacimiento;
 	protected long dni;
 	
-	public PersonaModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
+
+	public Persona(){
+		
+	}
+	
+	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
 		super();
 		this.apellido = apellido;
 		this.nombre = nombre;

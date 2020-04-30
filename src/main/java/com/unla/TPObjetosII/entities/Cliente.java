@@ -10,6 +10,10 @@ import javax.persistence.Table;
 public class Cliente extends Persona{
 	@Column(name="email")
 	private String email;
+	
+	public Cliente(){
+		
+	}
 
 	public Cliente(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
 		super(apellido, nombre, fechaNacimiento, dni);
