@@ -7,20 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-@Entity
-@Table (name="producto")
+
 public class Producto {
-	@Id
-	@GeneratedValue
-	@Column(name="idProducto")
+
 	private int idProducto;
-	@Column(name="nombre")
+
 	private String nombre;
-	@Column(name="descripcion")
+
 	private String descripcion;
-	@Column(name="precio")
+
 	private float precio;
-	@Column(name="fechaAlta")
+
 	private LocalDate fechaAlta;
 	
 	public Producto() {}

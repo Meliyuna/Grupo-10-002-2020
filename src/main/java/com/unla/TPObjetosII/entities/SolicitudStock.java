@@ -7,16 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-@Entity
-@Table (name="solicitudstock")
+
 public class SolicitudStock {
-	@Id
-	@GeneratedValue
-	@Column(name="idSolicitudStock")
+
 	private int idSolicitudStock;
-	@Column(name="fecha")
+
 	private LocalDate fecha;
-	@Column(name="aceptado")
+
 	private boolean aceptado;
 	private Pedido pedido;
 	private Local local;

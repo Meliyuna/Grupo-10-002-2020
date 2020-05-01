@@ -7,20 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-@Entity
-@Table (name="local")
+
 public class Local {
-	@Id
-	@GeneratedValue
-	@Column(name="idLocal")
+
+
 	private int idLocal;
-	@Column(name="direccion")
+
 	private String direccion;
-	@Column(name="latitud")
+
 	private double latitud;
-	@Column(name="longitud")
+
 	private double longitud;
-	@Column(name="telefono")
+
 	private double telefono;
 	private Set<Empleado> listaEmpleado;
 	private Set<Factura> listaFactura;

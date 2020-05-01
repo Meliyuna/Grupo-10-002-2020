@@ -10,18 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table (name="carrito")
+
 public class Carrito {
-	@Id
-	@GeneratedValue
-	@Column(name="idCarrito")
+
 	private int idCarrito;
 	
 	private Set<Pedido> listaPedido;
-	@Column(name="fecha")
+
 	private LocalDate fecha;
-	@Column(name="total")
+
 	private float total;
 	
 	private Cliente cliente;

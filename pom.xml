@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.unla</groupId>
-	<artifactId>TPObjetosII</artifactId>
+	<artifactId>Grupo-10-002-2020</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>TPObjetosII</name>
+	<name>Grupo-10-002-2020</name>
 	<description>TP Oientacion aObjetos 2 año 2020 con Java Spring</description>
 
 	<properties>

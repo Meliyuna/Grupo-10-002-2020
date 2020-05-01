@@ -5,15 +5,10 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-@Entity
-@Table (name="cliente")
+
 public class Cliente extends Persona{
-	@Column(name="email")
 	private String email;
 	
-	public Cliente(){
-		
-	}
 
 	public Cliente(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
 		super(apellido, nombre, fechaNacimiento, dni);

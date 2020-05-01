@@ -6,22 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table (name="pedido")
+
 public class Pedido {
-	@Id
-	@GeneratedValue
-	@Column(name="idPedido")
+
 	private int idPedido;
 	private Producto producto;
-	@Column(name="cantidad")
+
 	private int cantidad;
 	private Local local;
 	private Empleado vendedorOriginal;
 	private Empleado vendedorAuxiliar;
-	@Column(name="subtotal")
+
 	private float subtotal;
-	@Column(name="aceptado")
+
 	private boolean aceptado;
 	
 	public Pedido(){

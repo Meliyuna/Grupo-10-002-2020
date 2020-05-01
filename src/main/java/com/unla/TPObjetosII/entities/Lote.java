@@ -7,21 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-@Entity
-@Table (name="lote")
+
 public class Lote {
-	@Id
-	@GeneratedValue
-	@Column(name="idLote")
+
 	private int idLote;
-	@Column(name="cantidadInicial")
+
 	private int cantidadInicial;
-	@Column(name="cantidadActual")
+
 	private int cantidadActual;
-	@Column(name="fechaIngreso")
+
 	private LocalDate fechaIngreso;
 	private Producto producto;
-	@Column(name="estado")
+
 	private boolean estado;
 	
 	public int getIdLote() {

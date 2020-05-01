@@ -5,18 +5,13 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-@Entity
-@Table (name="empleado")
+
 public class Empleado extends Persona{
 	
 	private String franjaHoraria;
-	@Column(name="tipoEmpleado")
 	private boolean tipoEmpleado;
 	private Local local;
 	
-	public Empleado(){
-		
-	}
 	
 	public Empleado(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,Local local) {
 		super(apellido, nombre, fechaNacimiento, dni);

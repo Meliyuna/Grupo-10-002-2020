@@ -7,20 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-@Entity
-@Table (name="persona")
+
 public class Persona {
-	@Id
-	@GeneratedValue
-	@Column(name="idPersona")
+
 	protected int idPersona;
-	@Column(name="apellido")
+
 	protected String apellido;
-	@Column(name="nombre")
+
 	protected String nombre;
-	@Column(name="fechaNacimiento")
 	protected LocalDate fechaNacimiento;
-	@Column(name="dni")
+
 	protected long dni;
 	
 	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {

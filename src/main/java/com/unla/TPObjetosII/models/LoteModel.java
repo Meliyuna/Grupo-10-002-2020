@@ -11,14 +11,14 @@ public class LoteModel {
 	private ProductoModel producto;
 	private boolean estado;
 	
-	public Lote(){
+	public LoteModel(){
 		
 	}
 	
 	
 	
 	
-	public Lote(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto, boolean estado) {
+	public LoteModel(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, ProductoModel producto, boolean estado) {
 		super();
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
