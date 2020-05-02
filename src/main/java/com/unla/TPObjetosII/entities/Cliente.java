@@ -4,9 +4,13 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+@Entity
+@PrimaryKeyJoinColumn(name="IDCLIENTE")
 public class Cliente extends Persona{
+	
 	private String email;
 	
 

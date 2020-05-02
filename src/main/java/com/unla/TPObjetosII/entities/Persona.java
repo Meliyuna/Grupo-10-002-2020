@@ -5,18 +5,25 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+@Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Persona {
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="IDPERSONA")
 	protected int idPersona;
-
 	protected String apellido;
-
 	protected String nombre;
+	
+	@Column(name="FECHANACIMIENTO")
 	protected LocalDate fechaNacimiento;
-
 	protected long dni;
 	
 	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {

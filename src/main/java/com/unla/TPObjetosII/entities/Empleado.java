@@ -4,12 +4,25 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+@Entity
+@PrimaryKeyJoinColumn(name="IDEMPLEADO")
 public class Empleado extends Persona{
 	
+	@Column(name="FRANJAHORARIA")
 	private String franjaHoraria;
+	@Column(name="TIPOEMPLEADO")
 	private boolean tipoEmpleado;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
 	private Local local;
 	
 	

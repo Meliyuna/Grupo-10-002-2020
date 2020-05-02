@@ -4,13 +4,21 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+@Entity
 public class Local {
-
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="IDLOCAL")
 	private int idLocal;
 
 	private String direccion;
@@ -20,9 +28,19 @@ public class Local {
 	private double longitud;
 
 	private double telefono;
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
 	private Set<Empleado> listaEmpleado;
+	
+	@Transient //ignorar mapeo
 	private Set<Factura> listaFactura;
+	
+	@Transient
 	private Set<SolicitudStock> listaSolicitudStock;
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
 	private Set<Lote> listaLote;
 	
 	public Local(){
@@ -114,11 +132,6 @@ public class Local {
 		this.listaLote = listaLote;
 	}
 
-	@Override
-	public String toString() {
-		return "Local [idLocal=" + idLocal + ", direccion=" + direccion + ", latitud=" + latitud + ", longitud="
-				+ longitud + ", telefono=" + telefono + ", listaEmpleado=" + listaEmpleado + "]";
-	}
 	
 	
 	
