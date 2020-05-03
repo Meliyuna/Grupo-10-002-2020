@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `tp0022020` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `tp0022020`;
+CREATE DATABASE  IF NOT EXISTS `grupo-10-002-2020` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `grupo-10-002-2020`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: tp0022020
+-- Host: localhost    Database: grupo-10-002-2020
 -- ------------------------------------------------------
 -- Server version	5.7.29-log
 
@@ -36,15 +36,6 @@ CREATE TABLE `carrito` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `carrito`
---
-
-LOCK TABLES `carrito` WRITE;
-/*!40000 ALTER TABLE `carrito` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carrito` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cliente`
 --
 
@@ -60,15 +51,6 @@ CREATE TABLE `cliente` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cliente`
---
-
-LOCK TABLES `cliente` WRITE;
-/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `empleado`
 --
 
@@ -77,23 +59,15 @@ DROP TABLE IF EXISTS `empleado`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empleado` (
   `idEmpleado` int(11) NOT NULL,
-  `tipoEmpleado` tinyint(4) DEFAULT NULL,
+  `tipoEmpleado` bit(1) DEFAULT NULL,
   `idLocal` int(11) DEFAULT NULL,
+  `franjaHoraria` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`idEmpleado`),
   KEY `perteneceaolcal_idx` (`idLocal`),
   CONSTRAINT `herencia_persona` FOREIGN KEY (`idEmpleado`) REFERENCES `persona` (`idPersona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `perteneceaolcal` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `empleado`
---
-
-LOCK TABLES `empleado` WRITE;
-/*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `factura`
@@ -115,15 +89,6 @@ CREATE TABLE `factura` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `factura`
---
-
-LOCK TABLES `factura` WRITE;
-/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `local`
 --
 
@@ -132,21 +97,13 @@ DROP TABLE IF EXISTS `local`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `local` (
   `idLocal` int(11) NOT NULL AUTO_INCREMENT,
-  `direccion` double DEFAULT NULL,
+  `direccion` varchar(40) DEFAULT NULL,
   `latitud` double DEFAULT NULL,
   `telefono` double DEFAULT NULL,
+  `longitud` double DEFAULT NULL,
   PRIMARY KEY (`idLocal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `local`
---
-
-LOCK TABLES `local` WRITE;
-/*!40000 ALTER TABLE `local` DISABLE KEYS */;
-/*!40000 ALTER TABLE `local` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `lote`
@@ -170,16 +127,6 @@ CREATE TABLE `lote` (
   CONSTRAINT `fkproducto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `lote`
---
-
-LOCK TABLES `lote` WRITE;
-/*!40000 ALTER TABLE `lote` DISABLE KEYS */;
-INSERT INTO `lote` VALUES (1,NULL,NULL,NULL,NULL,0,NULL),(2,NULL,NULL,NULL,NULL,1,NULL);
-/*!40000 ALTER TABLE `lote` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `pedido`
@@ -213,15 +160,6 @@ CREATE TABLE `pedido` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pedido`
---
-
-LOCK TABLES `pedido` WRITE;
-/*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `persona`
 --
 
@@ -233,19 +171,10 @@ CREATE TABLE `persona` (
   `nombre` varchar(45) DEFAULT NULL,
   `apellido` varchar(45) DEFAULT NULL,
   `fechaNacimiento` date DEFAULT NULL,
-  `dni` int(11) DEFAULT NULL,
+  `dni` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`idPersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `persona`
---
-
-LOCK TABLES `persona` WRITE;
-/*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-/*!40000 ALTER TABLE `persona` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `producto`
@@ -263,15 +192,6 @@ CREATE TABLE `producto` (
   PRIMARY KEY (`idProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `producto`
---
-
-LOCK TABLES `producto` WRITE;
-/*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `producto` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `solicitudstock`
@@ -295,20 +215,11 @@ CREATE TABLE `solicitudstock` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `solicitudstock`
---
-
-LOCK TABLES `solicitudstock` WRITE;
-/*!40000 ALTER TABLE `solicitudstock` DISABLE KEYS */;
-/*!40000 ALTER TABLE `solicitudstock` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping events for database 'tp0022020'
+-- Dumping events for database 'grupo-10-002-2020'
 --
 
 --
--- Dumping routines for database 'tp0022020'
+-- Dumping routines for database 'grupo-10-002-2020'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -320,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-17 23:15:06
+-- Dump completed on 2020-05-03 19:22:23
