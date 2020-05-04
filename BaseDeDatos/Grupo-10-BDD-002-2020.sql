@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `grupo-10-002-2020` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `grupo-10-002-2020`;
+CREATE DATABASE  IF NOT EXISTS `grupo-10-bdd-002-2020` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `grupo-10-bdd-002-2020`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: grupo-10-002-2020
+-- Host: localhost    Database: grupo-10-bdd-002-2020
 -- ------------------------------------------------------
 -- Server version	5.7.29-log
 
@@ -215,11 +215,11 @@ CREATE TABLE `solicitudstock` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping events for database 'grupo-10-002-2020'
+-- Dumping events for database 'grupo-10-bdd-002-2020'
 --
 
 --
--- Dumping routines for database 'grupo-10-002-2020'
+-- Dumping routines for database 'grupo-10-bdd-002-2020'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
