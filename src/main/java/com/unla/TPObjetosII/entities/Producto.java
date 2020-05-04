@@ -5,11 +5,15 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+@Entity
 public class Producto {
 
+	@Id
+	@GeneratedValue (strategy=GenerationType.IDENTITY)
+	@Column (name="IDPRODUCTO")
 	private int idProducto;
 
 	private String nombre;
@@ -17,7 +21,7 @@ public class Producto {
 	private String descripcion;
 
 	private float precio;
-
+	@Column (name="FECHAALTA")
 	private LocalDate fechaAlta;
 	
 	public Producto() {}

@@ -36,7 +36,8 @@ public class Local {
 	@Transient //ignorar mapeo
 	private Set<Factura> listaFactura;
 	
-	@Transient
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn (name="IDLOCAL")
 	private Set<SolicitudStock> listaSolicitudStock;
 	
 	@OneToMany(fetch=FetchType.LAZY)

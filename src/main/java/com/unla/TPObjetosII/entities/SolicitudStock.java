@@ -4,18 +4,32 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+@Entity 
+@Table(name="SOLICITUDSTOCK")
 public class SolicitudStock {
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="IDSOLICITUDSTOCK")
 	private int idSolicitudStock;
 
 	private LocalDate fecha;
 
 	private boolean aceptado;
+	
+	@Transient
 	private Pedido pedido;
+	
+	@ManyToOne (fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
 	private Local local;
 	
 	public SolicitudStock() {}

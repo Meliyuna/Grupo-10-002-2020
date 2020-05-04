@@ -4,9 +4,12 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,16 +21,17 @@ public class Lote {
 	@Column(name="IDLOTE")
 	private int idLote;
 
-	@Transient
+	@Column (name="CANTIDADINICIAL")
 	private int cantidadInicial;
-	@Transient
+	@Column (name="CANTIDADACTUAL")
 	private int cantidadActual;
-	@Transient
+	@Column (name="FECHAINGRESO")
 	private LocalDate fechaIngreso;
-	@Transient
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDPRODUCTO")
 	private Producto producto;
 	
-	@Transient
+
 	private boolean estado;
 	
 	public int getIdLote() {
