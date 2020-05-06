@@ -14,6 +14,10 @@ public class Cliente extends Persona{
 	private String email;
 	
 
+	public Cliente() {
+		
+	}
+	
 	public Cliente(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
 		super(apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub

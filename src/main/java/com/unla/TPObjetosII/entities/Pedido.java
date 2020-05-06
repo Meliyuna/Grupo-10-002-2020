@@ -2,19 +2,40 @@ package com.unla.TPObjetosII.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+@Entity
 public class Pedido {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="IDPEDIDO")
 	private int idPedido;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDPRODUCTO")
 	private Producto producto;
 
 	private int cantidad;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
 	private Local local;
+	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDVENDEDORORIGINAL")
 	private Empleado vendedorOriginal;
+	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDVENDEDORAUXILIAR")
 	private Empleado vendedorAuxiliar;
 
 	private float subtotal;
@@ -41,7 +62,7 @@ public class Pedido {
 		return idPedido;
 	}
 
-	protected void setIdPedido(int idPedido) {
+	public void setIdPedido(int idPedido) {
 		this.idPedido = idPedido;
 	}
 

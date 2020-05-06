@@ -9,6 +9,8 @@ import com.unla.TPObjetosII.entities.Local;
 
 @Repository ("localRepository")
 public interface ILocalRepository extends JpaRepository<Local, Serializable>{
+	
+	public abstract Local findByIdLocal(int idLocal);
 
 	
 }
