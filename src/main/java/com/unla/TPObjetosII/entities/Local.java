@@ -133,6 +133,13 @@ public class Local {
 		this.listaLote = listaLote;
 	}
 
+	@Override
+	public String toString() {
+		return "Local [idLocal=" + idLocal + ", direccion=" + direccion + ", latitud=" + latitud + ", longitud="
+				+ longitud + ", telefono=" + telefono + "] \n";
+	}
+
+
 	
 	
 	

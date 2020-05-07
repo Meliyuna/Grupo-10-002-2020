@@ -65,8 +65,8 @@ public class Empleado extends Persona{
 	@Override
 	public String toString() {
 		return "Empleado [ idPersona=" + idPersona + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento="
-				+ fechaNacimiento + ", dni=" + dni + ", franjaHoraria=" + franjaHoraria + ", tipoEmpleado=" + tipoEmpleado + ", local=" + local
-				+ "] \n";
+				+ fechaNacimiento + ", dni=" + dni + ", franjaHoraria=" + franjaHoraria + ", tipoEmpleado=" + tipoEmpleado + ", local=" + local.getIdLocal()
+				+ ","+local.getDireccion()+ " ] \n";
 	}
 	
 	

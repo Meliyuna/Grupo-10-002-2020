@@ -126,7 +126,7 @@ public class Pedido {
 	public String toString() {
 		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad + ", local=" + local
 				+ ", vendedorOriginal=" + vendedorOriginal + ", vendedorAuxiliar=" + vendedorAuxiliar + ", subtotal="
-				+ subtotal + ", aceptado=" + aceptado + "]";
+				+ subtotal + ", aceptado=" + aceptado + "] \n";
 	}
 	
 	
