@@ -105,7 +105,7 @@ CREATE TABLE `local` (
   `telefono` double DEFAULT NULL,
   `longitud` double DEFAULT NULL,
   PRIMARY KEY (`idLocal`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `lote` (
   CONSTRAINT `FKiujiujdpkrc63ua596dd7yv3d` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`),
   CONSTRAINT `fklocal` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkproducto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +148,7 @@ CREATE TABLE `pedido` (
   `idVendedorOriginal` int(11) DEFAULT NULL,
   `idVendedorAuxiliar` int(11) DEFAULT NULL,
   `subtotal` float DEFAULT NULL,
-  `aceptado` tinyint(4) DEFAULT NULL,
+  `aceptado` bit(1) DEFAULT NULL,
   `idCarrito` int(11) DEFAULT NULL,
   PRIMARY KEY (`idPedido`),
   KEY `fkproducto2_idx` (`idProducto`),
@@ -161,7 +161,7 @@ CREATE TABLE `pedido` (
   CONSTRAINT `fkproducto2` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkvendedorauxoloar` FOREIGN KEY (`idVendedorAuxiliar`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkvendedororigianl` FOREIGN KEY (`idVendedorOriginal`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `persona` (
   `fechaNacimiento` date DEFAULT NULL,
   `dni` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`idPersona`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,8 +216,16 @@ CREATE TABLE `solicitudstock` (
   KEY `fklocal3_idx` (`idLocal`),
   CONSTRAINT `fklocal3` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkpedido2` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'grupo-10-bdd-002-2020'
+--
+
+--
+-- Dumping routines for database 'grupo-10-bdd-002-2020'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -228,4 +236,4 @@ CREATE TABLE `solicitudstock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-04 18:10:58
+-- Dump completed on 2020-05-09 14:13:02
