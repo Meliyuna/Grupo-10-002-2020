@@ -1,0 +1,36 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#subir").click(function() {
+			var direccion = $("#direccion").val();
+			var telefono = $("#telefono").val();
+			json = {"direccion": direccion, "telefono": telefono};
+			$.ajax({
+            	url: '/api/local/alta',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+            	success: function(response){
+                	console.log(response)
+            	},
+            	error: function(response){
+                	console.log("HUBO UN ERROR:" + response)
+            	}
+        	})
+		});
+	});
+</script>
+</head>
+<body>
+	<div>
+		<form id="formulario">
+			<p>Direccion: <input id="direccion" type="text" name="direccion"></p>
+			<p>Telefono: <input id="telefono" type="text" name="telefono"></p>
+			<button id="subir" type="button">Click Me!</button>
+		</form>
+	</div>
+</body>
+</html>

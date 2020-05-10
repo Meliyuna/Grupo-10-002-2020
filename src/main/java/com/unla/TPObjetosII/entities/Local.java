@@ -48,17 +48,12 @@ public class Local {
 		
 	}
 	
-	public Local(String direccion, double latitud, double longitud, double telefono, Set<Empleado> listaEmpleado,
-			Set<Factura> listaFactura, Set<SolicitudStock> listaSolicitudStock, Set<Lote> listaLote) {
+	public Local(String direccion, double latitud, double longitud, double telefono) {
 		super();
 		this.direccion = direccion;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.telefono = telefono;
-		this.listaEmpleado = listaEmpleado;
-		this.listaFactura = listaFactura;
-		this.listaSolicitudStock = listaSolicitudStock;
-		this.listaLote = listaLote;
 	}
 
 	public int getIdLocal() {
