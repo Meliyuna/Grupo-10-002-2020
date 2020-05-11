@@ -17,4 +17,9 @@ public class LocalController {
 	public String alta() {
 		return "/local/alta";
 	}
+	
+	@GetMapping("/modificacion")
+	public String modificacion(){
+		return "/local/modificar";
+	}
 }

@@ -1,6 +1,7 @@
 package com.unla.TPObjetosII.controllers.api;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.unla.TPObjetosII.entities.Empleado;
+import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.services.ILocalService;
 
@@ -34,6 +36,12 @@ public class LocalRestController {
 		// queda ver como devolver un mensaje simple
 	}
 	
+	@PostMapping("/traerLocales")
+	@ResponseBody
+	public List<Local> traerLocales() throws Exception{//@RequestBody setea auto los atributos a local
+		return localService.getAll();
+		// queda ver como devolver un mensaje simple
+	}
 //	@PostMapping("/alta2")
 //	public ResponseEntity<LocalModel> alta2(@RequestBody ObjectNode o) throws Exception{
 //		Gson gson = new Gson();
