@@ -10,4 +10,5 @@ public interface ILocalService {
 	public List<Local> getAll();
 	public LocalModel insertOrUpdate(LocalModel localModel) throws Exception;
 	public boolean remove(int idLocal);
+	public LocalModel getById(int idLocal);
 }

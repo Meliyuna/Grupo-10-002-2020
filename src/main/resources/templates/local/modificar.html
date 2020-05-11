@@ -3,19 +3,65 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
 	$(document).ready(function() {
+		//TRAERLOCALES
 		$.ajax({
         	url: '/api/local/traerLocales',
         	type: 'POST',
         	success: function(response){
             	console.log(response);
             	$.each(response,function(index,local){
-            		$("#locales").append(new Option(local.telefono, local.idLocal));
+            		$("#locales").append(new Option(local.telefono + " - " + local.direccion, local.idLocal));
             	});
         	},
         	error: function(response){
         		console.log(response);
         	}
         });
+		
+		//SELECCIONAR LOCAL A BORRAR O MODIFICAR
+		$("#locales").change(function(){
+			console.log("paso por aca");
+			json={"idLocal":$("#locales").val()};
+			$("#formularioLocal").hide(1000, function(){
+				$.ajax({
+		        	url: '/api/local/traerLocal',
+		        	type: 'POST',
+	            	dataType: 'json',
+	            	data: JSON.stringify(json),
+	            	contentType: "application/json",
+		        	success: function(local){
+		        		console.log(local)
+	                	$("#direccion").val(local.direccion);
+		        		$("#telefono").val(local.telefono);
+		        		$("#latitud").val(local.latitud);
+		        		$("#longitud").val(local.longitud);
+		        		$("#formularioLocal").show(1000);
+		        	},
+		        	error: function(response){
+		        		console.log("error al traer local" + response);
+		        	}
+		        });
+			});
+		});
+		
+		//BORRAR UN LOCAL SELECCIONADO
+		$("#eliminar").click(function(){
+			json={"idLocal":$("#locales").val()};
+			$.ajax({
+	        	url: '/api/local/baja',
+	        	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+	        	success: function(response){
+	        		console.log(response)
+                	$("#formularios").hide(1000,function(){$("#exito").show(1000)});
+	        	},
+	        	error: function(response){
+	        		console.log(response);
+	        	}
+	        });
+		});
 	});
 </script>
 </head>
@@ -23,9 +69,22 @@
 		<div>
 			<h1>MODIFICAR O ELIMINAR:</h1>
 		</div>
-		<div id="formulario">
-			<select id="locales">
-			</select>
+		<div id="formularios">
+			<div id="formularioSelectLocal">
+				<select id="locales">
+				</select>
+				
+			</div>
+			<div id="formularioLocal" style="display: none">
+				<p>Direccion: <input id="direccion" type="text"></p>
+				<p>Telefono: <input id="telefono" type="number"><span id="errorTelefono" class="error" style="display: none;"></span></p>
+				<p>latitud: <input id="latitud" type="number"></p>
+				<p>longitud: <input id="longitud" type="number"></p>
+				<button id="eliminar" type="button">ELIMINAR</button>
+			</div>
+		</div>
+		<div  id="exito" style="display: none;">
+			<h1>Local Eliminado</h1>
 		</div>
 </body>
 </html>

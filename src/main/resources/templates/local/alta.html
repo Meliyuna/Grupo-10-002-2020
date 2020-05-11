@@ -21,9 +21,10 @@
             	contentType: "application/json",
             	success: function(response){
                 	console.log(response)
-                	$("#formulario").hide(1000,function(){$("#exito").show(1000)});
+                	$("#formulario").hide(50,function(){$("#exito").show(1000)});
             	},
             	error: function(response){
+            		console.log(response);
             		if(response.responseJSON.message.includes("telefono")){
             			 $("#errorTelefono").css("display", "block");
             			 $("#errorTelefono").html(response.responseJSON.message);

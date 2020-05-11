@@ -38,10 +38,24 @@ public class LocalRestController {
 	
 	@PostMapping("/traerLocales")
 	@ResponseBody
-	public List<Local> traerLocales() throws Exception{//@RequestBody setea auto los atributos a local
+	public List<Local> traerLocales() throws Exception{
 		return localService.getAll();
-		// queda ver como devolver un mensaje simple
 	}
+	
+	@PostMapping("/baja")
+	@ResponseBody
+	public Boolean baja(@RequestBody ObjectNode o) throws Exception{
+		if(localService.remove(o.get("idLocal").asInt())==false) throw new Exception("Error al eliminar local");
+		return true;
+	}
+	
+	@PostMapping("/traerLocal")
+	@ResponseBody
+	public LocalModel traerLocal(@RequestBody ObjectNode o) throws Exception{
+		System.out.println("se busca el local");
+		return localService.getById(o.get("idLocal").asInt());
+	}
+	
 //	@PostMapping("/alta2")
 //	public ResponseEntity<LocalModel> alta2(@RequestBody ObjectNode o) throws Exception{
 //		Gson gson = new Gson();

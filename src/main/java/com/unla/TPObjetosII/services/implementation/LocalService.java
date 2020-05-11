@@ -33,6 +33,11 @@ public class LocalService implements ILocalService{
 	public List<Local> getAll() {
 		return localRepository.findAll();
 	}
+	
+	@Override
+	public LocalModel getById(int idLocal) {
+		return localConverter.entityToModel(localRepository.findByIdLocal(idLocal));
+	}
 
 	@Override
 	public boolean remove(int idLocal) {
