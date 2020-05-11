@@ -1,0 +1,65 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#guardar").click(function() {
+			var apellido = $("#apellido").val();
+			var nombre = $("#nombre").val();
+			var fechaNacimiento= $("fechaNacimiento").val();
+			var dni = $("dni").val();
+			var franjaHoraria= $("franjaHoraria").val();
+			var tipoEmpleado= $("tipoEmpleado").val();
+			json = {
+					"apellido": apellido,
+					"nombre": nombre,
+					"fechaNacimiento": fechaNacimiento,
+					"dni": dni,
+					"franjaHoraria":franjaHoraria,
+					"tipoEmpleado": tipoEmpleado
+					};
+			$.ajax({
+            	url: '/api/empleado/alta',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+            	success: function(response){
+                	console.log(response)
+            	},
+            	error: function(response){
+                	console.log("HUBO UN ERROR:" + response)
+            	}
+        	})
+		});
+	});
+</script>
+
+</head>
+<body>
+<div>
+		<form id="formulario">
+			<p>Apellido: <input id="apellido" type="text" name="apellido"></p>
+			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
+			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
+			<p>Dni: <input id="dni" type="number" name="dni"></p>
+			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria"></p>	
+			<p>
+          <label>Tipo de empleado</label>            
+          <input type = "radio"
+                 name = "tipoEmpleado"
+                 id = "tipoEmpleado"
+                 value = "vendedor"
+                 checked = "checked" />
+          <input type = "radio"
+                 name = "tipoEmpleado"
+                 id = "tipoEmpleado"
+                 value = "gerente"
+                 checked = "checked" />
+        </p>     	
+			<button id="guardar" type="button">Guardar</button>
+		</form>
+	</div>
+
+</body>
+</html>
