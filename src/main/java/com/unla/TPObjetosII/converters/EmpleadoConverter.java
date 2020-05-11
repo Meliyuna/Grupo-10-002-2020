@@ -1,11 +1,13 @@
 package com.unla.TPObjetosII.converters;
 
+import org.springframework.stereotype.Component;
+
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.LocalModel;
 
-
+@Component("empleadoConverter")
 public class EmpleadoConverter {
 	
 	public EmpleadoModel entityToModel(Empleado empleado) {

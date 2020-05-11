@@ -23,6 +23,12 @@ public class EmpleadoController {
 	public String alta() {
 		return "/empleado/alta";
 	}
+	
+	
+	@GetMapping("/modificacion")
+	public String modificacion() {
+		return "/empleado/modificacion";
+	}
 
 	
 	

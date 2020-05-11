@@ -6,10 +6,16 @@
 		$("#guardar").click(function() {
 			var apellido = $("#apellido").val();
 			var nombre = $("#nombre").val();
-			var fechaNacimiento= $("fechaNacimiento").val();
-			var dni = $("dni").val();
-			var franjaHoraria= $("franjaHoraria").val();
-			var tipoEmpleado= $("tipoEmpleado").val();
+			var fechaNacimiento= $("#fechaNacimiento").val();
+			var dni = $("#dni").val();
+			var franjaHoraria= $("#franjaHoraria").val();
+			var tipoEmpleado;
+			if($("#radioTipoEmpleado").val().contains("gerente")){
+			     tipoEmpleado = true;
+			}
+			else{
+			   tipoEmpleado = false;
+			}
 			json = {
 					"apellido": apellido,
 					"nombre": nombre,
@@ -31,6 +37,19 @@
                 	console.log("HUBO UN ERROR:" + response)
             	}
         	})
+        	$.ajax({
+            	url: '/api/local/traerLocales',
+            	type: 'POST',
+            	success: function(response){
+                	console.log(response);
+                	$.each(response,function(index,local){
+                		$("#locales")
+                	});
+            	},
+            	error: function(response){
+            		console.log(response);
+            	}
+            });
 		});
 	});
 </script>
@@ -47,18 +66,26 @@
 			<p>
           <label>Tipo de empleado</label>            
           <input type = "radio"
-                 name = "tipoEmpleado"
-                 id = "tipoEmpleado"
-                 value = "vendedor"
-                 checked = "checked" />
+                 name = "radioTipoEmpleado"
+                 id = "radioTipoEmpleado"
+                 value = "vendedor" />
           <input type = "radio"
-                 name = "tipoEmpleado"
-                 id = "tipoEmpleado"
-                 value = "gerente"
-                 checked = "checked" />
-        </p>     	
+                 name = "radioTipoEmpleado"
+                 id = "radioTipoEmpleado"
+                 value = "gerente" />
+        </p> 
+        <div>
+			<h1>Locales :</h1>
+		</div>
+		<div id="formulario">
+			<select id="locales">
+			</select>
+		</div>    	
 			<button id="guardar" type="button">Guardar</button>
 		</form>
+	</div>
+	<div>
+		<a href="/empleado">ATRAS</a>
 	</div>
 
 </body>

@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+	$(document).ready(function() {
+		$.ajax({
+        	url: '/api/empleado/traerEmpleados',
+        	type: 'POST',
+        	success: function(response){
+            	console.log(response);
+            	$.each(response,function(index,empleado){
+            		$("#empleados").append(new Option(empleado.apellido,empleado.nombre,empleado.fechaNacimiento,empleado.dni,empleado.franjaHoraria,empleado.tipoEmpleado));
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
+		$.ajax({
+        	url: '/api/local/traerLocales',
+        	type: 'POST',
+        	success: function(response){
+            	console.log(response);
+            	$.each(response,function(index,local){
+            		$("#locales").append(new Option(local.telefono, local.idLocal));
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
+	});
+</script>
+</head>
+<body>
+		<div>
+			<h1>Modificar empleados</h1>
+		</div>
+		<div id="formulario">
+			<select id="empleados">
+			</select>
+		</div>
+		<div>
+			<h1>Modificar local del empleado:</h1>
+		</div>
+		<div id="formulario">
+			<select id="locales">
+			</select>
+		</div>
+</body>
+</html>

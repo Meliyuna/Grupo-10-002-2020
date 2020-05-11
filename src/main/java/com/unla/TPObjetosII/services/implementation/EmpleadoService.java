@@ -20,12 +20,12 @@ public class EmpleadoService implements IEmpleadoService {
 	private IEmpleadoRepository empleadoRepository;
 	
 	@Autowired
-	@Qualifier("degreeConverter")
+	@Qualifier("empleadoConverter")
 	private EmpleadoConverter empleadoConverter;
 	
 	@Override
 	public List<Empleado> getAll(){
-		return empleadoRepository.findAll();
+		return empleadoRepository.findAllConLocal();
 	}
 	
 	@Override
