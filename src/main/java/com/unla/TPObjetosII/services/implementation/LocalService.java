@@ -24,7 +24,8 @@ public class LocalService implements ILocalService{
 	private LocalConverter localConverter;
 
 	@Override
-	public LocalModel insertOrUpdate(LocalModel localModel) {
+	public LocalModel insertOrUpdate(LocalModel localModel) throws Exception {
+		if(localRepository.findByTelefono(localModel.getTelefono())!=null) throw new Exception("El telefono ya existe");
 		return localConverter.entityToModel(localRepository.save(localConverter.modelToEntity(localModel)));
 	}
 

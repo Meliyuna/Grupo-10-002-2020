@@ -8,6 +8,6 @@ import com.unla.TPObjetosII.models.LocalModel;
 public interface ILocalService {
 	
 	public List<Local> getAll();
-	public LocalModel insertOrUpdate(LocalModel localModel);
+	public LocalModel insertOrUpdate(LocalModel localModel) throws Exception;
 	public boolean remove(int idLocal);
 }

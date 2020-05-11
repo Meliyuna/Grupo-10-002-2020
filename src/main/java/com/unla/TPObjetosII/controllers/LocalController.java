@@ -17,6 +17,4 @@ public class LocalController {
 	public String alta() {
 		return "/local/alta";
 	}
-	
-
 }

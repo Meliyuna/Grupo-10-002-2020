@@ -4,9 +4,15 @@
 <script>
 	$(document).ready(function() {
 		$("#subir").click(function() {
-			var direccion = $("#direccion").val();
-			var telefono = $("#telefono").val();
-			json = {"direccion": direccion, "telefono": telefono};
+			$(".error").css("display", "none");
+			json = {
+					"direccion": $("#direccion").val(),
+					"telefono": $("#telefono").val(),
+					"latitud": $("#latitud").val(),
+					"longitud": $("#longitud").val()
+					
+			};
+			console.log(json);
 			$.ajax({
             	url: '/api/local/alta',
             	type: 'POST',
@@ -15,9 +21,13 @@
             	contentType: "application/json",
             	success: function(response){
                 	console.log(response)
+                	$("#formulario").hide(1000,function(){$("#exito").show(1000)});
             	},
             	error: function(response){
-                	console.log("HUBO UN ERROR:" + response)
+            		if(response.responseJSON.message.includes("telefono")){
+            			 $("#errorTelefono").css("display", "block");
+            			 $("#errorTelefono").html(response.responseJSON.message);
+            		}
             	}
         	})
 		});
@@ -25,12 +35,23 @@
 </script>
 </head>
 <body>
-	<div>
-		<form id="formulario">
-			<p>Direccion: <input id="direccion" type="text" name="direccion"></p>
-			<p>Telefono: <input id="telefono" type="text" name="telefono"></p>
+	<div id="divFormulario">
+		<div>
+		<h1>Alta Local:</h1>
+		</div>
+		<div id="formulario">
+			<p>Direccion: <input id="direccion" type="text"></p>
+			<p>Telefono: <input id="telefono" type="number"><span id="errorTelefono" class="error" style="display: none;"></span></p>
+			<p>latitud: <input id="latitud" type="number"></p>
+			<p>longitud: <input id="longitud" type="number"></p>
 			<button id="subir" type="button">Click Me!</button>
-		</form>
+		</div>
+		<div  id="exito" style="display: none;">
+			<h1>Local Agregado</h1>
+		</div>
+	</div>
+	<div>
+		<a href="/local">ATRAS</a>
 	</div>
 </body>
 </html>
