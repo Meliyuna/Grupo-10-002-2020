@@ -14,12 +14,14 @@ public class LocalModel {
 	private Set<SolicitudStockModel> listaSolicitudStock;
 	private Set<LoteModel> listaLote;
 	
-	public LocalModel(String direccion, double latitud, double longitud, double telefono) {
+	public LocalModel(String direccion, double latitud, double longitud, double telefono){
 		super();
 		this.direccion = direccion;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.telefono = telefono;
+
+
 	}
 
 	public int getIdLocal() {

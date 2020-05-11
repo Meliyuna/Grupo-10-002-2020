@@ -11,6 +11,6 @@ import com.unla.TPObjetosII.entities.Local;
 public interface ILocalRepository extends JpaRepository<Local, Serializable>{
 	
 	public abstract Local findByIdLocal(int idLocal);
-
+	public abstract Local findByTelefono(double telefono);
 	
 }
