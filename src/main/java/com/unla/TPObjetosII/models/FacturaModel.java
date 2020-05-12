@@ -1,9 +1,15 @@
 package com.unla.TPObjetosII.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class FacturaModel {
 	 
 	private int idFactura;
+	
+	@JsonIgnore
 	private LocalModel local;
+	
+	@JsonIgnore
 	private CarritoModel carrito;
 	
 	public FacturaModel(LocalModel local, CarritoModel carrito) {

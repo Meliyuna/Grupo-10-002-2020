@@ -2,12 +2,18 @@ package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SolicitudStockModel {
 	
 	private int idSolicitudStock;
 	private LocalDate fecha;
 	private boolean aceptado;
+	
+	@JsonIgnore
 	private PedidoModel pedido;
+	
+	@JsonIgnore
 	private LocalModel local;
 	
 	public SolicitudStockModel() {}

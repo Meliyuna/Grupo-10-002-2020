@@ -2,12 +2,16 @@ package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class LoteModel {
 	
 	private int idLote;
 	private int cantidadInicial;
 	private int cantidadActual;
 	private LocalDate fechaIngreso;
+	
+	@JsonIgnore
 	private ProductoModel producto;
 	private boolean estado;
 	

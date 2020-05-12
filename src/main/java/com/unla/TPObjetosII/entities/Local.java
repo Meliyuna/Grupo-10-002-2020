@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Local {
 	
@@ -29,17 +31,21 @@ public class Local {
 
 	private double telefono;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Set<Empleado> listaEmpleado;
 	
+	@JsonIgnore
 	@Transient //ignorar mapeo
 	private Set<Factura> listaFactura;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn (name="IDLOCAL")
 	private Set<SolicitudStock> listaSolicitudStock;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Set<Lote> listaLote;

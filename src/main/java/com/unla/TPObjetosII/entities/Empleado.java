@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @PrimaryKeyJoinColumn(name="IDEMPLEADO")
 public class Empleado extends Persona{
@@ -21,6 +23,7 @@ public class Empleado extends Persona{
 	@Column(name="TIPOEMPLEADO")
 	private boolean tipoEmpleado;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
