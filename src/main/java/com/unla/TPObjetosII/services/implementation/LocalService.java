@@ -25,13 +25,19 @@ public class LocalService implements ILocalService{
 
 	@Override
 	public LocalModel insertOrUpdate(LocalModel localModel) throws Exception {
-		if(localRepository.findByTelefono(localModel.getTelefono())!=null) throw new Exception("El telefono ya existe");
+		Local bdLocal = localRepository.findByTelefono(localModel.getTelefono());
+		if(bdLocal!=null) if(bdLocal.getIdLocal()!=localModel.getIdLocal()) throw new Exception("El telefono ya existe");
 		return localConverter.entityToModel(localRepository.save(localConverter.modelToEntity(localModel)));
 	}
 
 	@Override
 	public List<Local> getAll() {
 		return localRepository.findAll();
+	}
+	
+	@Override
+	public LocalModel getById(int idLocal) {
+		return localConverter.entityToModel(localRepository.findByIdLocal(idLocal));
 	}
 
 	@Override
