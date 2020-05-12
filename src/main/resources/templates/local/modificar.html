@@ -20,7 +20,7 @@
 		
 		//SELECCIONAR LOCAL A BORRAR O MODIFICAR
 		$("#locales").change(function(){
-			console.log("paso por aca");
+			$(".error").css("display", "none");
 			json={"idLocal":$("#locales").val()};
 			$("#formularioLocal").hide(1000, function(){
 				$.ajax({
@@ -62,6 +62,35 @@
 	        	}
 	        });
 		});
+		
+		//Modificar UN LOCAL SELECCIONADO
+		$("#modificar").click(function() {
+			$(".error").css("display", "none");
+			json = {
+					"direccion": $("#direccion").val(),
+					"telefono": $("#telefono").val(),
+					"latitud": $("#latitud").val(),
+					"longitud": $("#longitud").val(),
+					"idLocal": $("#locales").val()
+			};
+			$.ajax({
+            	url: '/api/local/alta',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+            	success: function(response){
+                	$("#formularios").hide(1000,function(){$("#exitoModificar").show(1000)});
+            	},
+            	error: function(response){
+            		console.log(response);
+            		if(response.responseJSON.message.includes("telefono")){
+            			 $("#errorTelefono").css("display", "block");
+            			 $("#errorTelefono").html(response.responseJSON.message);
+            		}
+            	}
+        	});
+		});
 	});
 </script>
 </head>
@@ -71,20 +100,26 @@
 		</div>
 		<div id="formularios">
 			<div id="formularioSelectLocal">
-				<select id="locales">
+				<p>Seleccione Local: <select id="locales">
 				</select>
-				
+				</p>
 			</div>
-			<div id="formularioLocal" style="display: none">
-				<p>Direccion: <input id="direccion" type="text"></p>
+			<div id="formularioLocal" style="display: none;">
+				Direccion: <input id="direccion" type="text">
 				<p>Telefono: <input id="telefono" type="number"><span id="errorTelefono" class="error" style="display: none;"></span></p>
 				<p>latitud: <input id="latitud" type="number"></p>
 				<p>longitud: <input id="longitud" type="number"></p>
-				<button id="eliminar" type="button">ELIMINAR</button>
+				<button id="eliminar" type="button">ELIMINAR</button><button id="modificar" type="button">MODIFICAR</button>
 			</div>
 		</div>
 		<div  id="exito" style="display: none;">
 			<h1>Local Eliminado</h1>
+		</div>
+		<div  id="exitoModificar" style="display: none;">
+			<h1>Local Modificado</h1>
+		</div>
+		<div>
+			<a href="/local">ATRAS</a>
 		</div>
 </body>
 </html>

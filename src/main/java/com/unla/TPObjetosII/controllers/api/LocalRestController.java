@@ -52,7 +52,6 @@ public class LocalRestController {
 	@PostMapping("/traerLocal")
 	@ResponseBody
 	public LocalModel traerLocal(@RequestBody ObjectNode o) throws Exception{
-		System.out.println("se busca el local");
 		return localService.getById(o.get("idLocal").asInt());
 	}
 	

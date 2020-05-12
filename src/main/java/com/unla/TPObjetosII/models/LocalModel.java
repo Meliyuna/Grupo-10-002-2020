@@ -14,8 +14,9 @@ public class LocalModel {
 	private Set<SolicitudStockModel> listaSolicitudStock;
 	private Set<LoteModel> listaLote;
 	
-	public LocalModel(String direccion, double latitud, double longitud, double telefono) {
+	public LocalModel(int idLocal, String direccion, double latitud, double longitud, double telefono) {
 		super();
+		this.idLocal = idLocal;
 		this.direccion = direccion;
 		this.latitud = latitud;
 		this.longitud = longitud;
