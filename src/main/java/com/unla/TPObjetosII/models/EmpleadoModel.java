@@ -2,10 +2,14 @@ package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class EmpleadoModel extends PersonaModel{
 	
 	private String franjaHoraria;
 	private boolean tipoEmpleado;
+	
+	@JsonIgnore
 	private LocalModel local;
 	
 	public EmpleadoModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {

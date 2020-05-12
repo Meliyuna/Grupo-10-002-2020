@@ -1,12 +1,22 @@
 package com.unla.TPObjetosII.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class PedidoModel {
 	
 	private int idPedido;
+	
+	@JsonIgnore
 	private ProductoModel producto;
 	private int cantidad;
+	
+	@JsonIgnore
 	private LocalModel local;
+	
+	@JsonIgnore
 	private EmpleadoModel vendedorOriginal;
+	
+	@JsonIgnore
 	private EmpleadoModel vendedorAuxiliar;
 	private float subtotal;
 	private boolean aceptado;

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Pedido {
 
@@ -18,22 +20,24 @@ public class Pedido {
 	@Column(name="IDPEDIDO")
 	private int idPedido;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDPRODUCTO")
 	private Producto producto;
 
 	private int cantidad;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
 	
-	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDVENDEDORORIGINAL")
 	private Empleado vendedorOriginal;
 	
-	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDVENDEDORAUXILIAR")
 	private Empleado vendedorAuxiliar;
