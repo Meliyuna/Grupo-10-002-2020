@@ -46,10 +46,11 @@ public class EmpleadoService implements IEmpleadoService {
 	}
 
 	@Override
-	public Empleado getEmpleado(int id) {
-		Empleado e=empleadoRepository.findByIdEmpleado(id);
-		return e;
+	public EmpleadoModel getEmpleado(int id) {
+		return empleadoConverter.entityToModel(empleadoRepository.findByIdEmpleado(id));
 	}
+
+
 	
 
 }

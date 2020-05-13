@@ -7,7 +7,7 @@ import com.unla.TPObjetosII.models.EmpleadoModel;
 
 public interface IEmpleadoService {
 	
-	public Empleado getEmpleado(int id);
+	public EmpleadoModel getEmpleado(int id);
 
 	public List<Empleado> getAll();
 	

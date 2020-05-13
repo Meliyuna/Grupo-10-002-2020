@@ -15,7 +15,7 @@ import com.unla.TPObjetosII.entities.Empleado;
 public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializable>{
 	
 
-	@Query("Select e from Empleado e JOIN FETCH e.local l where e.idPersona= (:idEmpleado)")
+	@Query("Select e from Empleado e JOIN FETCH e.local l where e.idPersona= (:idEmpleado) order by e.idPersona")
 	public abstract Empleado findByIdEmpleado(int idEmpleado);
 	
 	@Query("Select e from Empleado e JOIN FETCH e.local l")
