@@ -8,8 +8,15 @@
         	type: 'POST',
         	success: function(response){
             	console.log(response);
+            	var stringTipo;
             	$.each(response,function(index,empleado){
-            		$("#empleados").append(new Option(empleado.apellido,empleado.nombre,empleado.fechaNacimiento,empleado.dni,empleado.franjaHoraria,empleado.tipoEmpleado));
+            		if(empleado.tipoEmpleado==false){	
+       			     stringTipo="Vendedor";
+       			}
+       			else{
+       			   stringTipo = "Gerente";
+       			}
+            		$("#empleados").append(new Option(empleado.apellido+" "+ empleado.nombre+" "+empleado.dni+" "+stringTipo ,empleado.idEmpleado));
             	});
         	},
         	error: function(response){

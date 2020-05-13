@@ -10,7 +10,8 @@
 			var dni = $("#dni").val();
 			var franjaHoraria= $("#franjaHoraria").val();
 			var tipoEmpleado;
-			if($("#radioTipoEmpleado").val().contains("gerente")){
+			var idLocal=$("#locales").val();
+			if($('[name="tipoEmpleado"]:checked').val().includes("gerente")){	
 			     tipoEmpleado = true;
 			}
 			else{
@@ -19,11 +20,14 @@
 			json = {
 					"apellido": apellido,
 					"nombre": nombre,
-					"fechaNacimiento": fechaNacimiento,
 					"dni": dni,
 					"franjaHoraria":franjaHoraria,
-					"tipoEmpleado": tipoEmpleado
+					"tipoEmpleado": tipoEmpleado,
+					"local": {
+						"idLocal":idLocal
+					}
 					};
+			console.log(json);
 			$.ajax({
             	url: '/api/empleado/alta',
             	type: 'POST',
@@ -58,6 +62,7 @@
 <body>
 <div>
 		<form id="formulario">
+			<h1>Alta de empleados</h1> 
 			<p>Apellido: <input id="apellido" type="text" name="apellido"></p>
 			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
 			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
@@ -66,13 +71,11 @@
 			<p>
           <label>Tipo de empleado</label>            
           <input type = "radio"
-                 name = "radioTipoEmpleado"
-                 id = "radioTipoEmpleado"
+                 name = "tipoEmpleado"
                  value = "vendedor" />
                  <label>Vendedor</label> 
           <input type = "radio"
-                 name = "radioTipoEmpleado"
-                 id = "radioTipoEmpleado"
+                 name = "tipoEmpleado"
                  value = "gerente" />
                  <label>Gerente</label> 
         </p> 

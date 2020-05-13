@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.services.IEmpleadoService;
@@ -30,9 +33,13 @@ public class EmpleadoRestController {
 	
 	@PostMapping("/alta")
 	@ResponseBody
-	public EmpleadoModel alta(@RequestBody EmpleadoModel empleado) throws Exception{  //RequestBody setea todos los atributos a empleado
-		System.out.println(empleadoService.insertOrUpdate(empleado));
-		return empleado;
+	public EmpleadoModel alta(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS); //un objeto que me ayuda a mapear o crear el json
+		// el disable esta para ignorar la etiqueta de JsonIgnore en LocalModel y que quede mapeado los 2
+		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
+		System.out.println(e);
+		System.out.println(empleadoService.insertOrUpdate(e));
+		return e;
 	
 	}
 	

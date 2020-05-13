@@ -25,9 +25,9 @@ public class EmpleadoController {
 	}
 	
 	
-	@GetMapping("/modificacion")
+	@GetMapping("/modificar")
 	public String modificacion() {
-		return "/empleado/modificacion";
+		return "/empleado/modificar";
 	}
 
 	

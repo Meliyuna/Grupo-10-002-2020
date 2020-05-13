@@ -41,6 +41,13 @@ public class Empleado extends Persona{
 		this.tipoEmpleado=tipoEmpleado;
 		this.local=local;
 	}
+	
+	public Empleado(int idEmpleado,String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado) {
+		super(idEmpleado,apellido, nombre, fechaNacimiento, dni);
+		// TODO Auto-generated constructor stub
+		this.franjaHoraria=franjaHoraria;
+		this.tipoEmpleado=tipoEmpleado;
+	}
 
 	public String getFranjaHoraria() {
 		return franjaHoraria;

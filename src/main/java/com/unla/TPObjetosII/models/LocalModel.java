@@ -24,6 +24,9 @@ public class LocalModel {
 	@JsonIgnore
 	private Set<LoteModel> listaLote;
 	
+	public LocalModel() {
+		
+	}
 
 	public LocalModel(int idLocal, String direccion, double latitud, double longitud, double telefono){
 		super();
