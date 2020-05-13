@@ -37,20 +37,20 @@
                 	console.log("HUBO UN ERROR:" + response)
             	}
         	})
-        	$.ajax({
-            	url: '/api/local/traerLocales',
-            	type: 'POST',
-            	success: function(response){
-                	console.log(response);
-                	$.each(response,function(index,local){
-                		$("#locales")
-                	});
-            	},
-            	error: function(response){
-            		console.log(response);
-            	}
-            });
 		});
+		$.ajax({
+        	url: '/api/local/traerLocales',
+        	type: 'POST',
+        	success: function(response){
+            	console.log(response);
+            	$.each(response,function(index,local){
+            		$("#locales").append(new Option(local.direccion,local.idLocal))
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
 	});
 </script>
 
@@ -69,10 +69,12 @@
                  name = "radioTipoEmpleado"
                  id = "radioTipoEmpleado"
                  value = "vendedor" />
+                 <label>Vendedor</label> 
           <input type = "radio"
                  name = "radioTipoEmpleado"
                  id = "radioTipoEmpleado"
                  value = "gerente" />
+                 <label>Gerente</label> 
         </p> 
         <div>
 			<h1>Locales :</h1>

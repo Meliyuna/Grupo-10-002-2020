@@ -30,8 +30,9 @@ public class Persona {
 		
 	}
 	
-	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
+	public Persona(int idPersona,String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
 		super();
+		this.idPersona=idPersona;
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.fechaNacimiento = fechaNacimiento;

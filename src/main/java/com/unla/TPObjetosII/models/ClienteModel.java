@@ -6,8 +6,8 @@ public class ClienteModel extends PersonaModel{
 	
 	private String email;
 
-	public ClienteModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
-		super(apellido, nombre, fechaNacimiento, dni);
+	public ClienteModel(int idCliente,String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
+		super(idCliente,apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.email=email;
 	}

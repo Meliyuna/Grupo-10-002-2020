@@ -12,14 +12,14 @@ public class EmpleadoConverter {
 	
 	public EmpleadoModel entityToModel(Empleado empleado) {
 		Local l=empleado.getLocal();
-		LocalModel loc=new LocalModel(l.getDireccion(),l.getLatitud(),l.getLongitud(),l.getTelefono());
-		return new EmpleadoModel(empleado.getApellido(),empleado.getNombre(),empleado.getFechaNacimiento(),empleado.getDni(),empleado.getFranjaHoraria(),empleado.isTipoEmpleado(),loc);
+		LocalModel loc=new LocalModel(l.getIdLocal(),l.getDireccion(),l.getLatitud(),l.getLongitud(),l.getTelefono());
+		return new EmpleadoModel(empleado.getIdPersona(),empleado.getApellido(),empleado.getNombre(),empleado.getFechaNacimiento(),empleado.getDni(),empleado.getFranjaHoraria(),empleado.isTipoEmpleado(),loc);
 	}
 	
 	public Empleado modelToEntity(EmpleadoModel empleado) {
 		LocalModel l=empleado.getLocal();
-		Local loc= new Local(l.getDireccion(),l.getLatitud(),l.getLongitud(),l.getTelefono());
-		return new Empleado(empleado.getApellido(),empleado.getNombre(),empleado.getFechaNacimiento(),empleado.getDni(),empleado.getFranjaHoraria(),empleado.isTipoEmpleado(),loc);
+		Local loc= new Local(l.getIdLocal(),l.getDireccion(),l.getLatitud(),l.getLongitud(),l.getTelefono());
+		return new Empleado(empleado.getIdPersona(),empleado.getApellido(),empleado.getNombre(),empleado.getFechaNacimiento(),empleado.getDni(),empleado.getFranjaHoraria(),empleado.isTipoEmpleado(),loc);
 	}
 
 }
