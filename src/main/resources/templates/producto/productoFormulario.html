@@ -1,0 +1,8 @@
+<h2>Nuevo Producto</h2>
+
+<form action="#" th:action="@{/productos/}" th:object="${producto}" method="post">
+	<p>Nombre: <input type="text" th:field="*{nombre}" /></p>
+	<p>Descripcion: <input type="text" th:field="*{descripcion}" /></p>
+	<p>Precio: <input type="number" step="0.01" th:field="*{precio}" /></p>
+	<input type="submit" />
+</form>

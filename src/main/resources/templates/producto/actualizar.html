@@ -1,0 +1,12 @@
+<h2>Actualizar Producto</h2
+<form>
+	<select th:field="*{productos}">
+		<option value="">--</option>
+		<option th:each="producto : ${productos}"
+			th:value="${producto.idProducto}" 
+			th:text="${producto.nombre}" />
+	</select>
+</form>
+
+</tr>
+</table>
