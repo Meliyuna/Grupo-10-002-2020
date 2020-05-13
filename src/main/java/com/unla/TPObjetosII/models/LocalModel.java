@@ -2,6 +2,8 @@ package com.unla.TPObjetosII.models;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class LocalModel {
 	
 	private int idLocal;
@@ -9,9 +11,17 @@ public class LocalModel {
 	private double latitud;
 	private double longitud;
 	private double telefono;
+	
+	@JsonIgnore
 	private Set<EmpleadoModel> listaEmpleado;
+	
+	@JsonIgnore
 	private Set<FacturaModel> listaFactura;
+	
+	@JsonIgnore
 	private Set<SolicitudStockModel> listaSolicitudStock;
+	
+	@JsonIgnore
 	private Set<LoteModel> listaLote;
 	
 

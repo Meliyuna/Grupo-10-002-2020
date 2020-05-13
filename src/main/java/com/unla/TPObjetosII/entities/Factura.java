@@ -6,11 +6,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 public class Factura {
 
 	private int idFactura;
+	
+	@JsonIgnore
 	private Local local;
+	
+	@JsonIgnore
 	private Carrito carrito;
 	
 	public Factura(){

@@ -4,12 +4,18 @@ package com.unla.TPObjetosII.models;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class CarritoModel {
 
 	private int idCarrito;
+	
+	@JsonIgnore
 	private Set<PedidoModel> listaPedido;
 	private LocalDate fecha;
 	private float total;
+	
+	@JsonIgnore
 	private ClienteModel cliente;
 
 	public CarritoModel() {

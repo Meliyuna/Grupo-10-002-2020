@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity 
 @Table(name="SOLICITUDSTOCK")
 public class SolicitudStock {
@@ -25,9 +27,11 @@ public class SolicitudStock {
 
 	private boolean aceptado;
 	
+	@JsonIgnore
 	@Transient
 	private Pedido pedido;
 	
+	@JsonIgnore
 	@ManyToOne (fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
