@@ -24,17 +24,19 @@ public class LocalModel {
 	@JsonIgnore
 	private Set<LoteModel> listaLote;
 	
-	public LocalModel(String direccion, double latitud, double longitud, double telefono, Set<EmpleadoModel> listaEmpleado,
-			Set<FacturaModel> listaFactura, Set<SolicitudStockModel> listaSolicitudStock, Set<LoteModel> listaLote) {
+	public LocalModel() {
+		
+	}
+
+	public LocalModel(int idLocal, String direccion, double latitud, double longitud, double telefono){
 		super();
+		this.idLocal = idLocal;
 		this.direccion = direccion;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.telefono = telefono;
-		this.listaEmpleado = listaEmpleado;
-		this.listaFactura = listaFactura;
-		this.listaSolicitudStock = listaSolicitudStock;
-		this.listaLote = listaLote;
+
+
 	}
 
 	public int getIdLocal() {

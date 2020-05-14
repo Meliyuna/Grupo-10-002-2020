@@ -14,7 +14,7 @@ import com.unla.TPObjetosII.entities.Cliente;
 public interface IClienteRepository extends JpaRepository<Cliente, Serializable>{
 	
 	public abstract Cliente findByNombre(String nombre);
-	public abstract Cliente findByDni(int dni);
+	public abstract Cliente findByDni(long dni);
 
 // ejemplo de query para unir tablas. Persona tiene Numero
 //	@Query("SELECT p from Persona p JOIN FETCH p.numeros where p.idPersona = (:id)")
