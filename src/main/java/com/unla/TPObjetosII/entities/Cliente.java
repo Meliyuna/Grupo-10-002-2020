@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="IDCLIENTE")
 public class Cliente extends Persona{
 	
+	@Column (name="EMAIL")
 	private String email;
 	
 

@@ -15,8 +15,7 @@ public interface IClienteRepository extends JpaRepository<Cliente, Serializable>
 	
 	public abstract Cliente findByNombre(String nombre);
 	public abstract Cliente findByDni(int dni);
-
-// ejemplo de query para unir tablas. Persona tiene Numero
-//	@Query("SELECT p from Persona p JOIN FETCH p.numeros where p.idPersona = (:id)")
-//	public abstract Cliente findByIdFetchNumeros(@Param("id") int id);
+	
+	@Query("SELECT c from Cliente c")	
+	public abstract List<Cliente> findAllConTodo();
 }
