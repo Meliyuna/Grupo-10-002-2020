@@ -64,7 +64,7 @@
             	data: JSON.stringify(json),
             	contentType: "application/json",
             	success: function(response){
-                	console.log(response)
+            		$("#formularios").hide(1000,function(){$("#exitoAgregar").show(1000)});
             	},
             	error: function(response){
                 	console.log(response.responseJSON.message)
@@ -97,7 +97,7 @@
 </head>
 <body>
 <div>
-		<form id="formulario">
+		<form id="formularios">
 			<h1>Alta de empleados</h1> 
 			
 			
@@ -139,6 +139,9 @@
 			<button id="guardar" type="button">Guardar</button>
 		</form>
 	</div>
+		<div  id="exitoAgregar" style="display: none;">
+			<h1>Empleado agregado</h1>
+		</div>
 	<div>
 		<a href="/empleado">ATRAS</a>
 	</div>
