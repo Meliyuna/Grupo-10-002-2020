@@ -25,22 +25,9 @@
         		console.log(response);
         	}
         });
-		//Locales
-		$.ajax({
-        	url: '/api/local/traerLocales',
-        	type: 'POST',
-        	success: function(response){
-            	console.log(response);
-            	$.each(response,function(index,local){
-            		$("#locales").append(new Option(local.telefono + " - " + local.direccion, local.idLocal));
-            	});
-        	},
-        	error: function(response){
-        		console.log(response);
-        	}
-        });
+	
 		
-		//Seleccionar Empleado a modificar 
+		//Seleccionar Empleado a borrar 
 		$("#empleados").change(function(){
 			$(".error").css("display", "none");
 			json={"idEmpleado":$("#empleados").val()};
@@ -72,38 +59,18 @@
 			});
 		});
 		
-		
-		
-		
-		//Modificar un empleado seleccionado
-		$("#modificar").click(function() {
-			$(".error").css("display", "none");
-			var tipoEmpleado;
-			if($('[name="tipoEmpleado"]:checked').val().includes("gerente")){	
-			     tipoEmpleado = true;
-			}
-			else{
-			   tipoEmpleado = false;
-			}
-			json = {
-					"apellido": $("#apellido").val(),
-					"nombre": $("#nombre").val(),
-					"dni": $("#dni").val(),
-					"franjaHoraria": $("#franjaHoraria").val(),
-					"tipoEmpleado": tipoEmpleado,
-					"idPersona": $("#empleados").val(),
-					"local": {
-						"idLocal":$("#locales").val()
-					}
-			};
+			
+		//Borrar un empleado seleccionado
+		$("#borrar").click(function(){
+			json={"idEmpleado":$("#empleados").val()};
 			$.ajax({
-            	url: '/api/empleado/modificar',
+            	url: '/api/empleado/baja',
             	type: 'POST',
             	dataType: 'json',
             	data: JSON.stringify(json),
             	contentType: "application/json",
             	success: function(response){
-                	$("#formularios").hide(1000,function(){$("#exitoModificar").show(1000)});
+                	$("#formularios").hide(1000,function(){$("#exitoBorrar").show(1000)});
             	},
             	error: function(response){
             		console.log(response);	
@@ -115,46 +82,22 @@
 </head>
 <body>
 		<div>
-			<h1>Modicar empleados:</h1>
+			<h1>Borrar empleados:</h1>
 		</div>
 		<div id="formularios">
 			<div id="formularioSelectEmpleados">
 				<p>Seleccione Empleado: <select id="empleados">
+		<!--  		<option>Elija una opcion </option>   -->
 				</select>
 				</p>
 			</div>
-			<div id="formularioEmpleado" style="display: none;">
-			<p>Apellido: <input id="apellido" type="text" name="apellido"></p>
-			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
-			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
-			<p>Dni: <input id="dni" type="number" name="dni"></p>
-			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria"></p>	
-			<p>
-          	<label>Tipo de empleado</label>            
-          	<input type = "radio"
-                 name = "tipoEmpleado"
-                 id="radioVendedor"
-                 value = "vendedor" />
-                 <label>Vendedor</label> 
-          	<input type = "radio"
-                 name = "tipoEmpleado"
-                 id="radioGerente"
-                 value = "gerente" />
-                 <label>Gerente</label> 
-       		 </p> 
-       		 
-       		 <div id="formulario">
-			<select id="locales">
-			</select>
-		</div>
-		
-			<button id="modificar" type="button">MODIFICAR</button>
+			<button id="borrar" type="button">Borrar</button>
 			</div>
+			
+			<div  id="exitoBorrar" style="display: none;">
+			<h1>Empleado borrado</h1>
 		</div>
 		
-		<div  id="exitoModificar" style="display: none;">
-			<h1>Empleado Modificado</h1>
-		</div>
 		<div>
 			<a href="/empleado">ATRAS</a>
 		</div>

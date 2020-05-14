@@ -22,9 +22,12 @@ public class Persona {
 	protected String apellido;
 	protected String nombre;
 	
+	
 	@Column(name="FECHANACIMIENTO")
 	protected LocalDate fechaNacimiento;
 	protected long dni;
+	
+	protected boolean baja;
 	
 	public Persona() {
 		
@@ -77,6 +80,16 @@ public class Persona {
 
 	public void setDni(long dni) {
 		this.dni = dni;
+	}
+	
+	
+
+	public boolean getBaja() {
+		return baja;
+	}
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 
 	@Override

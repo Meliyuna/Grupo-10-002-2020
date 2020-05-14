@@ -38,7 +38,11 @@
                 	console.log(response)
             	},
             	error: function(response){
-                	console.log("HUBO UN ERROR:" + response)
+                	console.log(response.responseJSON.message)
+                	if(response.responseJSON.message.includes("dni")){
+           			 $("#displayDniError").css("display", "block");
+           			 $("#displayDniError").html(response.responseJSON.message);
+           		}
             	}
         	})
 		});
@@ -67,6 +71,9 @@
 			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
 			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
 			<p>Dni: <input id="dni" type="number" name="dni"></p>
+			
+			<label id="displayDniError" style="display: none;"></label> 
+			
 			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria"></p>	
 			<p>
           <label>Tipo de empleado</label>            

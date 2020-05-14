@@ -21,6 +21,12 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializabl
 	@Query("Select e from Empleado e JOIN FETCH e.local l")
 	public abstract List<Empleado> findAllConLocal();
 	
+	@Query("Select e from Empleado e where e.baja='0'")
+	public abstract List<Empleado> traerEmpleadosAlta();   //empleados que tienen el estado alta en la bdd
+	
+	@Query("Select e from Empleado e where e.dni=(:dni) and e.baja='0'")
+	public abstract Empleado traerEmpleadoPorDni(long dni);
+ 	
 	
 	public abstract Empleado findByNombre(String nombre);
 	

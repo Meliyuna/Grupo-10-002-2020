@@ -30,7 +30,10 @@ public class EmpleadoController {
 		return "/empleado/modificar";
 	}
 
-	
+	@GetMapping("/baja")
+	public String baja() {
+		return "/empleado/baja";
+	}
 	
 	
 }

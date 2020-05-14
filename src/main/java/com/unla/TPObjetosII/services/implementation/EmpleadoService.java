@@ -25,7 +25,7 @@ public class EmpleadoService implements IEmpleadoService {
 	
 	@Override
 	public List<Empleado> getAll(){
-		return empleadoRepository.findAllConLocal();
+		return empleadoRepository.traerEmpleadosAlta();
 	}
 	
 	@Override
@@ -37,7 +37,10 @@ public class EmpleadoService implements IEmpleadoService {
 	@Override
 	public boolean remove(int idEmpleado) {
 		try {
-			empleadoRepository.deleteById(idEmpleado);
+			Empleado empleado=empleadoRepository.findByIdEmpleado(idEmpleado);
+			empleado.setBaja(true);
+			empleadoRepository.save(empleado);
+		//	empleadoRepository.deleteById(idEmpleado);            aca era antes baja fisica
 			return true;
 		}
 		catch(Exception e) {
@@ -50,7 +53,10 @@ public class EmpleadoService implements IEmpleadoService {
 		return empleadoConverter.entityToModel(empleadoRepository.findByIdEmpleado(id));
 	}
 
-
+	@Override
+	public EmpleadoModel getEmpleado(long dni) {
+		return empleadoConverter.entityToModel(empleadoRepository.traerEmpleadoPorDni(dni));
+	}
 	
 
 }

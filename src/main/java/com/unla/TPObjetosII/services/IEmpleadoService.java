@@ -15,4 +15,6 @@ public interface IEmpleadoService {
 	
 	public boolean remove(int idEmpleado);
 	
+	public EmpleadoModel getEmpleado(long dni);
+	
 }
