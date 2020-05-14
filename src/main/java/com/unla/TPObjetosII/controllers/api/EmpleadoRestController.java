@@ -62,7 +62,8 @@ public class EmpleadoRestController {
 		// el disable esta para ignorar la etiqueta de JsonIgnore en LocalModel y que quede mapeado los 2
 		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
 		long dni=e.getDni();
-		if(empleadoService.getEmpleado(dni)!=null)throw new Exception("Ya existe empleado con ese dni");
+		if(empleadoService.getEmpleado(dni)!=null)if(empleadoService.getEmpleado(dni).getIdPersona()!=e.getIdPersona()) throw new Exception("Ya existe empleado con ese dni");
+			
 		System.out.println(empleadoService.insertOrUpdate(e));
 		return e;
 	
