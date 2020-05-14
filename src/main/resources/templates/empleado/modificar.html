@@ -57,6 +57,7 @@
 		        		$("#nombre").val(empleado.nombre);
 		        		$("#dni").val(empleado.dni);
 		        		$("#franjaHoraria").val(empleado.franjaHoraria);
+		        		$("#locales").val(empleado.local.idLocal);
 		        		if(empleado.tipoEmpleado==false){
 		        			$("#radioVendedor").prop("checked", true);
                         }
@@ -78,6 +79,34 @@
 		
 		//Modificar un empleado seleccionado
 		$("#modificar").click(function() {
+			$(".ERROR").css("display", "none");
+			var error=false;
+			
+			if($("#apellido").val() == ""){
+		    //  $("#apellido").focus();			// Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
+		        $("#displayApellidoError").css("display", "block");
+		    	error=true;
+		    }	
+			if($("#nombre").val() == ""){    
+		    //    $("#nombre").focus();			
+				  $("#displayNombreError").css("display", "block");
+				  error=true;
+		    }
+			if($("#dni").val() == ""){     
+			 //       $("#dni").focus();       
+				 $("#displayDniError2").css("display", "block");
+				 error=true;
+			}
+			
+			if($("#franjaHoraria").val() == ""){
+		        
+		   //     $("#franjaHoraria").focus();
+		        $("#displayFHError").css("display", "block");
+		        error=true;
+		    }
+			
+			
+			
 			$(".error").css("display", "none");
 			var tipoEmpleado;
 			if($('[name="tipoEmpleado"]:checked').val().includes("gerente")){	
@@ -86,6 +115,7 @@
 			else{
 			   tipoEmpleado = false;
 			}
+			if(error==false){
 			json = {
 					"apellido": $("#apellido").val(),
 					"nombre": $("#nombre").val(),
@@ -114,6 +144,7 @@
            		}
             	}
         	});
+		}
 		});
 	});
 </script>
@@ -129,14 +160,23 @@
 				</p>
 			</div>
 			<div id="formularioEmpleado" style="display: none;">
-			<p>Apellido: <input id="apellido" type="text" name="apellido"></p>
-			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
+			
+			<p>Apellido: <input id="apellido" type="text" name="apellido" required="required"></p>
+			<label id="displayApellidoError" class="ERROR" style="display: none;">Complete el campo apellido</label>
+			
+			<p>Nombre: <input id="nombre" type="text" name="nombre" required="required"></p>
+			<label id="displayNombreError" class="ERROR" style="display: none;">Complete el campo nombre</label> 
+			
 			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
-			<p>Dni: <input id="dni" type="number" name="dni"></p>
 			
-			<label id="displayDniError" style="display: none;"></label>
+			<p>Dni: <input id="dni" type="number" name="dni" required="required"></p>
+			<label id="displayDniError" class="ERROR" style="display: none;"></label> 
+			<label id="displayDniError2" class="ERROR" style="display: none;">Complete el campo DNI </label> 
+		
+			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria" required="required"></p>
+			<label id="displayFHError" class="ERROR" style="display: none;">Complete el campo franja Horaria </label>	
 			
-			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria"></p>	
+			
 			<p>
           	<label>Tipo de empleado</label>            
           	<input type = "radio"

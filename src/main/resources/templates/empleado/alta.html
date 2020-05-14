@@ -4,6 +4,7 @@
 <script>
 	$(document).ready(function() {
 		$("#guardar").click(function() {
+			$(".ERROR").css("display", "none");
 			var apellido = $("#apellido").val();
 			var nombre = $("#nombre").val();
 			var fechaNacimiento= $("#fechaNacimiento").val();
@@ -11,12 +12,40 @@
 			var franjaHoraria= $("#franjaHoraria").val();
 			var tipoEmpleado;
 			var idLocal=$("#locales").val();
+			
+			var error=false;
+			
+			if($("#apellido").val() == ""){
+		    //  $("#apellido").focus();			// Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
+		        $("#displayApellidoError").css("display", "block");
+		    	error=true;
+		    }	
+			if($("#nombre").val() == ""){    
+		    //    $("#nombre").focus();			
+				  $("#displayNombreError").css("display", "block");
+				  error=true;
+		    }
+			if($("#dni").val() == ""){     
+			 //       $("#dni").focus();       
+				 $("#displayDniError2").css("display", "block");
+				 error=true;
+			}
+			
+			if($("#franjaHoraria").val() == ""){
+		        
+		   //     $("#franjaHoraria").focus();
+		        $("#displayFHError").css("display", "block");
+		        error=true;
+		    }
+			
+			
 			if($('[name="tipoEmpleado"]:checked').val().includes("gerente")){	
 			     tipoEmpleado = true;
 			}
 			else{
 			   tipoEmpleado = false;
 			}
+			if(error==false){
 			json = {
 					"apellido": apellido,
 					"nombre": nombre,
@@ -45,7 +74,9 @@
            		}
             	}
         	})
-		});
+			}
+			});
+		
 		$.ajax({
         	url: '/api/local/traerLocales',
         	type: 'POST',
@@ -60,6 +91,7 @@
         	}
         });
 	});
+			
 </script>
 
 </head>
@@ -67,19 +99,30 @@
 <div>
 		<form id="formulario">
 			<h1>Alta de empleados</h1> 
-			<p>Apellido: <input id="apellido" type="text" name="apellido"></p>
-			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
+			
+			
+			<p>Apellido: <input id="apellido" type="text" name="apellido" required="required"></p>
+			<label id="displayApellidoError" class="ERROR" style="display: none;">Complete el campo apellido</label> 
+			
+			<p>Nombre: <input id="nombre" type="text" name="nombre" required="required"></p>
+			<label id="displayNombreError" class="ERROR" style="display: none;">Complete el campo nombre</label> 
+			
 			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
-			<p>Dni: <input id="dni" type="number" name="dni"></p>
 			
-			<label id="displayDniError" style="display: none;"></label> 
 			
-			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria"></p>	
+			<p>Dni: <input id="dni" type="number" name="dni" required="required"></p>
+			<label id="displayDniError" class="ERROR" style="display: none;"></label> 
+			<label id="displayDniError2" class="ERROR" style="display: none;">Complete el campo DNI </label> 	
+			
+			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria" required="required"></p>
+			<label id="displayFHError" class="ERROR" style="display: none;">Complete el campo franja Horaria </label> 	
+			
 			<p>
           <label>Tipo de empleado</label>            
           <input type = "radio"
                  name = "tipoEmpleado"
-                 value = "vendedor" />
+                 value = "vendedor" 
+                 checked="checked"/>
                  <label>Vendedor</label> 
           <input type = "radio"
                  name = "tipoEmpleado"
