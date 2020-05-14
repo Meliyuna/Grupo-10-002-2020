@@ -39,7 +39,7 @@ public class EmpleadoRestController {
 		// el disable esta para ignorar la etiqueta de JsonIgnore en LocalModel y que quede mapeado los 2
 		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
 		long dni=e.getDni();
-		if(empleadoService.getEmpleado(dni)!=null)throw new Exception(",Ya existe empleado con ese dni");
+		if(empleadoService.getEmpleado(dni)!=null)throw new Exception("Ya existe empleado con ese dni");
 		System.out.println(empleadoService.insertOrUpdate(e));
 		return e;
 	
@@ -61,7 +61,8 @@ public class EmpleadoRestController {
 		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS); //un objeto que me ayuda a mapear o crear el json
 		// el disable esta para ignorar la etiqueta de JsonIgnore en LocalModel y que quede mapeado los 2
 		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
-		System.out.println(e);
+		long dni=e.getDni();
+		if(empleadoService.getEmpleado(dni)!=null)throw new Exception("Ya existe empleado con ese dni");
 		System.out.println(empleadoService.insertOrUpdate(e));
 		return e;
 	
