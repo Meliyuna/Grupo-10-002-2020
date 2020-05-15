@@ -32,7 +32,7 @@ public class LocalService implements ILocalService{
 
 	@Override
 	public List<Local> getAll() {
-		return localRepository.findAll();
+		return localRepository.findAllLocal();
 	}
 	
 	@Override
@@ -43,7 +43,9 @@ public class LocalService implements ILocalService{
 	@Override
 	public boolean remove(int idLocal) {
 		try {
-			localRepository.deleteById(idLocal);
+			Local local = localRepository.findByIdLocal(idLocal);
+			local.setBaja(true);
+			localRepository.save(local);
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();
