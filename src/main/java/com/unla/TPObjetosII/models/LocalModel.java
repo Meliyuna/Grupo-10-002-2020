@@ -24,13 +24,18 @@ public class LocalModel {
 	@JsonIgnore
 	private Set<LoteModel> listaLote;
 	
-	public LocalModel(int idLocal, String direccion, double latitud, double longitud, double telefono) {
+	public LocalModel() {
+		
+	}
+
+	public LocalModel(int idLocal, String direccion, double latitud, double longitud, double telefono){
 		super();
 		this.idLocal = idLocal;
 		this.direccion = direccion;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.telefono = telefono;
+
 
 	}
 

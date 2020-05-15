@@ -15,12 +15,18 @@ import com.unla.TPObjetosII.entities.Empleado;
 public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializable>{
 	
 
-	@Query("Select e from Empleado e JOIN FETCH e.local l where e.idPersona= (:idEmpleado)")
+	@Query("Select e from Empleado e JOIN FETCH e.local l where e.idPersona= (:idEmpleado) order by e.idPersona")
 	public abstract Empleado findByIdEmpleado(int idEmpleado);
 	
 	@Query("Select e from Empleado e JOIN FETCH e.local l")
 	public abstract List<Empleado> findAllConLocal();
 	
+	@Query("Select e from Empleado e where e.baja='0'")
+	public abstract List<Empleado> traerEmpleadosAlta();   //empleados que tienen el estado alta en la bdd
+	
+	@Query("Select e from Empleado e where e.dni=(:dni) and e.baja='0'")
+	public abstract Empleado traerEmpleadoPorDni(long dni);
+ 	
 	
 	public abstract Empleado findByNombre(String nombre);
 	

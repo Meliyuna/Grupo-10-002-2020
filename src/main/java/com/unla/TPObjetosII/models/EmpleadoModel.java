@@ -12,13 +12,26 @@ public class EmpleadoModel extends PersonaModel{
 	@JsonIgnore
 	private LocalModel local;
 	
-	public EmpleadoModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {
-		super(apellido, nombre, fechaNacimiento, dni);
+	public EmpleadoModel() {
+		
+	}
+	
+	public EmpleadoModel(int idEmpleado,String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {
+		super(idEmpleado, apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.franjaHoraria=franjaHoraria;
 		this.tipoEmpleado=tipoEmpleado;
 		this.local=local;
 	}
+
+	public EmpleadoModel(int idEmpleado,String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado) {
+		super(idEmpleado, apellido, nombre, fechaNacimiento, dni);
+		// TODO Auto-generated constructor stub
+		this.franjaHoraria=franjaHoraria;
+		this.tipoEmpleado=tipoEmpleado;
+	}
+
+	
 
 	public String getFranjaHoraria() {
 		return franjaHoraria;
@@ -36,10 +49,12 @@ public class EmpleadoModel extends PersonaModel{
 		this.tipoEmpleado = tipoEmpleado;
 	}
 
+	
 	public LocalModel getLocal() {
 		return local;
 	}
-
+	
+	
 	public void setLocal(LocalModel local) {
 		this.local = local;
 	}
