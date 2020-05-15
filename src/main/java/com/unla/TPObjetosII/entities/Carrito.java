@@ -10,17 +10,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 public class Carrito {
 
 	private int idCarrito;
 	
+	@JsonIgnore
 	private Set<Pedido> listaPedido;
 
 	private LocalDate fecha;
 
 	private float total;
 	
+	@JsonIgnore
 	private Cliente cliente;
 
 	public Carrito() {

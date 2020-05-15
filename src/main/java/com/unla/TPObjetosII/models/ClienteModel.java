@@ -6,8 +6,10 @@ public class ClienteModel extends PersonaModel{
 	
 	private String email;
 
+
 	public ClienteModel(int idPersona, String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
 		super(idPersona, apellido, nombre, fechaNacimiento, dni);
+
 		// TODO Auto-generated constructor stub
 		this.email=email;
 	}

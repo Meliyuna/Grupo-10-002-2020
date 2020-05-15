@@ -15,6 +15,7 @@ public interface IClienteRepository extends JpaRepository<Cliente, Serializable>
 	
 	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.nombre=(:nombre)")
 	public abstract Cliente findByNombre(String nombre);
+
 	
 	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.dni=(:DNI)")
 	public abstract Cliente findByDni(long DNI);
@@ -24,6 +25,5 @@ public interface IClienteRepository extends JpaRepository<Cliente, Serializable>
 	
 	@Query("SELECT c from Cliente c WHERE c.baja='0'")	
 	public abstract List<Cliente> findAllConTodo();
-	
 	
 }

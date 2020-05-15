@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Local {
 	
@@ -29,36 +31,40 @@ public class Local {
 
 	private double telefono;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Set<Empleado> listaEmpleado;
 	
+	@JsonIgnore
 	@Transient //ignorar mapeo
 	private Set<Factura> listaFactura;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn (name="IDLOCAL")
 	private Set<SolicitudStock> listaSolicitudStock;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Set<Lote> listaLote;
 	
+	private boolean baja;
+	
+
+
 	public Local(){
 		
 	}
-	
-	public Local(String direccion, double latitud, double longitud, double telefono, Set<Empleado> listaEmpleado,
-			Set<Factura> listaFactura, Set<SolicitudStock> listaSolicitudStock, Set<Lote> listaLote) {
+
+	public Local(int idLocal, String direccion, double latitud, double longitud, double telefono){
 		super();
+		this.idLocal = idLocal;
 		this.direccion = direccion;
 		this.latitud = latitud;
 		this.longitud = longitud;
 		this.telefono = telefono;
-		this.listaEmpleado = listaEmpleado;
-		this.listaFactura = listaFactura;
-		this.listaSolicitudStock = listaSolicitudStock;
-		this.listaLote = listaLote;
 	}
 
 	public int getIdLocal() {
@@ -133,6 +139,25 @@ public class Local {
 		this.listaLote = listaLote;
 	}
 
+	public boolean isBaja() {
+		return baja;
+	}
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
+	}
+	
+	public double distanciaCoord(Local local) {
+		double radioTierra = 6371;
+		double dLat = Math.toRadians(local.getLatitud()-this.getLatitud());
+		double dLng = Math.toRadians(local.getLongitud()-this.getLongitud());
+		double sindLat = Math.sin(dLat/2);
+		double sindLng = Math.sin(dLng/2);
+		double va1 = Math.pow(sindLat, 2) + Math.pow(sindLng, 2) * Math.cos(Math.toRadians(this.getLatitud())) * Math.cos(Math.toRadians(local.getLatitud()));
+		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+		return radioTierra * va2;
+	}
+	
 	@Override
 	public String toString() {
 		return "Local [idLocal=" + idLocal + ", direccion=" + direccion + ", latitud=" + latitud + ", longitud="

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Lote {
 
@@ -27,6 +29,8 @@ public class Lote {
 	private int cantidadActual;
 	@Column (name="FECHAINGRESO")
 	private LocalDate fechaIngreso;
+	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDPRODUCTO")
 	private Producto producto;
