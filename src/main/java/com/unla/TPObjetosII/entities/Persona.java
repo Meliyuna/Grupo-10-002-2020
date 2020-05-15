@@ -25,13 +25,15 @@ public class Persona {
 	@Column(name="FECHANACIMIENTO")
 	protected LocalDate fechaNacimiento;
 	protected long dni;
+	protected boolean baja;
 	
 	public Persona() {
 		
 	}
 	
-	public Persona(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
+	public Persona(int idPersona, String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
 		super();
+		this.idPersona=idPersona;
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.fechaNacimiento = fechaNacimiento;
@@ -76,6 +78,15 @@ public class Persona {
 
 	public void setDni(long dni) {
 		this.dni = dni;
+	}
+	
+
+	public boolean isBaja() {
+		return baja;
+	}
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 
 	@Override

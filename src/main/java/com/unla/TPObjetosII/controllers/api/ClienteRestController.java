@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unla.TPObjetosII.models.ClienteModel;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Cliente;
 import com.unla.TPObjetosII.services.IClienteService;
 
@@ -39,11 +40,21 @@ public class ClienteRestController {
 		return clienteService.getAll();
 	}
 	
+	@PostMapping("/traerCliente")
+	@ResponseBody
+	public ClienteModel traerCliente(@RequestBody ObjectNode o) throws Exception{
+		System.out.println(o.get("idPersona").asInt());
+		return clienteService.getById(o.get("idPersona").asInt());
+	}
 	
-//	@PostMapping("/alta")
-//	public ResponseEntity<ClienteModel> alta(@RequestBody ClienteModel cliente){//@RequestBody setea auto los atributos a local
-//		System.out.println(cliente);
-//		return ResponseEntity.ok(cliente);
-//		// 
-//	}
+	@PostMapping("/baja")
+	@ResponseBody
+	public Boolean baja (@RequestBody ObjectNode o) throws Exception{
+		System.out.println(o.get("idPersona").asInt());
+		if(clienteService.remove(o.get("idPersona").asInt())==false) throw new Exception("Error al eliminar el Cliente");
+		return true;
+	}
+	
+	
+
 }

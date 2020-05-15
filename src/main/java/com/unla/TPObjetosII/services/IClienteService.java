@@ -8,7 +8,8 @@ import com.unla.TPObjetosII.models.ClienteModel;
 public interface IClienteService {
 	
 	public List<Cliente> getAll();
-	public ClienteModel insertOrUpdate(ClienteModel clienteModel);
+	public ClienteModel getById(int idCliente);
+	public ClienteModel insertOrUpdate(ClienteModel clienteModel) throws Exception;
 	public boolean remove(int idCliente);
 
 }

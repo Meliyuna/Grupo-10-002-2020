@@ -10,11 +10,13 @@ import com.unla.TPObjetosII.models.ClienteModel;
 public class ClienteConverter {
 	
 	public ClienteModel entityToModel(Cliente cliente) {
-		return new ClienteModel(cliente.getApellido(), cliente.getNombre(), cliente.getFechaNacimiento(), cliente.getDni(), cliente.getEmail());
+		if (cliente==null) return null;
+		return new ClienteModel(cliente.getIdPersona(), cliente.getApellido(), cliente.getNombre(), cliente.getFechaNacimiento(), cliente.getDni(), cliente.getEmail());
 	}
 	
 	public Cliente modelToEntity(ClienteModel clienteModel) {
-		return new Cliente(clienteModel.getApellido(),clienteModel.getNombre(),clienteModel.getFechaNacimiento(),clienteModel.getDni(), clienteModel.getEmail());
+		if (clienteModel==null) return null;
+		return new Cliente(clienteModel.getIdPersona() , clienteModel.getApellido(),clienteModel.getNombre(),clienteModel.getFechaNacimiento(),clienteModel.getDni(), clienteModel.getEmail());
 	}
 
 }

@@ -24,7 +24,9 @@ public class ClienteService implements IClienteService{
 	private ClienteConverter clienteConverter;
 
 	@Override
-	public ClienteModel insertOrUpdate(ClienteModel clienteModel) {
+	public ClienteModel insertOrUpdate(ClienteModel clienteModel) throws Exception {
+		Cliente cli = clienteRepository.findByDni(clienteModel.getDni());
+		if ((cli!=null) && (cli.getIdPersona()!=clienteModel.getIdPersona())) throw new Exception ("Ya existe un cliente con ese DNI");		
 		return clienteConverter.entityToModel(clienteRepository.save(clienteConverter.modelToEntity(clienteModel)));
 	}
 
@@ -32,11 +34,18 @@ public class ClienteService implements IClienteService{
 	public List<Cliente> getAll() {
 		return clienteRepository.findAllConTodo();
 	}
+	
+	@Override
+	public ClienteModel getById(int idPersona) {
+		return clienteConverter.entityToModel(clienteRepository.findByIdPersona(idPersona));
+	}
 
 	@Override
-	public boolean remove(int idCliente) {
+	public boolean remove(int idPersona) {
 		try {
-			clienteRepository.deleteById(idCliente);
+			Cliente cli=clienteRepository.findByIdPersona(idPersona);
+			cli.setBaja(true);
+			clienteRepository.save(cli);
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();

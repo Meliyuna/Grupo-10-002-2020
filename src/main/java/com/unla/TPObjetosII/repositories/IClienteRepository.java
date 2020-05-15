@@ -13,9 +13,17 @@ import com.unla.TPObjetosII.entities.Cliente;
 @Repository("clienteRepository")
 public interface IClienteRepository extends JpaRepository<Cliente, Serializable>{
 	
+	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.nombre=(:nombre)")
 	public abstract Cliente findByNombre(String nombre);
-	public abstract Cliente findByDni(int dni);
 	
-	@Query("SELECT c from Cliente c")	
+	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.dni=(:DNI)")
+	public abstract Cliente findByDni(long DNI);
+	
+	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.idPersona=(:idPersona)")
+	public abstract Cliente findByIdPersona(int idPersona);
+	
+	@Query("SELECT c from Cliente c WHERE c.baja='0'")	
 	public abstract List<Cliente> findAllConTodo();
+	
+	
 }

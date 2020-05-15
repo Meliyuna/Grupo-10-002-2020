@@ -30,8 +30,8 @@ public class Empleado extends Persona{
 		
 	}
 	
-	public Empleado(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,Local local) {
-		super(apellido, nombre, fechaNacimiento, dni);
+	public Empleado(int idPersona, String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,Local local) {
+		super(idPersona, apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.franjaHoraria=franjaHoraria;
 		this.tipoEmpleado=tipoEmpleado;

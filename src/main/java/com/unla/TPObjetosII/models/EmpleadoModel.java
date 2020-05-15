@@ -8,8 +8,8 @@ public class EmpleadoModel extends PersonaModel{
 	private boolean tipoEmpleado;
 	private LocalModel local;
 	
-	public EmpleadoModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {
-		super(apellido, nombre, fechaNacimiento, dni);
+	public EmpleadoModel(int idPersona, String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {
+		super(idPersona, apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.franjaHoraria=franjaHoraria;
 		this.tipoEmpleado=tipoEmpleado;

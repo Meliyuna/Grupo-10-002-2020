@@ -15,8 +15,9 @@ public class PersonaModel {
 		
 	}
 	
-	public PersonaModel(String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
+	public PersonaModel(int idPersona, String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
 		super();
+		this.idPersona=idPersona;
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.fechaNacimiento = fechaNacimiento;

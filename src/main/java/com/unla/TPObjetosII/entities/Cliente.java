@@ -4,8 +4,15 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 @PrimaryKeyJoinColumn(name="IDCLIENTE")
@@ -19,8 +26,8 @@ public class Cliente extends Persona{
 		
 	}
 	
-	public Cliente(String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
-		super(apellido, nombre, fechaNacimiento, dni);
+	public Cliente(int idPersona, String apellido, String nombre, LocalDate fechaNacimiento, long dni, String email) {
+		super(idPersona, apellido, nombre, fechaNacimiento, dni);
 		// TODO Auto-generated constructor stub
 		this.email=email;
 	}
