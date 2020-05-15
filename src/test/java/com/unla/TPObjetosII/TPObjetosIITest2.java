@@ -46,7 +46,7 @@ public class TPObjetosIITest2 {
 	void agregarEmpleadoGuille() {
 		LocalDate fecha= LocalDate.of(1995,9,23);
 		Local local=lRepo.findByIdLocal(2);
-		eRepo.save(new Empleado("Lucas","Medrana",fecha,30123102,"tarde-noche",false,local));
+		//eRepo.save(new Empleado("Lucas","Medrana",fecha,30123102,"tarde-noche",false,local));
 		System.out.println(eRepo.findAllConLocal());
 	}
 */	

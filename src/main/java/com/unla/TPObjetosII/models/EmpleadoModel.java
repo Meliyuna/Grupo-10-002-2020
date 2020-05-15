@@ -12,12 +12,14 @@ public class EmpleadoModel extends PersonaModel{
 	@JsonIgnore
 	private LocalModel local;
 	
+
 	public EmpleadoModel() {
 		
 	}
 	
 	public EmpleadoModel(int idEmpleado,String apellido, String nombre, LocalDate fechaNacimiento, long dni,String franjaHoraria,boolean tipoEmpleado,LocalModel local) {
 		super(idEmpleado, apellido, nombre, fechaNacimiento, dni);
+
 		// TODO Auto-generated constructor stub
 		this.franjaHoraria=franjaHoraria;
 		this.tipoEmpleado=tipoEmpleado;

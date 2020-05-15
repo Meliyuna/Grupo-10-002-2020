@@ -13,10 +13,17 @@ import com.unla.TPObjetosII.entities.Cliente;
 @Repository("clienteRepository")
 public interface IClienteRepository extends JpaRepository<Cliente, Serializable>{
 	
+	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.nombre=(:nombre)")
 	public abstract Cliente findByNombre(String nombre);
-	public abstract Cliente findByDni(long dni);
 
-// ejemplo de query para unir tablas. Persona tiene Numero
-//	@Query("SELECT p from Persona p JOIN FETCH p.numeros where p.idPersona = (:id)")
-//	public abstract Cliente findByIdFetchNumeros(@Param("id") int id);
+	
+	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.dni=(:DNI)")
+	public abstract Cliente findByDni(long DNI);
+	
+	@Query("SELECT c FROM Cliente c WHERE c.baja='0' and c.idPersona=(:idPersona)")
+	public abstract Cliente findByIdPersona(int idPersona);
+	
+	@Query("SELECT c from Cliente c WHERE c.baja='0'")	
+	public abstract List<Cliente> findAllConTodo();
+	
 }

@@ -26,14 +26,15 @@ public class Persona {
 	@Column(name="FECHANACIMIENTO")
 	protected LocalDate fechaNacimiento;
 	protected long dni;
-	
 	protected boolean baja;
 	
 	public Persona() {
 		
 	}
 	
+
 	public Persona(int idPersona,String apellido, String nombre, LocalDate fechaNacimiento, long dni) {
+
 		super();
 		this.idPersona=idPersona;
 		this.apellido = apellido;
@@ -80,11 +81,10 @@ public class Persona {
 
 	public void setDni(long dni) {
 		this.dni = dni;
-	}
-	
-	
+	}		
 
 	public boolean getBaja() {
+
 		return baja;
 	}
 
