@@ -28,8 +28,6 @@ public class Persona {
 	protected long dni;
 	protected boolean baja;
 	
-	protected boolean baja;
-	
 	public Persona() {
 		
 	}
@@ -83,12 +81,7 @@ public class Persona {
 
 	public void setDni(long dni) {
 		this.dni = dni;
-	}	
-
-
-	public boolean isBaja() {
-	
-	}	
+	}		
 
 	public boolean getBaja() {
 

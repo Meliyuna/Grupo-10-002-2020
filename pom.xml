@@ -13,7 +13,7 @@
 	<artifactId>Grupo-10-002-2020</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Grupo-10-002-2020</name>
-	<description>TP Oientacion a Objetos 2 año 2020 con Java Spring</description>
+	<description>TP Oientacion aObjetos 2 año 2020 con Java Spring</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -22,9 +22,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -36,7 +40,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -76,6 +79,9 @@
 
 	</dependencies>
 
+
+
+
 	<build>
 		<plugins>
 			<plugin>
@@ -84,6 +90,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
