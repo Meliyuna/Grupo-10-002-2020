@@ -20,25 +20,25 @@ public class LoteService {
 	@Qualifier("loteConverter")
 	private LocalConverter localConverter;
 
-	@Override
-	public LoteModel insertOrUpdate(LoteModel loteModel) throws Exception {
-		return loteConverter.entityToModel(loteRepository.save(loteConverter.modelToEntity(loteModel)));
-	}
-	
-	@Override
-	public LoteModel getById(int idLote) {
-		return loteConverter.entityToModel(loteRepository.findBy(idLote));
-	}
-
-	@Override
-	public boolean remove(int idLote) {
-		try {
-			loteRepository.deleteById(idLote);
-			return true;
-		}catch (Exception e) {
-			return false;
-		}
-	}
-	
-}
+//	@Override
+//	public LoteModel insertOrUpdate(LoteModel loteModel) throws Exception {
+//		return loteConverter.entityToModel(loteRepository.save(loteConverter.modelToEntity(loteModel)));
+//	}
+//	
+//	@Override
+//	public LoteModel getById(int idLote) {
+//		return loteConverter.entityToModel(loteRepository.findBy(idLote));
+//	}
+//
+//	@Override
+//	public boolean remove(int idLote) {
+//		try {
+//			loteRepository.deleteById(idLote);
+//			return true;
+//		}catch (Exception e) {
+//			return false;
+//		}
+//	}
+//	
+//}
 }
