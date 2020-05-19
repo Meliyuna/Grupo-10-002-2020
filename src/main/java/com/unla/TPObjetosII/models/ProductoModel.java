@@ -18,12 +18,23 @@ public class ProductoModel {
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
 	}
+	
+	
+
+	public ProductoModel(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+	}
 
 	public int getIdProducto() {
 		return idProducto;
 	}
 
-	protected void setIdProducto(int idProducto) {
+	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
 

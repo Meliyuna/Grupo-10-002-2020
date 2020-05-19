@@ -10,4 +10,6 @@ import com.unla.TPObjetosII.entities.Producto;
 public interface IProductoRepository extends JpaRepository<Producto, Serializable>{
 		
 	public abstract Producto findByNombre(String nombre);
+
+	public abstract Producto findByIdProducto(int id);
 }

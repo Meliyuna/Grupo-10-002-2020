@@ -1,0 +1,23 @@
+<h2>Productos</h2>
+
+<table border="1px">
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Descripcion</th>
+			<th>Precio</th>
+			<th>Fecha de Alta</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="producto : ${productos}">
+			<td><span th:text="${producto.nombre}" /></td>
+			<td><span th:text="${producto.descripcion}" /></td>
+			<td><span th:text="${producto.precio}" /></td>
+			<td><span th:text="${producto.fechaAlta}" /></td>
+		</tr>
+	</tbody>
+</table>
+
+<p><a href="nuevo">Nuevo Producto</a></p>
+<p><a href="actualizar">Eliminar o Actualizar Producto</a></p>
