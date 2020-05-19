@@ -22,4 +22,14 @@ public class LocalController {
 	public String modificacion(){
 		return "/local/modificar";
 	}
+	
+	@GetMapping("/vistaAlta")
+	public String vistaAlta() {
+		return "/local/vistas/alta";
+	}
+	
+	@GetMapping("/vistaModificacion")
+	public String vistaModificacion(){
+		return "/local/vistas/modificar";
+	}
 }

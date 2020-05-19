@@ -12,4 +12,15 @@ public class HomeController {
 	public String home(){
 		return "/index";
 	}
+	
+	@GetMapping("/estructura")
+	public String bootstrap() {
+		return "estructura/estructura";
+	}
+	
+	@GetMapping("/blank")
+	public String bootstrapBlank() {
+		return "bootstrap/blank";
+	}
+	
 }
