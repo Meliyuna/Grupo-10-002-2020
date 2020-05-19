@@ -35,6 +35,18 @@ public class Lote {
 	@JoinColumn(name="IDPRODUCTO")
 	private Producto producto;
 	
+	
+
+	public Lote(int idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto,
+			boolean estado) {
+		super();
+		this.idLote = idLote;
+		this.cantidadInicial = cantidadInicial;
+		this.cantidadActual = cantidadActual;
+		this.fechaIngreso = fechaIngreso;
+		this.producto = producto;
+		this.estado = estado;
+	}
 
 	private boolean estado;
 	

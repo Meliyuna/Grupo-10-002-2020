@@ -3,6 +3,7 @@ package com.unla.TPObjetosII.models;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unla.TPObjetosII.entities.Producto;
 
 public class LoteModel {
 	
@@ -15,13 +16,21 @@ public class LoteModel {
 	private ProductoModel producto;
 	private boolean estado;
 	
-	public LoteModel(){
-		
+
+	public LoteModel(int idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
+			ProductoModel producto, boolean estado) {
+		super();
+		this.idLote = idLote;
+		this.cantidadInicial = cantidadInicial;
+		this.cantidadActual = cantidadActual;
+		this.fechaIngreso = fechaIngreso;
+		this.producto = producto;
+		this.estado = estado;
 	}
-	
-	
-	
-	
+
+
+
+
 	public LoteModel(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, ProductoModel producto, boolean estado) {
 		super();
 		this.cantidadInicial = cantidadInicial;
