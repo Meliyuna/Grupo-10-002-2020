@@ -12,13 +12,13 @@ import com.unla.TPObjetosII.models.LoteModel;
 import com.unla.TPObjetosII.repositories.ILoteRepository;
 @Service("loteService")
 public class LoteService {
-	@Autowired
-	@Qualifier("loteRepository")
-	private ILoteRepository localRepository;
-	
-	@Autowired
-	@Qualifier("loteConverter")
-	private LocalConverter localConverter;
+//	@Autowired
+//	@Qualifier("loteRepository")
+//	private ILoteRepository localRepository;
+//	
+//	@Autowired
+//	@Qualifier("loteConverter")
+//	private LocalConverter localConverter;
 
 //	@Override
 //	public LoteModel insertOrUpdate(LoteModel loteModel) throws Exception {
