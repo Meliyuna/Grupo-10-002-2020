@@ -34,7 +34,7 @@ public class ProductoModel {
 		return idProducto;
 	}
 
-	protected void setIdProducto(int idProducto) {
+	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
 

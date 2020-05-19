@@ -1,5 +1,6 @@
 package com.unla.TPObjetosII.converters;
 
+
 import org.springframework.stereotype.Component;
 
 import com.unla.TPObjetosII.entities.Producto;
@@ -15,4 +16,6 @@ public class ProductoConverter {
 	public Producto modelToEntity(ProductoModel productoModel) {
 		return new Producto(productoModel.getIdProducto(),productoModel.getNombre(),productoModel.getDescripcion(),productoModel.getPrecio(),productoModel.getFechaAlta());
 	}
+
+	
 }

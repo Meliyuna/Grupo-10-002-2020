@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.services.implementation;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.unla.TPObjetosII.entities.Producto;
 import com.unla.TPObjetosII.models.ProductoModel;
 import com.unla.TPObjetosII.repositories.IProductoRepository;
 import com.unla.TPObjetosII.services.IProductoService;
+
 
 
 
@@ -30,6 +32,8 @@ public class ProductoSerivce implements IProductoService{
 		public List<Producto> getAll(){
 			return productoRepository.findAll();
 		}
+		
+		
 		@Override
 		public ProductoModel insertOrUpdate (ProductoModel productoModel) {
 			Producto producto = productoRepository.save(productoConverter.modelToEntity(productoModel));
@@ -46,6 +50,9 @@ public class ProductoSerivce implements IProductoService{
 			}
 		}
 	
-
+		@Override
+		public ProductoModel findByIdProducto(int id) {
+			return productoConverter.entityToModel(productoRepository.findByIdProducto(id));
+		}
 
 }

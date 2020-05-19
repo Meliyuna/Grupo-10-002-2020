@@ -43,7 +43,10 @@ class TpObjetosIiApplicationTests {
 		System.out.println(pRepo.findAll());
 		LocalDate fecha= LocalDate.now();
 		pRepo.save(new Producto("zapatillas Nike Air Max","zapatillas para correr",3000,fecha));
+		System.out.println(pRepo.findByIdProducto(2));
 	}
+	
+
 	@Test
 	void testLote() {
 		System.out.println(lRepo.lotesXproducto(1));
@@ -51,6 +54,7 @@ class TpObjetosIiApplicationTests {
 	@Test
 	void testSolicitudesStock() {
 		System.out.println(sRepo.solicitudesStockXlocal(1));
+		
 	}
 //	
 	

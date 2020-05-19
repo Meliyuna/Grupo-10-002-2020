@@ -1,12 +1,30 @@
-<h2>Actualizar Producto</h2
-<form>
-	<select th:field="*{productos}">
-		<option value="">--</option>
-		<option th:each="producto : ${productos}"
-			th:value="${producto.idProducto}" 
-			th:text="${producto.nombre}" />
-	</select>
-</form>
+<h2>Eliminar o Actualizar Producto</h2>
 
-</tr>
-</table>
+<select id="select-producto">
+	<option value="">--</option>
+		<option th:each="producto : ${productos}"
+		th:value="${producto.idProducto}" 
+		th:text="${producto.nombre}" />
+</select>
+
+<div id="div-select-producto" class="row"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+		$("#select-producto").change(function() {	
+			var id = $("#select-producto").val();
+			if($.isNumeric(id)){
+				$.ajax({ 
+					method: "GET",
+				 	url: "/productos/actualizar/" + id,
+				})
+				.done(function(result) {
+					$("#div-select-producto").html(result);
+				})
+				.fail(function() {
+					alert("error");
+				});
+			}else $("#div-select-producto").html();
+		});
+</script>
+
