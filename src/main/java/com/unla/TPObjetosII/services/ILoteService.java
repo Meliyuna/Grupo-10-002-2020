@@ -13,5 +13,6 @@ public interface ILoteService {
 	public boolean remove(int idLote);
 	public List<ProductoModel> ProductosXlocal(int idLocal);
 	public ProductoModel ProductoXlocal(int idProducto, int idLocal);
+	public List<ProductoModel> CantidadProductoXlocal(int idLocal);
 
 }
