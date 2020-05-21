@@ -54,7 +54,7 @@ public class TPObjetosIITest2 {
 	@Test
 	void agregarProductoGuille() {
 		LocalDate fecha= LocalDate.of(2019,5,23);
-		prRepo.save(new Producto("Campera addidas","blanco y negro talla L",2750f,fecha));
+		prRepo.save(new Producto("Campera addidas","blanco y negro talla L",2750f,fecha,0));
 		System.out.println(prRepo.findAll());
 	}
 	

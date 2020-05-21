@@ -24,24 +24,30 @@ public class Producto {
 	@Column (name="FECHAALTA")
 	private LocalDate fechaAlta;
 	
+	private int cantidad;
+	
 	public Producto() {}
 	
-	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+
+	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta, int cantidad) {
+		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
+		this.cantidad = cantidad;
 	}
 	
-	
 
-	public Producto(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+	public Producto(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta,
+			int cantidad) {
 		super();
 		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
+		this.cantidad = cantidad;
 	}
 
 	public int getIdProducto() {
@@ -83,12 +89,40 @@ public class Producto {
 	public void setFechaAlta(LocalDate fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
+	
+	
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 
 	@Override
 	public String toString() {
 		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + "]\n";
+				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + ", cantidad=" + cantidad + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idProducto;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		Producto other = (Producto) obj;
+		if (idProducto != other.idProducto)
+			return false;
+		return true;
+	}
+	
+
 	
 
 }

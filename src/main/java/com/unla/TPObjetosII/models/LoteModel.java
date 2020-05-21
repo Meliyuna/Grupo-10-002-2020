@@ -15,10 +15,11 @@ public class LoteModel {
 	@JsonIgnore
 	private ProductoModel producto;
 	private boolean estado;
+	private LocalModel local;
 	
 
 	public LoteModel(int idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso,
-			ProductoModel producto, boolean estado) {
+			ProductoModel producto, boolean estado, LocalModel local) {
 		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
@@ -26,20 +27,20 @@ public class LoteModel {
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
 		this.estado = estado;
+		this.local = local;
 	}
 
 
-
-
-	public LoteModel(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, ProductoModel producto, boolean estado) {
+	public LoteModel(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, ProductoModel producto,
+			boolean estado, LocalModel local) {
 		super();
 		this.cantidadInicial = cantidadInicial;
 		this.cantidadActual = cantidadActual;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
 		this.estado = estado;
+		this.local = local;
 	}
-
 
 
 
@@ -80,13 +81,22 @@ public class LoteModel {
 		this.estado = estado;
 	}
 	
+	
+	public LocalModel getLocal() {
+		return local;
+	}
+
+
+	public void setLocal(LocalModel local) {
+		this.local = local;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Lote [idLote=" + idLote + ", cantidadInicial=" + cantidadInicial + ", cantidadActual=" + cantidadActual
-				+ ", fechaIngreso=" + fechaIngreso + ", producto=" + producto + ", estado=" + estado + "]";
+		return "LoteModel [idLote=" + idLote + ", cantidadInicial=" + cantidadInicial + ", cantidadActual="
+				+ cantidadActual + ", fechaIngreso=" + fechaIngreso + ", producto=" + producto + ", estado=" + estado
+				+ ", local=" + local + "]";
 	}
-	
-	
-	
 
 }

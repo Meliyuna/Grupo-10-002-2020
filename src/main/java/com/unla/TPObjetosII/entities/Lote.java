@@ -35,10 +35,34 @@ public class Lote {
 	@JoinColumn(name="IDPRODUCTO")
 	private Producto producto;
 	
+	private boolean estado;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
+	private Local local;
 	
 
+	
+	public Lote() {
+		super();
+	}
+
+	public Lote(int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto, boolean estado,
+			Local local) {
+		super();
+		this.cantidadInicial = cantidadInicial;
+		this.cantidadActual = cantidadActual;
+		this.fechaIngreso = fechaIngreso;
+		this.producto = producto;
+		this.estado = estado;
+		this.local = local;
+	}
+
+
+
+
 	public Lote(int idLote, int cantidadInicial, int cantidadActual, LocalDate fechaIngreso, Producto producto,
-			boolean estado) {
+			boolean estado, Local local) {
 		super();
 		this.idLote = idLote;
 		this.cantidadInicial = cantidadInicial;
@@ -46,10 +70,9 @@ public class Lote {
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
 		this.estado = estado;
+		this.local = local;
 	}
 
-	private boolean estado;
-	
 	public int getIdLote() {
 		return idLote;
 	}
@@ -87,6 +110,15 @@ public class Lote {
 		this.estado = estado;
 	}
 	
+	
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
 	@Override
 	public String toString() {
 		return "Lote [idLote=" + idLote + ", cantidadInicial=" + cantidadInicial + ", cantidadActual=" + cantidadActual
