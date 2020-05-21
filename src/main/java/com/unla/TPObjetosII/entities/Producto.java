@@ -1,5 +1,6 @@
 package com.unla.TPObjetosII.entities;
 
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 @Entity
 public class Producto {
 
@@ -23,31 +25,30 @@ public class Producto {
 	private float precio;
 	@Column (name="FECHAALTA")
 	private LocalDate fechaAlta;
-	
+	@Transient
 	private int cantidad;
 	
 	public Producto() {}
 	
 
-	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta, int cantidad) {
+	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
-		this.cantidad = cantidad;
+
 	}
 	
 
-	public Producto(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta,
-			int cantidad) {
+	public Producto(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
 		super();
 		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
-		this.cantidad = cantidad;
+
 	}
 
 	public int getIdProducto() {
@@ -89,29 +90,14 @@ public class Producto {
 	public void setFechaAlta(LocalDate fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
-	
-	
-	public int getCantidad() {
-		return cantidad;
-	}
 
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
 
 	@Override
 	public String toString() {
 		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + ", cantidad=" + cantidad + "]";
+				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + idProducto;
-		return result;
-	}
 
 	@Override
 	public boolean equals(Object obj) {

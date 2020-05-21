@@ -14,6 +14,25 @@ public class ProductoModel {
 	public ProductoModel() {}
 	
 
+	public ProductoModel(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+	}
+
+
+	public ProductoModel(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+	}
+
+
 	public ProductoModel(String nombre, String descripcion, float precio, LocalDate fechaAlta, int cantidad) {
 		super();
 		this.nombre = nombre;
@@ -22,8 +41,7 @@ public class ProductoModel {
 		this.fechaAlta = fechaAlta;
 		this.cantidad = cantidad;
 	}
-	
-	
+
 
 	public ProductoModel(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta,
 			int cantidad) {

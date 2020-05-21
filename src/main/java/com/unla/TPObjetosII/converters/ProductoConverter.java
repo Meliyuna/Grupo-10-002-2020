@@ -10,11 +10,11 @@ import com.unla.TPObjetosII.models.ProductoModel;
 public class ProductoConverter {
 
 	public ProductoModel entityToModel(Producto producto) {
-		return new ProductoModel(producto.getIdProducto(),producto.getNombre(),producto.getDescripcion(),producto.getPrecio(),producto.getFechaAlta(),producto.getCantidad());
+		return new ProductoModel(producto.getIdProducto(),producto.getNombre(),producto.getDescripcion(),producto.getPrecio(),producto.getFechaAlta());
 	}
 	
 	public Producto modelToEntity(ProductoModel productoModel) {
-		return new Producto(productoModel.getIdProducto(),productoModel.getNombre(),productoModel.getDescripcion(),productoModel.getPrecio(),productoModel.getFechaAlta(),productoModel.getCantidad());
+		return new Producto(productoModel.getIdProducto(),productoModel.getNombre(),productoModel.getDescripcion(),productoModel.getPrecio(),productoModel.getFechaAlta());
 	}
 
 	

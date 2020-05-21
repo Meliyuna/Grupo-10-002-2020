@@ -51,7 +51,6 @@ public class ProductoController {
 	@PostMapping("/")
 	public RedirectView nuevoProducto(@ModelAttribute("producto") ProductoModel productoModel) {
 		productoModel.setFechaAlta(LocalDate.now().plusDays(1));
-		productoModel.setCantidad(0);
 		productoService.insertOrUpdate(productoModel);
 		return new RedirectView(ViewRouteHelper.PRODUCTO_REDIRECT);
 	}
