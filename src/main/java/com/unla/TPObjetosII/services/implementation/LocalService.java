@@ -1,5 +1,6 @@
 package com.unla.TPObjetosII.services.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,23 @@ public class LocalService implements ILocalService{
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+
+	@Override
+	public List<LocalModel> traerLocalesConDistancia(LocalModel local) throws Exception{
+		List<Local> locales=this.getAll();
+		if(locales.isEmpty())throw new Exception ("La lista de locales esta vacia");
+		List<LocalModel> localesConDist= new ArrayList<LocalModel>();
+		double distancia;
+		for(Local l: locales) {
+			localesConDist.add(localConverter.entityToModel(l));
+		}
+		for(LocalModel l: localesConDist) {
+			distancia=local.distanciaCoord(l);
+			l.setDistancia(distancia);
+		}
+		return localesConDist;
 	}
 	
 }

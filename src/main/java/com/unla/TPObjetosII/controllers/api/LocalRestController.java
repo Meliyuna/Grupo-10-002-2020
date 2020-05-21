@@ -55,6 +55,15 @@ public class LocalRestController {
 		return localService.getById(o.get("idLocal").asInt());
 	}
 	
+	@PostMapping("/traerLocalesPorDistancia")
+	@ResponseBody
+	public List<LocalModel> traerLocalesPorDistancia(LocalModel local) throws Exception{
+		return localService.traerLocalesConDistancia(local);
+	}
+	
+	
+	
+	
 //	@PostMapping("/alta2")
 //	public ResponseEntity<LocalModel> alta2(@RequestBody ObjectNode o) throws Exception{
 //		Gson gson = new Gson();
