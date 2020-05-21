@@ -37,6 +37,7 @@ public class Lote {
 	
 	private boolean estado;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
