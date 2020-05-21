@@ -10,8 +10,7 @@ public class PedidoModel {
 	private ProductoModel producto;
 	private int cantidad;
 	
-	@JsonIgnore
-	private LocalModel local;
+
 	
 	@JsonIgnore
 	private EmpleadoModel vendedorOriginal;
@@ -21,12 +20,11 @@ public class PedidoModel {
 	private float subtotal;
 	private boolean aceptado;
 	
-	public PedidoModel(ProductoModel producto, int cantidad, LocalModel local, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar,
+	public PedidoModel(ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar,
 			float subtotal, boolean aceptado) {
 		super();
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.local = local;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
 		this.subtotal = subtotal;
@@ -57,13 +55,6 @@ public class PedidoModel {
 		this.cantidad = cantidad;
 	}
 
-	public LocalModel getLocal() {
-		return local;
-	}
-
-	public void setLocal(LocalModel local) {
-		this.local = local;
-	}
 
 	public EmpleadoModel getVendedorOriginal() {
 		return vendedorOriginal;
@@ -99,7 +90,7 @@ public class PedidoModel {
 
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad + ", local=" + local
+		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad 
 				+ ", vendedorOriginal=" + vendedorOriginal + ", vendedorAuxiliar=" + vendedorAuxiliar + ", subtotal="
 				+ subtotal + ", aceptado=" + aceptado + "]";
 	}

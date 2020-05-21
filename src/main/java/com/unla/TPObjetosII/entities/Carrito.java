@@ -6,8 +6,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +29,11 @@ public class Carrito {
 	
 	@JsonIgnore
 	private Cliente cliente;
+	
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDLOCAL")
+	private Local local;
 
 	public Carrito() {
 	}
@@ -76,6 +84,15 @@ public class Carrito {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
 	}
 
 	@Override
