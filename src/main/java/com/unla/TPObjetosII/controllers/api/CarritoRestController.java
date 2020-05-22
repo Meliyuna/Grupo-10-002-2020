@@ -24,7 +24,7 @@ import com.unla.TPObjetosII.services.ICarritoService;
 public class CarritoRestController {
 	
 	@Autowired
-	@Qualifier("CarritoService")
+	@Qualifier("carritoService")
 	private ICarritoService CarritoService;
 	
 	@PostMapping("/alta")
