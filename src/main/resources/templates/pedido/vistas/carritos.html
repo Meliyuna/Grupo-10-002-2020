@@ -22,15 +22,37 @@ idLocal=sessionStorage.getItem("idLocal");
 function verPedidos(idCarrito){
 	$("#contenido").hide(velAnim,function(){
 		$("#tbody-tabla-pedidos").html("");
-		$("#tbody-tabla-pedidos").append('<tr><th scope="row">1</th>'+
-											'<td>Zapatillas algo</td>'+
-											'<td>3</td>'+
-											'<td>$6290</td>'+
-											'<td><button type="button" class="btn btn-success" onclick="verPedido(1,1)">modificar</button></td>'+
-											'</tr>');
-		$(".vista").hide();
-		$("#pedidos").show();
-		$("#contenido").show(velAnim);
+		json={"idCarrito":idCarrito};
+		$.ajax({
+        	url: '/api/carrito/traerListaPedidos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(pedidos){
+        		console.log(pedidos);
+            	$.each(pedidos,function(index,pedido){
+            		$("#tbody-tabla-pedidos").append('<tr><th scope="row">'+pedido.idPedido+'</th>'+
+							'<td>?</td>'+
+							'<td>'+pedido.cantidad+'</td>'+
+							'<td>'+pedido.subtotal+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verModificarPedido('+pedido.idPedido+')">modificar</button></td>'+
+							'</tr>');
+            		$(".vista").hide();
+            		$("#pedidos").show();
+            		$("#contenido").show(velAnim);
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#pedidos").show();
+        		$("#error").html("Error en pedidos");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
+		
 	});
 }
 
@@ -66,9 +88,6 @@ function verCarritos(){
         		$("#contenido").show(velAnim);
         	}
     	})
-		
-		
-		
 	});
 }
 
@@ -152,7 +171,7 @@ function verAgregarPedido(idProducto){
 function agregarCarrito(){
 	json={"local":{"idLocal":idLocal}}
 	$.ajax({
-    	url: '/api/carrito/agregarCarrito',
+    	url: '/api/carrito/alta',
     	type: 'POST',
     	dataType: 'json',
     	data: JSON.stringify(json),

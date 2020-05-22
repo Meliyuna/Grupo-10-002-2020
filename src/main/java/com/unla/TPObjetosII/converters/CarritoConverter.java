@@ -1,7 +1,10 @@
 package com.unla.TPObjetosII.converters;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.unla.TPObjetosII.entities.Carrito;
@@ -12,14 +15,19 @@ import com.unla.TPObjetosII.models.PedidoModel;
 @Component("carritoConverter")
 public class CarritoConverter {
 	
-	PedidoConverter pedidosConverter;
-	ClienteConverter clienteConverter;
+	@Autowired
+	@Qualifier("pedidoConverter")
+	private PedidoConverter pedidosConverter;
+	
+	@Autowired
+	@Qualifier("clienteConverter")
+	private ClienteConverter clienteConverter;
 	
 	
-	@SuppressWarnings({ "unused", "null" })
+	@SuppressWarnings({ "unused"})
 	public CarritoModel entityToModel(Carrito carrito) {
 		Set<Pedido> p = carrito.getListaPedido();
-		Set<PedidoModel> np = null;
+		Set<PedidoModel> np = new HashSet<PedidoModel>();
 		
 		for (Pedido ped: p) {
 			np.add(pedidosConverter.entityToModel(ped));			
@@ -36,7 +44,7 @@ public class CarritoConverter {
 	@SuppressWarnings("unused")
 	public Carrito modelToEntity(CarritoModel carritoModel) {
 		Set<PedidoModel> p = carritoModel.getListaPedido();
-		Set<Pedido> np = null;
+		Set<Pedido> np = new HashSet<Pedido>();;
 		
 		for (PedidoModel ped: p) {
 			np.add(pedidosConverter.modelToEntity(ped));			

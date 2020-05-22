@@ -32,8 +32,7 @@ public class CarritoRestController {
 	@PostMapping("/alta")
 	@ResponseBody
 	public CarritoModel alta (@RequestBody CarritoModel carrito) throws Exception {
-		System.out.println(CarritoService.insertOrUpdate(carrito));
-		return carrito;
+		return CarritoService.insertOrUpdate(carrito);
 	}
 	
 	@PostMapping("/traerCarritos")

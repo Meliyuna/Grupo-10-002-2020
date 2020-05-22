@@ -1,5 +1,7 @@
 package com.unla.TPObjetosII.converters;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.unla.TPObjetosII.entities.Pedido;
@@ -9,8 +11,13 @@ import com.unla.TPObjetosII.models.PedidoModel;
 @Component("pedidoConverter")
 public class PedidoConverter {
 	
-	ProductoConverter productoConverter; 
-	EmpleadoConverter empleadoConverter; 
+	@Autowired
+	@Qualifier("productoConverter")
+	private ProductoConverter productoConverter;
+	
+	@Autowired
+	@Qualifier("empleadoConverter")
+	private EmpleadoConverter empleadoConverter;
 
 	public Pedido modelToEntity(PedidoModel pedidoModel) {		
 		if (pedidoModel==null) return null;
