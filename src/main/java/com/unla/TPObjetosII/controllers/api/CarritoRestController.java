@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.controllers.api;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unla.TPObjetosII.models.CarritoModel;
+import com.unla.TPObjetosII.models.PedidoModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.services.ICarritoService;
@@ -45,6 +47,13 @@ public class CarritoRestController {
 	public CarritoModel traerCarrito(@RequestBody ObjectNode o) throws Exception{
 		System.out.println(o.get("idCarrito").asInt());
 		return CarritoService.getById(o.get("idCarrito").asInt());
+	}
+	
+	@PostMapping("/traerListaPedidos")
+	@ResponseBody
+	public Set<PedidoModel> traerListaPedidos(@RequestBody ObjectNode o) throws Exception{
+		System.out.println(o.get("idCarrito").asInt());
+		return CarritoService.getById(o.get("idCarrito").asInt()).getListaPedido();
 	}
 	
 //	@PostMapping("/baja")

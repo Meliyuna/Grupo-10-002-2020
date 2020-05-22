@@ -1,25 +1,18 @@
 package com.unla.TPObjetosII.converters;
 
+import org.springframework.stereotype.Component;
+
 import com.unla.TPObjetosII.entities.Pedido;
-import com.unla.TPObjetosII.entities.Producto;
+
 import com.unla.TPObjetosII.models.PedidoModel;
-import com.unla.TPObjetosII.models.ProductoModel;
-import com.unla.TPObjetosII.converters.ProductoConverter;
 
-import java.util.Set;
-
-import com.unla.TPObjetosII.converters.EmpleadoConverter;
-
+@Component("pedidoConverter")
 public class PedidoConverter {
 	
-	ProductoConverter productoConverter = new ProductoConverter();
-	EmpleadoConverter empleadoConverter = new EmpleadoConverter();
+	ProductoConverter productoConverter; 
+	EmpleadoConverter empleadoConverter; 
 
-	public Pedido modelToEntity(PedidoModel pedidoModel) {
-			
-	
-		
-		
+	public Pedido modelToEntity(PedidoModel pedidoModel) {		
 		if (pedidoModel==null) return null;
 		return new Pedido(	pedidoModel.getIdPedido(), 
 							productoConverter.modelToEntity(pedidoModel.getProducto()),
