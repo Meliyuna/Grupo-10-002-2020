@@ -29,11 +29,6 @@ public class Pedido {
 	
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="IDLOCAL")
-	private Local local;
-	
-	@JsonIgnore
-	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDVENDEDORORIGINAL")
 	private Empleado vendedorOriginal;
 	
@@ -50,12 +45,12 @@ public class Pedido {
 		
 	}
 	
-	public Pedido(Producto producto, int cantidad, Local local, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
+	public Pedido(int idPedido, Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
 			float subtotal, boolean aceptado) {
 		super();
+		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.local = local;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
 		this.subtotal = subtotal;
@@ -84,14 +79,6 @@ public class Pedido {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
 	}
 
 	public Empleado getVendedorOriginal() {
@@ -128,7 +115,7 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad + ", local=" + local
+		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad
 				+ ", vendedorOriginal=" + vendedorOriginal + ", vendedorAuxiliar=" + vendedorAuxiliar + ", subtotal="
 				+ subtotal + ", aceptado=" + aceptado + "] \n";
 	}

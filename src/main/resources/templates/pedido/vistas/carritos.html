@@ -4,9 +4,11 @@ $(document).ready(function(){
 	
 	//Actualizar precio total de nuevo pedido
 	$("#aComprar").change(function(){
-		if($("#aComprar").val()>10){ //validacion
-			$("#aComprar").val($("#aComprar").attr("max"));
-		}else if($("#aComprar").val()<1){
+		cantidadMax = parseInt($("#aComprar").attr("max"));
+		cantidadIngresada = parseInt($("#aComprar").val());
+		if(cantidadIngresada>cantidadMax){ //validacion
+			$("#aComprar").val(cantidadMax);
+		}else if(cantidadIngresada<1){
 			$("#aComprar").val($("#aComprar").attr("min"));
 		}
 		$("#precioTotal").val($("#aComprar").val()*$("#precioUnitario").val());
@@ -15,6 +17,7 @@ $(document).ready(function(){
 
 velAnim = 500;
 carritoSeleccionado= 0;
+idLocal=sessionStorage.getItem("idLocal");
 
 function verPedidos(){
 	$("#contenido").hide(velAnim,function(){
@@ -34,6 +37,7 @@ function verPedidos(){
 function verCarritos(){
 	$("#contenido").hide(velAnim,function(){
 		$("#tbody-tabla-carritos").html("");
+		
 		$("#tbody-tabla-carritos").append('<tr><th scope="row">1</th>'+
 											'<td>3</td>'+
 											'<td>$3290</td>'+
@@ -47,18 +51,34 @@ function verCarritos(){
 
 function verProductos(){
 	$("#contenido").hide(velAnim,function(){
-		$("#tbody-tabla-productos").html("");
-		$("#tbody-tabla-productos").append('<tr><th scope="row">1</th>'+
-											'<td>Zapatilla niko black</td>'+
-											'<td>$3290</td>'+
-											'<td>21</td>'+
-											'<td><button type="button" class="btn btn-success" onclick="verPedido(1,0)">agregar</button></td>'+
-											'</tr>');
-		$(".vista").hide();
-		$("#productos").show();
-		$("#contenido").show(velAnim);
+		json={"idLocal":idLocal};
+		$.ajax({
+        	url: '/api/stock/traerProductos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(response){
+            	console.log(response)
+            	$("#tbody-tabla-productos").html("");
+            	$.each(response,function(index,producto){
+            		$("#tbody-tabla-productos").append('<tr><th scope="row">'+index+'</th>'+
+							'<td>'+producto.nombre+'</td>'+
+							'<td>$'+producto.precio+'</td>'+
+							'<td>'+producto.cantidad+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+',0)">agregar</button></td>'+
+							'</tr>');
+            	});
+            	$(".vista").hide();
+        		$("#productos").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+    	})
 	});
-}
+};
 
 function verPedido(id, opcion){
 	$("#contenido").hide(velAnim,function(){
@@ -66,10 +86,43 @@ function verPedido(id, opcion){
 		$("#pedido").show();
 		if(opcion==0){
 			$("#botonesAgregar").show();
+			$("#tituloAgregar").show();
 		}else{
+			$("#tituloModificar").show();
 			$("#botonesModificar").show();
 		}
 		$("#contenido").show(velAnim);
+	});
+}
+
+function verAgregarPedido(idProducto){
+	$("#contenido").hide(velAnim,function(){
+		json={"idProducto":idProducto,"idLocal":idLocal};
+		$.ajax({
+        	url: '/api/stock/traerProducto',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(producto){
+            	console.log(producto)
+            	$("#nombre").val(producto.nombre);
+            	$("#precioUnitario").val(producto.precio);
+            	$("#descripcion").html(producto.descripcion);
+            	$("#aComprar").val(1);
+            	$("#precioTotal").val(producto.precio);
+            	$("#aComprar").attr("max",producto.cantidad);
+            	
+            	$(".vista").hide();
+        		$("#pedido").show();
+        		$("#botonesAgregar").show();
+        		$("#tituloAgregar").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+    	})
 	});
 }
 </script>
@@ -127,30 +180,31 @@ function verPedido(id, opcion){
 		<button type="button" class="btn btn-primary" onclick="verPedidos()">Volver</button>
 	</div>
 	<div id="pedido" class="vista" style="display: none">
-		<h1>Agregar Pedido</h1>
+		<h1 id="tituloAgregar" class="vista">Agregar Pedido</h1>
+		<h1 id="tituloModificar" class="vista">Modificar Pedido</h1>
 		<form>
 			<div class="form-row">
 			    <div class="form-group col-md-6">
 			      <label for="nombre">Nombre Producto:</label>
-			      <input type="text" class="form-control" id="nombre" disabled value="zapatillas niko">
+			      <input type="text" class="form-control" id="nombre" disabled>
 			    </div>
 			    <div class="form-group col-md-6">
 			      <label for="precioUnitario">Precio unitario:</label>
-			      <input type="number" class="form-control" id="precioUnitario" disabled value="6236">
+			      <input type="number" class="form-control" id="precioUnitario" disabled>
 			    </div>
 			</div>
 			<div class="form-group">
 				<label for="descripcion">Descripcion</label>
-				<textarea id="descripcion" class="form-control" rows="3" disabled>Zapatillas para correr re rapido</textarea>
+				<textarea id="descripcion" class="form-control" rows="3" disabled></textarea>
 			</div>
 			<div class="form-row">
 			    <div class="form-group col-md-6">
 			      <label for="aComprar">Cantidad a comprar:</label>
-			      <input type="number" class="form-control" id="aComprar" min="1" max="10" value="1">
+			      <input type="number" class="form-control" id="aComprar" min="1">
 			    </div>
 			    <div class="form-group col-md-6">
 			      <label for="precioTotal">Precio Total:</label>
-			      <input type="number" class="form-control" id="precioTotal" disabled value="6236">
+			      <input type="number" class="form-control" id="precioTotal" disabled>
 			    </div>
 			</div>
 		</form>

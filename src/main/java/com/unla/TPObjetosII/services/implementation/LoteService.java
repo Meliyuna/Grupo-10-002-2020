@@ -83,6 +83,38 @@ public class LoteService implements ILoteService{
 		if(productosDelLocal.isEmpty())return null;
 		else return productosDelLocal;
 	}
+	
+	@Override
+	public List<ProductoModel>  CantidadProductoXlocal(int idLocal){
+		
+		List<Producto> todosLosProductos =productoRepository.findAll();
+		List<ProductoModel>	productosDelLocal = new ArrayList<ProductoModel>();
+
+		for(Producto p: todosLosProductos) {
+			List<Lote> lotes=	loteRepository.lotesXproductoXlocal(p.getIdProducto(), idLocal);
+			int cantidad=0;
+			ProductoModel producto = null;
+			if(!lotes.isEmpty()) {
+			for(Lote l: lotes) {
+				if(producto==null) {
+					producto= productoConverter.entityToModel(l.getProducto());
+					cantidad = l.getCantidadActual();
+				}else {
+				if(producto.getIdProducto()==l.getProducto().getIdProducto())cantidad += l.getCantidadActual();
+				}
+			}
+			producto.setCantidad(cantidad);
+			productosDelLocal.add(producto);
+		}else {
+			producto=productoConverter.entityToModel(p);
+			producto.setCantidad(0);
+			productosDelLocal.add(producto);
+		}
+		}
+		if(productosDelLocal.isEmpty())return null;
+		else return productosDelLocal;
+	}
+	
 	@Override
 	public ProductoModel ProductoXlocal(int idProducto, int idLocal ){
 		List<Lote> lotes= loteRepository.lotesXproductoXlocal(idProducto, idLocal);

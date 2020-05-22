@@ -56,23 +56,24 @@ class TpObjetosIiApplicationTests {
 //		List<Producto>productos=pRepo.findAll();
 //		System.out.println(productos);
 		
-//		LocalDate fecha= LocalDate.now();
-//		pRepo.save(new Producto("zapatillas Nike Air Max","zapatillas para correr",3000,fecha));
+		LocalDate fecha= LocalDate.now();
+//		pRepo.save(new Producto("pantalon","",1500,fecha));
 //		System.out.println(pRepo.findByIdProducto(2));
 	}
 	
 
 	@Test
 	void testLote() {
-	//	lRepo.save(new Lote(200,100,LocalDate.now(),pRepo.findByIdProducto(11),true,locRepo.findByIdLocal(8)));
+	//	lRepo.save(new Lote(200,100,LocalDate.now(),pRepo.findByIdProducto(7),true,locRepo.findByIdLocal(7)));
 	//	System.out.println(lRepo.lotesXlocal(8));
 	//	System.out.println(lRepo.lotesXproducto(8));
 	//	List<Lote> lotes= lRepo.lotesXproducto(8);
 //		System.out.println(lotes.get(0).getProducto());
 //		System.out.println(lotes);
 	//	System.out.println(lRepo.lotesXproductoXlocal(8, 8)==null);
-		System.out.println(loteService.ProductosXlocal(8));
-		System.out.println(loteService.ProductoXlocal(11,8));
+		System.out.println(loteService.ProductosXlocal(7));
+		System.out.println(loteService.ProductoXlocal(7,7));
+		System.out.println(loteService. CantidadProductoXlocal(7));
 	}
 //	@Test
 //	void testSolicitudesStock() {
