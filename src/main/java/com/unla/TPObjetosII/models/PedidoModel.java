@@ -6,7 +6,6 @@ public class PedidoModel {
 	
 	private int idPedido;
 	
-	@JsonIgnore
 	private ProductoModel producto;
 	private int cantidad;
 	
@@ -17,10 +16,12 @@ public class PedidoModel {
 	
 	@JsonIgnore
 	private EmpleadoModel vendedorAuxiliar;
+	@JsonIgnore
+	private CarritoModel carrito;
 	private float subtotal;
 	private boolean aceptado;
 	
-	public PedidoModel(int idPedido, ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar,
+	public PedidoModel(int idPedido, ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar, CarritoModel carrito,
 			float subtotal, boolean aceptado) {
 		super();
 		this.idPedido=idPedido;
@@ -28,8 +29,13 @@ public class PedidoModel {
 		this.cantidad = cantidad;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
+		this.carrito = carrito;
 		this.subtotal = subtotal;
 		this.aceptado = aceptado;
+	}
+
+	public PedidoModel() {
+		super();
 	}
 
 	public int getIdPedido() {
@@ -87,6 +93,16 @@ public class PedidoModel {
 
 	public void setAceptado(boolean aceptado) {
 		this.aceptado = aceptado;
+	}
+
+	
+	
+	public CarritoModel getCarrito() {
+		return carrito;
+	}
+
+	public void setCarrito(CarritoModel carrito) {
+		this.carrito = carrito;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ $(document).ready(function(){
 velAnim = 500;
 carritoSeleccionado= 0;
 idLocal=sessionStorage.getItem("idLocal");
+idEmpleado=sessionStorage.getItem("idEmpleado");
 
 function verPedidos(idCarrito){
 	$("#contenido").hide(velAnim,function(){
@@ -31,17 +32,18 @@ function verPedidos(idCarrito){
         	contentType: "application/json",
         	success: function(pedidos){
         		console.log(pedidos);
+        		carritoSeleccionado=idCarrito;
             	$.each(pedidos,function(index,pedido){
             		$("#tbody-tabla-pedidos").append('<tr><th scope="row">'+pedido.idPedido+'</th>'+
-							'<td>?</td>'+
+							'<td>'+pedido.producto.nombre+'</td>'+
 							'<td>'+pedido.cantidad+'</td>'+
 							'<td>'+pedido.subtotal+'</td>'+
 							'<td><button type="button" class="btn btn-success" onclick="verModificarPedido('+pedido.idPedido+')">modificar</button></td>'+
 							'</tr>');
-            		$(".vista").hide();
-            		$("#pedidos").show();
-            		$("#contenido").show(velAnim);
             	});
+            	$(".vista").hide();
+        		$("#pedidos").show();
+        		$("#contenido").show(velAnim);
         	},
         	error: function(response){
         		console.log(response);
@@ -108,7 +110,7 @@ function verProductos(){
 							'<td>'+producto.nombre+'</td>'+
 							'<td>$'+producto.precio+'</td>'+
 							'<td>'+producto.cantidad+'</td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+',0)">agregar</button></td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td>'+
 							'</tr>');
             	});
             	$(".vista").hide();
@@ -148,6 +150,7 @@ function verAgregarPedido(idProducto){
         	contentType: "application/json",
         	success: function(producto){
             	console.log(producto)
+            	$("#idProducto").val(idProducto);
             	$("#nombre").val(producto.nombre);
             	$("#precioUnitario").val(producto.precio);
             	$("#descripcion").html(producto.descripcion);
@@ -168,8 +171,56 @@ function verAgregarPedido(idProducto){
 	});
 }
 
+function verModificarPedido(idPedido){
+	$("#contenido").hide(velAnim,function(){
+		console.log("success ocultar")
+       	json={"idPedido":idPedido};
+       	$.ajax({
+           	url: '/api/pedido/traerPedido',
+           	type: 'POST',
+           	dataType: 'json',
+           	data: JSON.stringify(json),
+           	contentType: "application/json",
+           	success: function(pedido){
+           		$("#idPedido").val(pedido.idPedido);
+       			$("#aComprar").val(pedido.cantidad);
+       			$("#precioTotal").val(pedido.subtotal);
+       			
+       			json={"idProducto":pedido.producto.idProducto,"idLocal":idLocal};
+       			$.ajax({
+       	        	url: '/api/stock/traerProducto',
+       	        	type: 'POST',
+       	        	dataType: 'json',
+       	        	data: JSON.stringify(json),
+       	        	contentType: "application/json",
+       	        	success: function(producto){
+       	            	console.log(producto)
+       	            	$("#idProducto").val(producto.idProducto);
+       	            	$("#nombre").val(producto.nombre);
+       	            	$("#precioUnitario").val(producto.precio);
+       	            	$("#descripcion").html(producto.descripcion);
+       	            	
+       	            	$(".vista").hide();
+       	        		$("#pedido").show();
+       	        		$("#botonesModificar").show();
+       	        		$("#tituloModificar").show();
+       	        		$("#contenido").show(velAnim);
+       	        	},
+       	        	error: function(response){
+       	        		console.log(response);
+       	        	}
+       	    	})
+       		
+           	},
+           	error: function(response){
+           		console.log(response);
+           	}
+       	});
+    });
+}
+
 function agregarCarrito(){
-	json={"local":{"idLocal":idLocal}}
+	json={"local":{"idLocal":idLocal,"listaPedido":[]}}
 	$.ajax({
     	url: '/api/carrito/alta',
     	type: 'POST',
@@ -187,6 +238,59 @@ function agregarCarrito(){
     	error: function(response){
     		console.log(response);
     		$("#error").html("Error agregando carrito");
+    		$("#error").show();
+    	}
+	})
+}
+
+function agregarPedido(){
+	json={	"cantidad":$("#aComprar").val(),
+			"subtotal":$("#precioTotal").val(),
+			"aceptado":true,
+			"producto":{"idProducto":$("#idProducto").val()},
+			"vendedorOriginal":{"idPersona":idEmpleado},
+			"carrito":{"idCarrito":carritoSeleccionado}
+	}
+	$.ajax({
+    	url: '/api/pedido/alta',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verPedidos(carritoSeleccionado);
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error agregando pedido");
+    		$("#error").show();
+    	}
+	})
+}
+
+function modificarPedido(){
+	json={	"idPedido":$("#idPedido").val(),
+			"cantidad":$("#aComprar").val(),
+			"subtotal":$("#precioTotal").val(),
+			"aceptado":true,
+			"producto":{"idProducto":$("#idProducto").val()},
+			"vendedorOriginal":{"idPersona":idEmpleado},
+			"carrito":{"idCarrito":carritoSeleccionado}
+	}
+	$.ajax({
+    	url: '/api/pedido/alta',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verPedidos(carritoSeleccionado);
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error modificando pedido");
     		$("#error").show();
     	}
 	})
@@ -243,7 +347,7 @@ function agregarCarrito(){
 		  <tbody id="tbody-tabla-productos">
 		  </tbody>
 		</table>
-		<button type="button" class="btn btn-primary" onclick="verPedidos()">Volver</button>
+		<button type="button" class="btn btn-primary" onclick="verPedidos(carritoSeleccionado)">Volver</button>
 	</div>
 	<div id="pedido" class="vista" style="display: none">
 		<h1 id="tituloAgregar" class="vista">Agregar Pedido</h1>
@@ -273,13 +377,15 @@ function agregarCarrito(){
 			      <input type="number" class="form-control" id="precioTotal" disabled>
 			    </div>
 			</div>
+			<input id="idProducto" type="number" hidden="true" />
+			<input id="idPedido" type="number" hidden="true" />
 		</form>
 		<div id="botonesAgregar" style="display: none" class="vista">
 			<button type="button" class="btn btn-primary" onclick="verProductos()">Volver</button>
 			<button type="button" class="btn btn-primary" onclick="agregarPedido()">Agregar</button>
 		</div>
 		<div id="botonesModificar" style="display: none" class="vista">
-			<button type="button" class="btn btn-primary" onclick="verPedidos()">Volver</button>
+			<button type="button" class="btn btn-primary" onclick="verPedidos(carritoSeleccionado)">Volver</button>
 			<button type="button" class="btn btn-primary" onclick="modificarPedido()">Modificar</button>
 			<button type="button" class="btn btn-primary" onclick="eliminarPedido()">Eliminar</button>
 		</div>

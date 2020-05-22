@@ -26,14 +26,13 @@ public class CarritoConverter {
 	
 	@SuppressWarnings({ "unused"})
 	public CarritoModel entityToModel(Carrito carrito) {
+		if (carrito==null) return null;
 		Set<Pedido> p = carrito.getListaPedido();
 		Set<PedidoModel> np = new HashSet<PedidoModel>();
 		
 		for (Pedido ped: p) {
-			np.add(pedidosConverter.entityToModel(ped));			
+			np.add(pedidosConverter.entityToModelNoCarrito(ped));			
 		}
-		
-		if (carrito==null) return null;
 		return new CarritoModel(	carrito.getIdCarrito(), 
 									np, 
 									carrito.getFecha(), 
@@ -43,16 +42,17 @@ public class CarritoConverter {
 	
 	@SuppressWarnings("unused")
 	public Carrito modelToEntity(CarritoModel carritoModel) {
+		if (carritoModel==null) return null;
 		Set<PedidoModel> p = carritoModel.getListaPedido();
 		Set<Pedido> np = new HashSet<Pedido>();;
 		
-		for (PedidoModel ped: p) {
-			np.add(pedidosConverter.modelToEntity(ped));			
+		if(p!=null) {
+			for (PedidoModel ped: p) {
+				np.add(pedidosConverter.modelToEntity(ped));			
+			}
 		}
-		
-		if (carritoModel==null) return null;
 		return new Carrito(	carritoModel.getIdCarrito(), 
-									np, 
+									np,
 									carritoModel.getFecha(), 
 									carritoModel.getTotal(), 
 									clienteConverter.modelToEntity(carritoModel.getCliente()));

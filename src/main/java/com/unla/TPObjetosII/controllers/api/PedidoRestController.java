@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.unla.TPObjetosII.entities.Pedido;
@@ -27,9 +29,11 @@ public class PedidoRestController {
 	
 	@PostMapping("/alta")
 	@ResponseBody
-	public PedidoModel alta (@RequestBody PedidoModel pedido) throws Exception {
-		System.out.println(pedidoService.insertOrUpdate(pedido));
-		return pedido;
+	public PedidoModel alta (@RequestBody ObjectNode pedidoNode) throws Exception {
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
+		PedidoModel pedidoModel = mapper.treeToValue(pedidoNode, PedidoModel.class);
+		System.out.println(pedidoModel.getProducto().getIdProducto());
+		return pedidoService.insertOrUpdate(pedidoModel);
 	}
 	
 	@PostMapping("/traerPedidos")
