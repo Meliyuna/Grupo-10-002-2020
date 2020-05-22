@@ -23,8 +23,9 @@ public class CarritoModel {
 	public CarritoModel() {
 	}
 
-	public CarritoModel(Set<PedidoModel> listaPedido, LocalDate fecha, float total, ClienteModel cliente) {
+	public CarritoModel(int idCarrito, Set<PedidoModel> listaPedido, LocalDate fecha, float total, ClienteModel cliente) {
 		super();
+		this.idCarrito=idCarrito;
 		this.listaPedido = listaPedido;
 		this.fecha = fecha;
 		this.total = total;

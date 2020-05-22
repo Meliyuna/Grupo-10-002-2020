@@ -45,9 +45,10 @@ public class Pedido {
 		
 	}
 	
-	public Pedido(Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
+	public Pedido(int idPedido, Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
 			float subtotal, boolean aceptado) {
 		super();
+		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.vendedorOriginal = vendedorOriginal;

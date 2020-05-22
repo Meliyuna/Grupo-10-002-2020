@@ -38,8 +38,9 @@ public class Carrito {
 	public Carrito() {
 	}
 
-	public Carrito(Set<Pedido> listaPedido, LocalDate fecha, float total, Cliente cliente) {
+	public Carrito(int idCarrito, Set<Pedido> listaPedido, LocalDate fecha, float total, Cliente cliente) {
 		super();
+		this.idCarrito=idCarrito;
 		this.listaPedido = listaPedido;
 		this.fecha = fecha;
 		this.total = total;

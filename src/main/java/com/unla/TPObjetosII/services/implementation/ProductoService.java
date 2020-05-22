@@ -18,7 +18,7 @@ import com.unla.TPObjetosII.services.IProductoService;
 
 
 @Service("productoService")
-public class ProductoSerivce implements IProductoService{
+public class ProductoService implements IProductoService{
 
 		@Autowired
 		@Qualifier("productoRepository")

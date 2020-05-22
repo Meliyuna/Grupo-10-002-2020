@@ -20,9 +20,10 @@ public class PedidoModel {
 	private float subtotal;
 	private boolean aceptado;
 	
-	public PedidoModel(ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar,
+	public PedidoModel(int idPedido, ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar,
 			float subtotal, boolean aceptado) {
 		super();
+		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.vendedorOriginal = vendedorOriginal;
