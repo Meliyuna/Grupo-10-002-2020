@@ -19,7 +19,7 @@ velAnim = 500;
 carritoSeleccionado= 0;
 idLocal=sessionStorage.getItem("idLocal");
 
-function verPedidos(){
+function verPedidos(idCarrito){
 	$("#contenido").hide(velAnim,function(){
 		$("#tbody-tabla-pedidos").html("");
 		$("#tbody-tabla-pedidos").append('<tr><th scope="row">1</th>'+
@@ -36,16 +36,39 @@ function verPedidos(){
 
 function verCarritos(){
 	$("#contenido").hide(velAnim,function(){
+		json={"idLocal":idLocal};
 		$("#tbody-tabla-carritos").html("");
+		$.ajax({
+        	url: '/api/carrito/traerCarritos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(carritos){
+        		console.log(carritos);
+            	$.each(carritos,function(index,carrito){
+            		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
+							'<td>?</td>'+
+							'<td>$'+carrito.total+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">modificar</button></td>'+
+							'</tr>');
+            	});
+            	$(".vista").hide();
+        		$("#carritos").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#carritos").show();
+        		$("#error").html("Error en carritos");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
 		
-		$("#tbody-tabla-carritos").append('<tr><th scope="row">1</th>'+
-											'<td>3</td>'+
-											'<td>$3290</td>'+
-											'<td><button type="button" class="btn btn-success" onclick="verPedidos()">modificar</button></td>'+
-											'</tr>');
-		$(".vista").hide();
-		$("#carritos").show();
-		$("#contenido").show(velAnim);
+		
+		
 	});
 }
 
@@ -125,11 +148,35 @@ function verAgregarPedido(idProducto){
     	})
 	});
 }
+
+function agregarCarrito(){
+	json={"local":{"idLocal":idLocal}}
+	$.ajax({
+    	url: '/api/carrito/agregarCarrito',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
+					'<td>?</td>'+
+					'<td>$'+carrito.total+'</td>'+
+					'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">modificar</button></td>'+
+					'</tr>');
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error agregando carrito");
+    		$("#error").show();
+    	}
+	})
+}
 </script>
 <div id="contenido">
 	<div id="carritos" class="vista" style="display: none">
 		<h1>Carritos</h1>
-		<button type="button" class="btn btn-success">Agregar Carrito</button>
+		<button type="button" class="btn btn-success" onclick="agregarCarrito()">Agregar Carrito</button>
 		
 		<table id="tabla-carritoss" class="table table-hover">
 		  <thead class="thead-dark">
@@ -218,4 +265,5 @@ function verAgregarPedido(idProducto){
 			<button type="button" class="btn btn-primary" onclick="eliminarPedido()">Eliminar</button>
 		</div>
 	</div>
+	<div id="error" class="vista" style="display: none"></div>
 </div>

@@ -29,7 +29,7 @@ public class StockRestController {
 	@PostMapping("/traerProductos")
 	@ResponseBody
 	public List<ProductoModel> traerProductos(@RequestBody LocalModel localModel) throws Exception{
-		return loteService.ProductosXlocal(localModel.getIdLocal());
+		return loteService.CantidadProductoXlocal(localModel.getIdLocal());
 	}
 	
 	@PostMapping("/traerProducto")
