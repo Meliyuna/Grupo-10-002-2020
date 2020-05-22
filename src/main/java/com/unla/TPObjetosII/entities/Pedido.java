@@ -36,6 +36,11 @@ public class Pedido {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDVENDEDORAUXILIAR")
 	private Empleado vendedorAuxiliar;
+	
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDCARRITO")
+	private Carrito carrito;
 
 	private float subtotal;
 
@@ -45,7 +50,7 @@ public class Pedido {
 		
 	}
 	
-	public Pedido(int idPedido, Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
+	public Pedido(int idPedido, Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar, Carrito carrito,
 			float subtotal, boolean aceptado) {
 		super();
 		this.idPedido=idPedido;
@@ -53,6 +58,7 @@ public class Pedido {
 		this.cantidad = cantidad;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
+		this.carrito = carrito;
 		this.subtotal = subtotal;
 		this.aceptado = aceptado;
 	}
@@ -111,6 +117,14 @@ public class Pedido {
 
 	public void setAceptado(boolean aceptado) {
 		this.aceptado = aceptado;
+	}
+
+	public Carrito getCarrito() {
+		return carrito;
+	}
+
+	public void setCarrito(Carrito carrito) {
+		this.carrito = carrito;
 	}
 
 	@Override

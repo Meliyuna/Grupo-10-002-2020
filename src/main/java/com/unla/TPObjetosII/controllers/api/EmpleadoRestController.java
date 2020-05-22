@@ -88,8 +88,6 @@ public class EmpleadoRestController {
 		if(empleadoService.remove(o.get("idEmpleado").asInt())==false) throw new Exception("Error al eliminar empleado");
 		return true;
 	}
-	
-	
 }
 
 

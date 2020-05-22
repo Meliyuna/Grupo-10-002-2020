@@ -12,6 +12,7 @@ import com.unla.TPObjetosII.entities.Pedido;
 @Repository ("pedidoRepository")
 public interface IPedidoRepository extends JpaRepository<Pedido, Serializable>{
 
+	@Query("select p from Pedido p join fetch p.producto where p.idPedido = (:idPedido)")
 	public abstract Pedido findByIdPedido(int idPedido);
 	
 	
