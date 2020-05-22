@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unla.TPObjetosII.models.CarritoModel;
 import com.unla.TPObjetosII.models.PedidoModel;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.services.ICarritoService;
@@ -31,14 +33,16 @@ public class CarritoRestController {
 	
 	@PostMapping("/alta")
 	@ResponseBody
-	public CarritoModel alta (@RequestBody CarritoModel carrito) throws Exception {
-		return CarritoService.insertOrUpdate(carrito);
+	public CarritoModel alta (@RequestBody ObjectNode carritoNode) throws Exception {
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
+		CarritoModel carritoModel = mapper.treeToValue(carritoNode, CarritoModel.class);
+		return CarritoService.insertOrUpdate(carritoModel);
 	}
 	
 	@PostMapping("/traerCarritos")
 	@ResponseBody
-	public List<Carrito> traerCarritos() throws Exception {
-		return CarritoService.getAll();
+	public List<Carrito> traerCarritos(@RequestBody ObjectNode o) throws Exception {
+		return CarritoService.getAll(o.get("idLocal").asInt());
 	}
 	
 	@PostMapping("/traerCarrito")
@@ -55,13 +59,13 @@ public class CarritoRestController {
 		return CarritoService.getById(o.get("idCarrito").asInt()).getListaPedido();
 	}
 	
-//	@PostMapping("/baja")
-//	@ResponseBody
-//	public Boolean baja (@RequestBody ObjectNode o) throws Exception{
-//		System.out.println(o.get("idCarrito").asInt());
-//		if(CarritoService.remove(o.get("idCarrito").asInt())==false) throw new Exception("Error al eliminar el Carrito");
-//		return true;
-//	}
+	@PostMapping("/baja")
+	@ResponseBody
+	public Boolean baja (@RequestBody ObjectNode o) throws Exception{
+		System.out.println(o.get("idCarrito").asInt());
+		if(CarritoService.remove(o.get("idCarrito").asInt())==false) throw new Exception("Error al eliminar el Carrito");
+		return true;
+	}
 	
 	
 

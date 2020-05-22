@@ -49,5 +49,10 @@ public class PedidoRestController {
 		return pedidoService.getById(o.get("idPedido").asInt());
 	}
 	
+	@PostMapping("/baja")
+	@ResponseBody
+	public boolean baja(@RequestBody ObjectNode o)throws Exception{
+		return pedidoService.remove(o.get("idPedido").asInt());
+	}
 
 }

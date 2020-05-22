@@ -23,6 +23,10 @@ public class CarritoConverter {
 	@Qualifier("clienteConverter")
 	private ClienteConverter clienteConverter;
 	
+	@Autowired
+	@Qualifier("localConverter")
+	private LocalConverter localConverter;
+	
 	
 	@SuppressWarnings({ "unused"})
 	public CarritoModel entityToModel(Carrito carrito) {
@@ -33,11 +37,13 @@ public class CarritoConverter {
 		for (Pedido ped: p) {
 			np.add(pedidosConverter.entityToModelNoCarrito(ped));			
 		}
-		return new CarritoModel(	carrito.getIdCarrito(), 
+		CarritoModel carritoModel = new CarritoModel(	carrito.getIdCarrito(), 
 									np, 
 									carrito.getFecha(), 
 									carrito.getTotal(), 
 									clienteConverter.entityToModel(carrito.getCliente()));
+		carritoModel.setLocal(localConverter.entityToModel(carrito.getLocal()));
+		return carritoModel;
 	}
 	
 	@SuppressWarnings("unused")
@@ -51,11 +57,13 @@ public class CarritoConverter {
 				np.add(pedidosConverter.modelToEntity(ped));			
 			}
 		}
-		return new Carrito(	carritoModel.getIdCarrito(), 
+		Carrito carrito = new Carrito(	carritoModel.getIdCarrito(), 
 									np,
 									carritoModel.getFecha(), 
 									carritoModel.getTotal(), 
 									clienteConverter.modelToEntity(carritoModel.getCliente()));
+		carrito.setLocal(localConverter.modelToEntity(carritoModel.getLocal()));
+		return carrito;
 	}
 
 }

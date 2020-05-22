@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Carrito {
 	private int idCarrito;
 	
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="IDCARRITO")
 	private Set<Pedido> listaPedido;
 

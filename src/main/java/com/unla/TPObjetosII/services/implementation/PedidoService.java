@@ -38,4 +38,14 @@ public class PedidoService implements IPedidoService {
 		return pedidoConverter.entityToModel(pedidoRepository.findByIdPedido(idPedido));
 	}
 	
+	public boolean remove(int idPedido) {
+	try {
+		pedidoRepository.deleteById(idPedido);			
+		return true;
+	}catch(Exception e) {
+		e.printStackTrace();
+		return false;
+	}
+}
+	
 }

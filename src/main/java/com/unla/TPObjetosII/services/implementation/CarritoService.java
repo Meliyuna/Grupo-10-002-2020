@@ -33,22 +33,25 @@ public class CarritoService implements ICarritoService{
 		return carritoRepository.findAllConTodo();
 	}
 	
+	public List<Carrito> getAll(int idLocal){
+		return carritoRepository.findAllByIdLocal(idLocal); 
+	}
 	
 	public CarritoModel getById(int idCarrito) {
 		return carritoConverter.entityToModel(carritoRepository.findByIdCarrito(idCarrito));
 	}
 
 	
-//	public boolean remove(int idCarrito) {
-//		try {
-//			Carrito carrito=carritoRepository.findByIdCarrito(idCarrito);			
-//			carritoRepository.save(carrito);
-//			return true;
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
+	public boolean remove(int idCarrito) {
+		try {
+			Carrito carrito=carritoRepository.findByIdCarrito(idCarrito);			
+			carritoRepository.delete(carrito);
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 
 }

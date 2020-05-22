@@ -19,6 +19,7 @@ velAnim = 500;
 carritoSeleccionado= 0;
 idLocal=sessionStorage.getItem("idLocal");
 idEmpleado=sessionStorage.getItem("idEmpleado");
+pedidosDeCarrito = null;
 
 function verPedidos(idCarrito){
 	$("#contenido").hide(velAnim,function(){
@@ -31,6 +32,7 @@ function verPedidos(idCarrito){
         	data: JSON.stringify(json),
         	contentType: "application/json",
         	success: function(pedidos){
+        		pedidosDeCarrito=pedidos;
         		console.log(pedidos);
         		carritoSeleccionado=idCarrito;
             	$.each(pedidos,function(index,pedido){
@@ -106,12 +108,25 @@ function verProductos(){
             	console.log(response)
             	$("#tbody-tabla-productos").html("");
             	$.each(response,function(index,producto){
-            		$("#tbody-tabla-productos").append('<tr><th scope="row">'+index+'</th>'+
-							'<td>'+producto.nombre+'</td>'+
-							'<td>$'+producto.precio+'</td>'+
-							'<td>'+producto.cantidad+'</td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td>'+
-							'</tr>');
+            		var productoAgregado=false;
+            		$.each(pedidosDeCarrito,function(index,pedido){
+            			if(producto.idProducto==pedido.producto.idProducto){
+            				productoAgregado=true;
+            			}
+            		});
+            		if(productoAgregado==false){
+            			html='<tr><th scope="row">'+index+'</th>'+
+						'<td>'+producto.nombre+'</td>'+
+						'<td>$'+producto.precio+'</td>'+
+						'<td>'+producto.cantidad+'</td>';
+	            		if(producto.cantidad!=0){
+	            			html+= '<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
+	            		}
+	            		else{
+	            			html+= '<td><button type="button" class="btn btn-success" disabled onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
+	            		}
+            		$("#tbody-tabla-productos").append(html)
+            		}
             	});
             	$(".vista").hide();
         		$("#productos").show();
@@ -220,7 +235,8 @@ function verModificarPedido(idPedido){
 }
 
 function agregarCarrito(){
-	json={"local":{"idLocal":idLocal,"listaPedido":[]}}
+	json={"local":{"idLocal":idLocal},"listaPedido":[]}
+	console.log(json)
 	$.ajax({
     	url: '/api/carrito/alta',
     	type: 'POST',
@@ -295,6 +311,46 @@ function modificarPedido(){
     	}
 	})
 }
+
+function eliminarPedido(){
+	json={"idPedido":$("#idPedido").val()};
+	$.ajax({
+    	url: '/api/pedido/baja',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verPedidos(carritoSeleccionado);
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error eliminando pedido");
+    		$("#error").show();
+    	}
+	})
+}
+
+function eliminarCarrito(idCarrito){
+	json={"idCarrito":idCarrito};
+	$.ajax({
+    	url: '/api/carrito/baja',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verCarritos();
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error eliminando carrito");
+    		$("#error").show();
+    	}
+	})
+}
 </script>
 <div id="contenido">
 	<div id="carritos" class="vista" style="display: none">
@@ -331,6 +387,7 @@ function modificarPedido(){
 		  </tbody>
 		</table>
 		<button type="button" class="btn btn-primary" onclick="verCarritos()">Volver</button>
+		<button type="button" class="btn btn-danger" onclick="eliminarCarrito(carritoSeleccionado)">Eliminar Carrito</button>
 	</div>
 	<div id="productos" class="vista" style="display: none">
 		<h1>Productos</h1>

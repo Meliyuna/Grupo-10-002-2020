@@ -25,4 +25,7 @@ import com.unla.TPObjetosII.entities.Carrito;
 	@Query("SELECT c from Carrito c ")	
 	public abstract List<Carrito> findAllConTodo();
 	
+	@Query("select c from Carrito c join fetch c.local l where l.idLocal = (:idLocal)")
+	public abstract List<Carrito> findAllByIdLocal(int idLocal);
+	
 }
