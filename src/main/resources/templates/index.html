@@ -46,6 +46,8 @@
         	success: function(empleado){
         		sessionStorage.setItem("idLocal",empleado.local.idLocal);
         		sessionStorage.setItem("idEmpleado",$("#empleados").val());
+        		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
+        		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
         		$(location).attr('href','/local/alta');
         	},
         	error: function(response){
