@@ -1,0 +1,451 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	verCarritos();
+	
+	//Actualizar precio total de nuevo pedido
+	$("#aComprar").change(function(){
+		cantidadMax = parseInt($("#aComprar").attr("max"));
+		cantidadIngresada = parseInt($("#aComprar").val());
+		if(cantidadIngresada>cantidadMax){ //validacion
+			$("#aComprar").val(cantidadMax);
+		}else if(cantidadIngresada<1){
+			$("#aComprar").val($("#aComprar").attr("min"));
+		}
+		$("#precioTotal").val($("#aComprar").val()*$("#precioUnitario").val());
+	});
+});
+
+velAnim = 250;
+carritoSeleccionado= 0;
+idLocal=sessionStorage.getItem("idLocal");
+idEmpleado=sessionStorage.getItem("idEmpleado");
+pedidosDeCarrito = null;
+
+function verPedidos(idCarrito){
+	$("#contenido").hide(velAnim,function(){
+		$("#tbody-tabla-pedidos").html("");
+		json={"idCarrito":idCarrito};
+		$.ajax({
+        	url: '/api/carrito/traerListaPedidos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(pedidos){
+        		pedidosDeCarrito=pedidos;
+        		console.log(pedidos);
+        		carritoSeleccionado=idCarrito;
+            	$.each(pedidos,function(index,pedido){
+            		$("#tbody-tabla-pedidos").append('<tr><th scope="row">'+pedido.idPedido+'</th>'+
+							'<td>'+pedido.producto.nombre+'</td>'+
+							'<td>'+pedido.cantidad+'</td>'+
+							'<td>'+pedido.subtotal+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verModificarPedido('+pedido.idPedido+')">modificar</button></td>'+
+							'</tr>');
+            	});
+            	$(".vista").hide();
+        		$("#pedidos").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#pedidos").show();
+        		$("#error").html("Error en pedidos");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
+		
+	});
+}
+
+function verCarritos(){
+	$("#contenido").hide(velAnim,function(){
+		json={"idLocal":idLocal};
+		$("#tbody-tabla-carritos").html("");
+		$.ajax({
+        	url: '/api/carrito/traerCarritos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(carritos){
+        		console.log(carritos);
+            	$.each(carritos,function(index,carrito){
+            		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
+							'<td>?</td>'+
+							'<td>$'+carrito.total+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">modificar</button></td>'+
+							'</tr>');
+            	});
+            	$(".vista").hide();
+        		$("#carritos").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#carritos").show();
+        		$("#error").html("Error en carritos");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
+	});
+}
+
+function verProductos(){
+	$("#contenido").hide(velAnim,function(){
+		json={"idLocal":idLocal};
+		$.ajax({
+        	url: '/api/stock/traerProductos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(response){
+            	console.log(response)
+            	$("#tbody-tabla-productos").html("");
+            	$.each(response,function(index,producto){
+            		var productoAgregado=false;
+            		$.each(pedidosDeCarrito,function(index,pedido){
+            			if(producto.idProducto==pedido.producto.idProducto){
+            				productoAgregado=true;
+            			}
+            		});
+            		if(productoAgregado==false){
+            			html='<tr><th scope="row">'+index+'</th>'+
+						'<td>'+producto.nombre+'</td>'+
+						'<td>$'+producto.precio+'</td>'+
+						'<td>'+producto.cantidad+'</td>';
+	            		if(producto.cantidad!=0){
+	            			html+= '<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
+	            		}
+	            		else{
+	            			html+= '<td><button type="button" class="btn btn-success" disabled onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
+	            		}
+            		$("#tbody-tabla-productos").append(html)
+            		}
+            	});
+            	$(".vista").hide();
+        		$("#productos").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+    	})
+	});
+};
+
+function verPedido(id, opcion){
+	$("#contenido").hide(velAnim,function(){
+		$(".vista").hide();
+		$("#pedido").show();
+		if(opcion==0){
+			$("#botonesAgregar").show();
+			$("#tituloAgregar").show();
+		}else{
+			$("#tituloModificar").show();
+			$("#botonesModificar").show();
+		}
+		$("#contenido").show(velAnim);
+	});
+}
+
+function verAgregarPedido(idProducto){
+	$("#contenido").hide(velAnim,function(){
+		json={"idProducto":idProducto,"idLocal":idLocal};
+		$.ajax({
+        	url: '/api/stock/traerProducto',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(producto){
+            	console.log(producto)
+            	$("#idProducto").val(idProducto);
+            	$("#nombre").val(producto.nombre);
+            	$("#precioUnitario").val(producto.precio);
+            	$("#descripcion").html(producto.descripcion);
+            	$("#aComprar").val(1);
+            	$("#precioTotal").val(producto.precio);
+            	$("#aComprar").attr("max",producto.cantidad);
+            	
+            	$(".vista").hide();
+        		$("#pedido").show();
+        		$("#botonesAgregar").show();
+        		$("#tituloAgregar").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+    	})
+	});
+}
+
+function verModificarPedido(idPedido){
+	$("#contenido").hide(velAnim,function(){
+		console.log("success ocultar")
+       	json={"idPedido":idPedido};
+       	$.ajax({
+           	url: '/api/pedido/traerPedido',
+           	type: 'POST',
+           	dataType: 'json',
+           	data: JSON.stringify(json),
+           	contentType: "application/json",
+           	success: function(pedido){
+           		$("#idPedido").val(pedido.idPedido);
+       			$("#aComprar").val(pedido.cantidad);
+       			$("#precioTotal").val(pedido.subtotal);
+       			
+       			json={"idProducto":pedido.producto.idProducto,"idLocal":idLocal};
+       			$.ajax({
+       	        	url: '/api/stock/traerProducto',
+       	        	type: 'POST',
+       	        	dataType: 'json',
+       	        	data: JSON.stringify(json),
+       	        	contentType: "application/json",
+       	        	success: function(producto){
+       	            	console.log(producto)
+       	            	$("#idProducto").val(producto.idProducto);
+       	            	$("#nombre").val(producto.nombre);
+       	            	$("#precioUnitario").val(producto.precio);
+       	            	$("#descripcion").html(producto.descripcion);
+       	            	
+       	            	$(".vista").hide();
+       	        		$("#pedido").show();
+       	        		$("#botonesModificar").show();
+       	        		$("#tituloModificar").show();
+       	        		$("#contenido").show(velAnim);
+       	        	},
+       	        	error: function(response){
+       	        		console.log(response);
+       	        	}
+       	    	})
+       		
+           	},
+           	error: function(response){
+           		console.log(response);
+           	}
+       	});
+    });
+}
+
+function agregarCarrito(){
+	json={"local":{"idLocal":idLocal},"listaPedido":[]}
+	console.log(json)
+	$.ajax({
+    	url: '/api/carrito/alta',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
+					'<td>?</td>'+
+					'<td>$'+carrito.total+'</td>'+
+					'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">modificar</button></td>'+
+					'</tr>');
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error agregando carrito");
+    		$("#error").show();
+    	}
+	})
+}
+
+function agregarPedido(){
+	json={	"cantidad":$("#aComprar").val(),
+			"subtotal":$("#precioTotal").val(),
+			"aceptado":true,
+			"producto":{"idProducto":$("#idProducto").val()},
+			"vendedorOriginal":{"idPersona":idEmpleado},
+			"carrito":{"idCarrito":carritoSeleccionado}
+	}
+	$.ajax({
+    	url: '/api/pedido/alta',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verPedidos(carritoSeleccionado);
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error agregando pedido");
+    		$("#error").show();
+    	}
+	})
+}
+
+function modificarPedido(){
+	json={	"idPedido":$("#idPedido").val(),
+			"cantidad":$("#aComprar").val(),
+			"subtotal":$("#precioTotal").val(),
+			"aceptado":true,
+			"producto":{"idProducto":$("#idProducto").val()},
+			"vendedorOriginal":{"idPersona":idEmpleado},
+			"carrito":{"idCarrito":carritoSeleccionado}
+	}
+	$.ajax({
+    	url: '/api/pedido/alta',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verPedidos(carritoSeleccionado);
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error modificando pedido");
+    		$("#error").show();
+    	}
+	})
+}
+
+function eliminarPedido(){
+	json={"idPedido":$("#idPedido").val()};
+	$.ajax({
+    	url: '/api/pedido/baja',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verPedidos(carritoSeleccionado);
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error eliminando pedido");
+    		$("#error").show();
+    	}
+	})
+}
+
+function eliminarCarrito(idCarrito){
+	json={"idCarrito":idCarrito};
+	$.ajax({
+    	url: '/api/carrito/baja',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(carrito){
+    		console.log(carrito);
+    		verCarritos();
+    	},
+    	error: function(response){
+    		console.log(response);
+    		$("#error").html("Error eliminando carrito");
+    		$("#error").show();
+    	}
+	})
+}
+</script>
+<div id="contenido">
+	<div id="carritos" class="vista" style="display: none">
+		<h1>Carritos</h1>
+		<button type="button" class="btn btn-success" onclick="agregarCarrito()">Agregar Carrito</button>
+		
+		<table id="tabla-carritoss" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#id</th>
+		      <th scope="col">Productos</th>
+		      <th scope="col">Precio Total</th>
+		      <th scope="col">Accion</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-carritos">
+		  </tbody>
+		</table>
+	</div>
+	<div id="pedidos" class="vista" style="display: none">
+		<h1>Pedidos</h1>
+		<button type="button" class="btn btn-success" onclick="verProductos()">Agregar Producto</button>
+		<table id="tabla-pedidos" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Producto</th>
+		      <th scope="col">Cantidad</th>
+		      <th scope="col">Subtotal</th>
+		      <th scope="col">Accion</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-pedidos">
+		  </tbody>
+		</table>
+		<button type="button" class="btn btn-primary" onclick="verCarritos()">Volver</button>
+		<button type="button" class="btn btn-danger" onclick="eliminarCarrito(carritoSeleccionado)">Eliminar Carrito</button>
+	</div>
+	<div id="productos" class="vista" style="display: none">
+		<h1>Productos</h1>
+		<table id="tabla-productos" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Producto</th>
+		      <th scope="col">Precio</th>
+		      <th scope="col">Stock</th>
+		      <th scope="col">Accion</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-productos">
+		  </tbody>
+		</table>
+		<button type="button" class="btn btn-primary" onclick="verPedidos(carritoSeleccionado)">Volver</button>
+	</div>
+	<div id="pedido" class="vista" style="display: none">
+		<h1 id="tituloAgregar" class="vista">Agregar Pedido</h1>
+		<h1 id="tituloModificar" class="vista">Modificar Pedido</h1>
+		<form>
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="nombre">Nombre Producto:</label>
+			      <input type="text" class="form-control" id="nombre" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="precioUnitario">Precio unitario:</label>
+			      <input type="number" class="form-control" id="precioUnitario" disabled>
+			    </div>
+			</div>
+			<div class="form-group">
+				<label for="descripcion">Descripcion</label>
+				<textarea id="descripcion" class="form-control" rows="3" disabled></textarea>
+			</div>
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="aComprar">Cantidad a comprar:</label>
+			      <input type="number" class="form-control" id="aComprar" min="1">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="precioTotal">Precio Total:</label>
+			      <input type="number" class="form-control" id="precioTotal" disabled>
+			    </div>
+			</div>
+			<input id="idProducto" type="number" hidden="true" />
+			<input id="idPedido" type="number" hidden="true" />
+		</form>
+		<div id="botonesAgregar" style="display: none" class="vista">
+			<button type="button" class="btn btn-primary" onclick="verProductos()">Volver</button>
+			<button type="button" class="btn btn-primary" onclick="agregarPedido()">Agregar</button>
+		</div>
+		<div id="botonesModificar" style="display: none" class="vista">
+			<button type="button" class="btn btn-primary" onclick="verPedidos(carritoSeleccionado)">Volver</button>
+			<button type="button" class="btn btn-primary" onclick="modificarPedido()">Modificar</button>
+			<button type="button" class="btn btn-primary" onclick="eliminarPedido()">Eliminar</button>
+		</div>
+	</div>
+	<div id="error" class="vista" style="display: none"></div>
+</div>

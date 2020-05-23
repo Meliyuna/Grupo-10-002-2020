@@ -29,11 +29,6 @@ public class Pedido {
 	
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="IDLOCAL")
-	private Local local;
-	
-	@JsonIgnore
-	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDVENDEDORORIGINAL")
 	private Empleado vendedorOriginal;
 	
@@ -41,6 +36,11 @@ public class Pedido {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDVENDEDORAUXILIAR")
 	private Empleado vendedorAuxiliar;
+	
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDCARRITO")
+	private Carrito carrito;
 
 	private float subtotal;
 
@@ -50,14 +50,15 @@ public class Pedido {
 		
 	}
 	
-	public Pedido(Producto producto, int cantidad, Local local, Empleado vendedorOriginal, Empleado vendedorAuxiliar,
+	public Pedido(int idPedido, Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar, Carrito carrito,
 			float subtotal, boolean aceptado) {
 		super();
+		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.local = local;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
+		this.carrito = carrito;
 		this.subtotal = subtotal;
 		this.aceptado = aceptado;
 	}
@@ -84,14 +85,6 @@ public class Pedido {
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
 	}
 
 	public Empleado getVendedorOriginal() {
@@ -126,9 +119,17 @@ public class Pedido {
 		this.aceptado = aceptado;
 	}
 
+	public Carrito getCarrito() {
+		return carrito;
+	}
+
+	public void setCarrito(Carrito carrito) {
+		this.carrito = carrito;
+	}
+
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad + ", local=" + local
+		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad
 				+ ", vendedorOriginal=" + vendedorOriginal + ", vendedorAuxiliar=" + vendedorAuxiliar + ", subtotal="
 				+ subtotal + ", aceptado=" + aceptado + "] \n";
 	}

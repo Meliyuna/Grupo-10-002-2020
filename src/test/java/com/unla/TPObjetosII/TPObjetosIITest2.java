@@ -67,8 +67,8 @@ public class TPObjetosIITest2 {
 		Local l=lRepo.findByIdLocal(1);
 		Empleado e=eRepo.findByIdEmpleado(1);
 		Empleado e2=eRepo.findByIdEmpleado(3);
-		pedRepo.save(new Pedido(p,100,l,e,null,100000,true));
-		pedRepo.save(new Pedido(p2,150,l,e2,null,19500,true));
+//		pedRepo.save(new Pedido(p,100,e,null,100000,true));
+//		pedRepo.save(new Pedido(p2,150,e2,null,19500,true));
 		System.out.println(pedRepo.findAllConTodo());
 	}
 

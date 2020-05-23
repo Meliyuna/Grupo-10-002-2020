@@ -9,21 +9,56 @@ public class ProductoModel {
 	private String descripcion;
 	private float precio;
 	private LocalDate fechaAlta;
+	private int cantidad;
 	
 	public ProductoModel() {}
 	
+
 	public ProductoModel(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
 	}
 
+
+	public ProductoModel(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+	}
+
+
+	public ProductoModel(String nombre, String descripcion, float precio, LocalDate fechaAlta, int cantidad) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+		this.cantidad = cantidad;
+	}
+
+
+	public ProductoModel(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta,
+			int cantidad) {
+		super();
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+		this.cantidad = cantidad;
+	}
+
 	public int getIdProducto() {
 		return idProducto;
 	}
 
-	protected void setIdProducto(int idProducto) {
+	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
 
@@ -58,11 +93,20 @@ public class ProductoModel {
 	public void setFechaAlta(LocalDate fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
+	
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 
 	@Override
 	public String toString() {
-		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + "]\n";
+		return "ProductoModel [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + ", cantidad=" + cantidad + "]";
 	}
 	
 

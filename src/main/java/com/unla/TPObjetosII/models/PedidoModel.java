@@ -6,31 +6,36 @@ public class PedidoModel {
 	
 	private int idPedido;
 	
-	@JsonIgnore
 	private ProductoModel producto;
 	private int cantidad;
 	
-	@JsonIgnore
-	private LocalModel local;
+
 	
 	@JsonIgnore
 	private EmpleadoModel vendedorOriginal;
 	
 	@JsonIgnore
 	private EmpleadoModel vendedorAuxiliar;
+	@JsonIgnore
+	private CarritoModel carrito;
 	private float subtotal;
 	private boolean aceptado;
 	
-	public PedidoModel(ProductoModel producto, int cantidad, LocalModel local, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar,
+	public PedidoModel(int idPedido, ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar, CarritoModel carrito,
 			float subtotal, boolean aceptado) {
 		super();
+		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.local = local;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
+		this.carrito = carrito;
 		this.subtotal = subtotal;
 		this.aceptado = aceptado;
+	}
+
+	public PedidoModel() {
+		super();
 	}
 
 	public int getIdPedido() {
@@ -57,13 +62,6 @@ public class PedidoModel {
 		this.cantidad = cantidad;
 	}
 
-	public LocalModel getLocal() {
-		return local;
-	}
-
-	public void setLocal(LocalModel local) {
-		this.local = local;
-	}
 
 	public EmpleadoModel getVendedorOriginal() {
 		return vendedorOriginal;
@@ -97,9 +95,19 @@ public class PedidoModel {
 		this.aceptado = aceptado;
 	}
 
+	
+	
+	public CarritoModel getCarrito() {
+		return carrito;
+	}
+
+	public void setCarrito(CarritoModel carrito) {
+		this.carrito = carrito;
+	}
+
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad + ", local=" + local
+		return "Pedido [idPedido=" + idPedido + ", producto=" + producto + ", cantidad=" + cantidad 
 				+ ", vendedorOriginal=" + vendedorOriginal + ", vendedorAuxiliar=" + vendedorAuxiliar + ", subtotal="
 				+ subtotal + ", aceptado=" + aceptado + "]";
 	}

@@ -1,5 +1,6 @@
 package com.unla.TPObjetosII.entities;
 
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 @Entity
 public class Producto {
 
@@ -23,14 +25,30 @@ public class Producto {
 	private float precio;
 	@Column (name="FECHAALTA")
 	private LocalDate fechaAlta;
+	@Transient
+	private int cantidad;
 	
 	public Producto() {}
 	
+
 	public Producto(String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.fechaAlta = fechaAlta;
+
+	}
+	
+
+	public Producto(int idProducto, String nombre, String descripcion, float precio, LocalDate fechaAlta) {
+		super();
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.fechaAlta = fechaAlta;
+
 	}
 
 	public int getIdProducto() {
@@ -73,11 +91,24 @@ public class Producto {
 		this.fechaAlta = fechaAlta;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + "]\n";
+				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + "]";
 	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+
+		Producto other = (Producto) obj;
+		if (idProducto != other.idProducto)
+			return false;
+		return true;
+	}
+	
+
 	
 
 }
