@@ -3,7 +3,9 @@ package com.unla.TPObjetosII.services;
 import java.util.List;
 
 import com.unla.TPObjetosII.entities.Pedido;
+import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.models.PedidoModel;
+import com.unla.TPObjetosII.models.SolicitudStockModel;
 
 
 public interface IPedidoService {
@@ -12,6 +14,10 @@ public interface IPedidoService {
 	public PedidoModel getById(int idPedido);
 	public PedidoModel insertOrUpdate(PedidoModel pedidoModel) throws Exception;
 	public boolean remove(int idPedido);
+	public SolicitudStockModel altaSolicitudStock(SolicitudStockModel solicitud);
+	public SolicitudStockModel aceptarSolicitudStock(SolicitudStockModel solicitud);
+	public SolicitudStockModel negarSolicitudStock(SolicitudStockModel solicitud);
 	//public boolean remove(int idPedido);
+	
 
 }

@@ -15,7 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.unla.TPObjetosII.entities.Pedido;
+import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.models.PedidoModel;
+import com.unla.TPObjetosII.models.SolicitudStockModel;
 import com.unla.TPObjetosII.services.IPedidoService;
 
 
@@ -53,6 +55,30 @@ public class PedidoRestController {
 	@ResponseBody
 	public boolean baja(@RequestBody ObjectNode o)throws Exception{
 		return pedidoService.remove(o.get("idPedido").asInt());
+	}
+	
+	@PostMapping("/altaSolicitudStock")
+	@ResponseBody
+	public SolicitudStockModel altaSolicutudStock(@RequestBody ObjectNode o) throws Exception{
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
+		SolicitudStockModel solicitud = mapper.treeToValue(o, SolicitudStockModel.class);
+		return pedidoService.altaSolicitudStock(solicitud);
+	}
+	
+	@PostMapping("/aceptarSolicitudStock")
+	@ResponseBody
+	public SolicitudStockModel aceptarSolicutudStock(@RequestBody ObjectNode o) throws Exception{
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
+		SolicitudStockModel solicitud = mapper.treeToValue(o, SolicitudStockModel.class);
+		return pedidoService.aceptarSolicitudStock(solicitud);
+	}
+	
+	@PostMapping("/negarSolicitudStock")
+	@ResponseBody
+	public SolicitudStockModel negarSolicutudStock(@RequestBody ObjectNode o) throws Exception{
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
+		SolicitudStockModel solicitud = mapper.treeToValue(o, SolicitudStockModel.class);
+		return pedidoService.negarSolicitudStock(solicitud);
 	}
 
 }

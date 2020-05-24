@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class SolicitudStockModel {
 	
 	private int idSolicitudStock;
-	private LocalDate fecha;
+	private LocalDate fechaAbierta;
+	private LocalDate fechaCerrada;
 	private boolean aceptado;
+	private boolean pendiente;
 	
 	@JsonIgnore
 	private PedidoModel pedido;
@@ -18,9 +20,20 @@ public class SolicitudStockModel {
 	
 	public SolicitudStockModel() {}
 	
-	public SolicitudStockModel(LocalDate fecha, boolean aceptado, PedidoModel pedido, LocalModel local) {
+	public SolicitudStockModel(int idSolicitudStock,LocalDate fechaAbierta,LocalDate fechaCerrada, boolean aceptado,boolean pendiente, PedidoModel pedido, LocalModel local) {
 		super();
-		this.fecha = fecha;
+		this.idSolicitudStock = idSolicitudStock;
+		this.fechaAbierta = fechaAbierta;
+		this.fechaCerrada = fechaCerrada;
+		this.aceptado = aceptado;
+		this.pedido = pedido;
+		this.local = local;
+	}
+	
+	public SolicitudStockModel(LocalDate fechaAbierta,LocalDate fechaCerrada, boolean aceptado,boolean pendiente, PedidoModel pedido, LocalModel local) {
+		super();
+		this.fechaAbierta = fechaAbierta;
+		this.fechaCerrada = fechaCerrada;
 		this.aceptado = aceptado;
 		this.pedido = pedido;
 		this.local = local;
@@ -34,12 +47,20 @@ public class SolicitudStockModel {
 		this.idSolicitudStock = idSolicitudStock;
 	}
 
-	public LocalDate getFecha() {
-		return fecha;
+	public LocalDate getFechaAbierta() {
+		return fechaAbierta;
 	}
 
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
+	public void setFechaAbierta(LocalDate fechaAbierta) {
+		this.fechaAbierta = fechaAbierta;
+	}
+	
+	public LocalDate getFechaCerrada() {
+		return fechaAbierta;
+	}
+
+	public void setFechaCerrada(LocalDate fechaCerrada) {
+		this.fechaCerrada = fechaCerrada;
 	}
 
 	public boolean isAceptado() {
@@ -66,11 +87,22 @@ public class SolicitudStockModel {
 		this.local = local;
 	}
 
+
+	public boolean getPendiente() {
+		return pendiente;
+	}
+
+	public void setPendiente(boolean pendiente) {
+		this.pendiente = pendiente;
+	}
+
 	@Override
 	public String toString() {
-		return "SolicitudStock [idSolicitudStock=" + idSolicitudStock + ", fecha=" + fecha + ", aceptado=" + aceptado
-				+ ", pedido=" + pedido + ", local=" + local + "]\n";
+		return "SolicitudStockModel [idSolicitudStock=" + idSolicitudStock + ", fechaAbierta=" + fechaAbierta
+				+ ", fechaCerrada=" + fechaCerrada + ", aceptado=" + aceptado + ", pendiente=" + pendiente + ", pedido="
+				+ pedido + ", local=" + local + "]";
 	}
+
 	
 	
 	
