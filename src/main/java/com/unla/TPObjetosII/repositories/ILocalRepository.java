@@ -20,4 +20,7 @@ public interface ILocalRepository extends JpaRepository<Local, Serializable>{
 	@Query("select l from Local l where l.baja='0'")
 	public abstract List<Local> findAllLocal();
 	
+	@Query("select l from Local l join fetch l.listaLote lot join fetch lot.producto p where p.idProducto=(:idProducto) group by l having SUM(lot.cantidadActual)>0")
+	public abstract List<Local> localesConStock(int idProducto);
+	
 }
