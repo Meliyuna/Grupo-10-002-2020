@@ -130,6 +130,30 @@ public class LoteService implements ILoteService{
 	}
 	
 	@Override
+	public List<Lote> modificacionStockPrevio(int idLocal, int idProducto,int cantidadProd) {
+		List<Lote> lotes= loteRepository.lotesXproductoXlocal(idProducto, idLocal);
+		if(!lotes.isEmpty()) {
+		int cantRestante=cantidadProd;
+		for(Lote l: lotes) {	
+			int cantNuevaLote = l.getCantidadActual()-cantRestante;
+		    if(cantNuevaLote<0){
+		    	cantRestante=cantRestante-l.getCantidadActual();
+		    	l.setCantidadActual(0);
+		     //   cantRestante = cantRestante + cantNuevaLote; // si es negativa es una resta
+		        this.insertOrUpdate(loteConverter.entityToModel(l));
+		    }
+		    else{
+		        l.setCantidadActual(cantNuevaLote);
+		        this.insertOrUpdate(loteConverter.entityToModel(l));
+		        break;
+		    }
+		}			
+			return lotes;
+		}
+		return null;
+	}
+	
+	@Override
 	public List<Lote> getAll() {
 		// TODO Auto-generated method stub
 		return null;

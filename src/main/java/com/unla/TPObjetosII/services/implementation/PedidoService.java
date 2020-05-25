@@ -19,6 +19,7 @@ import com.unla.TPObjetosII.models.SolicitudStockModel;
 import com.unla.TPObjetosII.repositories.ILoteRepository;
 import com.unla.TPObjetosII.repositories.IPedidoRepository;
 import com.unla.TPObjetosII.repositories.ISolicitudStockRepository;
+import com.unla.TPObjetosII.services.ILoteService;
 import com.unla.TPObjetosII.services.IPedidoService;
 
 
@@ -41,6 +42,10 @@ public class PedidoService implements IPedidoService {
 	@Autowired
 	@Qualifier("pedidoConverter")
 	private PedidoConverter pedidoConverter;
+	
+	@Autowired
+	@Qualifier("loteService")
+	private ILoteService loteService;
 	
 	@Autowired
 	@Qualifier("solicitudStockConverter")
@@ -95,11 +100,10 @@ public class PedidoService implements IPedidoService {
 		s.setPendiente(pendiente);
 		
 		Local local=s.getLocal();
-		Pedido p= s.getPedido();
-		int cantidadProd=p.getCantidad();
-		int  IdProd=p.getProducto().getIdProducto();
-		List<Lote> lotes= loteRepository.lotesXproductoXlocal(IdProd, local.getIdLocal());
-		
+		Pedido pedido= s.getPedido();
+		int cantidadProd=pedido.getCantidad();
+		int  idProd=pedido.getProducto().getIdProducto();
+		loteService.modificacionStockPrevio(local.getIdLocal(),idProd,cantidadProd);
 		solicitudStockRepository.save(s);
 		return solicitudStockConverter.entityToModel(s);
 	}

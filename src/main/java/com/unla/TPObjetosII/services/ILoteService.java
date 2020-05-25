@@ -14,5 +14,6 @@ public interface ILoteService {
 	public List<ProductoModel> ProductosXlocal(int idLocal);
 	public ProductoModel ProductoXlocal(int idProducto, int idLocal);
 	public List<ProductoModel> CantidadProductoXlocal(int idLocal);
+	public List<Lote> modificacionStockPrevio(int idLocal, int idProducto,int cantidadProd);
 
 }
