@@ -70,5 +70,10 @@ public class LocalService implements ILocalService{
 		}
 		return localesConDist;
 	}
+
+	@Override
+	public List<Local> traerLocalesConStock(int idProducto) {
+		return localRepository.localesConStock(idProducto);
+	}
 	
 }

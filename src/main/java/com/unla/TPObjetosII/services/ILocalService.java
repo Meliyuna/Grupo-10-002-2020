@@ -12,4 +12,5 @@ public interface ILocalService {
 	public boolean remove(int idLocal);
 	public LocalModel getById(int idLocal);
 	public List<LocalModel> traerLocalesConDistancia(LocalModel local) throws Exception;
+	public List<Local> traerLocalesConStock(int idProducto);
 }
