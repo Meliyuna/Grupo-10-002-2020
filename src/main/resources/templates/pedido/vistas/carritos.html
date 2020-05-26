@@ -17,6 +17,7 @@ $(document).ready(function(){
 
 velAnim = 250;
 carritoSeleccionado= 0;
+productoSeleccionado = 0;
 idLocal=sessionStorage.getItem("idLocal");
 idEmpleado=sessionStorage.getItem("idEmpleado");
 pedidosDeCarrito = null;
@@ -234,6 +235,10 @@ function verModificarPedido(idPedido){
     });
 }
 
+function verSolicitudStock(idProducto){
+	
+}
+
 function agregarCarrito(){
 	json={"local":{"idLocal":idLocal},"listaPedido":[]}
 	console.log(json)
@@ -267,6 +272,14 @@ function agregarPedido(){
 			"vendedorOriginal":{"idPersona":idEmpleado},
 			"carrito":{"idCarrito":carritoSeleccionado}
 	}
+	if($('[name="optionStock"]:checked').val().includes("true")){	
+	     json.solicitudStock ={local:{idLocal:7}};
+	}
+	else{
+		json.solicitudStock = null;
+	}
+	console.log("imprimo sol");
+	console.log(json);
 	$.ajax({
     	url: '/api/pedido/alta',
     	type: 'POST',
@@ -351,6 +364,14 @@ function eliminarCarrito(idCarrito){
     	}
 	})
 }
+
+function verSelectLocal(){
+	$("#selectLocalSolicitar").show(velAnim);
+}
+
+function ocultarSelectLocal(){
+	$("#selectLocalSolicitar").hide(velAnim);
+}
 </script>
 <div id="contenido">
 	<div id="carritos" class="vista" style="display: none">
@@ -420,16 +441,40 @@ function eliminarCarrito(idCarrito){
 			      <input type="number" class="form-control" id="precioUnitario" disabled>
 			    </div>
 			</div>
-			<div class="form-group">
-				<label for="descripcion">Descripcion</label>
-				<textarea id="descripcion" class="form-control" rows="3" disabled></textarea>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="descripcion">Descripcion</label>
+					<textarea id="descripcion" class="form-control" rows="3" disabled></textarea>
+				</div>
+				<div class="form-group col-md-6">
+				<br><br>
+					<div class="form-check">
+					  <input class="form-check-input" type="radio" name="optionStock" id="optionStockPropio" value="false" checked onclick="ocultarSelectLocal()">
+					  <label class="form-check-label" for="optionStockPropio">
+					    Stock Propio
+					  </label>
+					</div>
+					<div class="form-check">
+					  <input class="form-check-input" type="radio" name="optionStock" id="optionStockOtro" value="true" onclick="verSelectLocal()">
+					  <label class="form-check-label" for="optionStockOtro">
+					    Stock de otro local
+					  </label>
+					</div>
+				</div>
 			</div>
 			<div class="form-row">
-			    <div class="form-group col-md-6">
+			    <div class="form-group col">
 			      <label for="aComprar">Cantidad a comprar:</label>
 			      <input type="number" class="form-control" id="aComprar" min="1">
 			    </div>
-			    <div class="form-group col-md-6">
+			    <div id="selectLocalSolicitar" class="form-group col" style="display: none">
+			    	<label for="localSolicitar">Seleccione local:</label>
+			    	<select id="localSolicitar" class="form-control">
+			      		<option>LocalMiCasa 4k</option>
+			      		<option>MuyMuyLejano 34k</option>
+			     	</select>
+			    </div>
+			    <div class="form-group col">
 			      <label for="precioTotal">Precio Total:</label>
 			      <input type="number" class="form-control" id="precioTotal" disabled>
 			    </div>
@@ -446,6 +491,9 @@ function eliminarCarrito(idCarrito){
 			<button type="button" class="btn btn-primary" onclick="modificarPedido()">Modificar</button>
 			<button type="button" class="btn btn-primary" onclick="eliminarPedido()">Eliminar</button>
 		</div>
+	</div>
+	<div id="carritos" class="vista" style="display: none">
+		<h1>Solicitud Stock</h1>
 	</div>
 	<div id="error" class="vista" style="display: none"></div>
 </div>
