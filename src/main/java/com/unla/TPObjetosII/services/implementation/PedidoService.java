@@ -51,8 +51,15 @@ public class PedidoService implements IPedidoService {
 	@Qualifier("solicitudStockConverter")
 	private SolicitudStockConverter solicitudStockConverter;
 
-	public PedidoModel insertOrUpdate(PedidoModel pedidoModel) {				
-		return pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
+	public PedidoModel insertOrUpdate(PedidoModel pedidoModel) {
+		if(pedidoModel.getSolicitudStock()!=null) {
+			SolicitudStockModel solicitud = pedidoModel.getSolicitudStock();
+			pedidoModel.setSolicitudStock(null);
+			PedidoModel pedidoGuardado = pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
+			solicitud.setPedido(pedidoGuardado);
+			this.altaSolicitudStock(solicitud);
+			return pedidoGuardado;
+		}else return pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
 	}
 
 	

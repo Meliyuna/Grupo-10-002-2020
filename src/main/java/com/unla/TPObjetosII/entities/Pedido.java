@@ -1,5 +1,6 @@
 package com.unla.TPObjetosII.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +28,10 @@ public class Pedido {
 	private Producto producto;
 
 	private int cantidad;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "pedido", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
+	private SolicitudStock solicitudStock;
 	
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -51,11 +57,12 @@ public class Pedido {
 	}
 	
 	public Pedido(int idPedido, Producto producto, int cantidad, Empleado vendedorOriginal, Empleado vendedorAuxiliar, Carrito carrito,
-			float subtotal, boolean aceptado) {
+			float subtotal, boolean aceptado, SolicitudStock solicitudStock) {
 		super();
 		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
+		this.solicitudStock = solicitudStock;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
 		this.carrito = carrito;
@@ -125,6 +132,16 @@ public class Pedido {
 
 	public void setCarrito(Carrito carrito) {
 		this.carrito = carrito;
+	}
+
+	
+	
+	public SolicitudStock getSolicitudStock() {
+		return solicitudStock;
+	}
+
+	public void setSolicitudStock(SolicitudStock solicitudStock) {
+		this.solicitudStock = solicitudStock;
 	}
 
 	@Override

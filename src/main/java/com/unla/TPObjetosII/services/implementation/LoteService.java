@@ -111,8 +111,7 @@ public class LoteService implements ILoteService{
 			productosDelLocal.add(producto);
 		}
 		}
-		if(productosDelLocal.isEmpty())return null;
-		else return productosDelLocal;
+		return productosDelLocal;
 	}
 	
 	@Override

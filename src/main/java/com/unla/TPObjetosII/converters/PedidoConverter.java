@@ -22,6 +22,10 @@ public class PedidoConverter {
 	@Autowired
 	@Qualifier("carritoConverter")
 	private CarritoConverter carritoConverter;
+	
+	@Autowired
+	@Qualifier("solicitudStockConverter")
+	private SolicitudStockConverter solicitudStockConverter;
 
 	public Pedido modelToEntity(PedidoModel pedidoModel) {		
 		if (pedidoModel==null) return null;
@@ -32,7 +36,8 @@ public class PedidoConverter {
 							empleadoConverter.modelToEntity(pedidoModel.getVendedorAuxiliar()), 
 							carritoConverter.modelToEntity(pedidoModel.getCarrito()),
 							pedidoModel.getSubtotal(), 
-							pedidoModel.isAceptado()
+							pedidoModel.isAceptado(),
+							solicitudStockConverter.modelToEntity(pedidoModel.getSolicitudStock())
 						);		
 		
 	}
@@ -46,7 +51,8 @@ public class PedidoConverter {
 							empleadoConverter.entityToModel(pedido.getVendedorAuxiliar()), 
 							carritoConverter.entityToModel(pedido.getCarrito()),
 							pedido.getSubtotal(), 
-							pedido.isAceptado()
+							pedido.isAceptado(),
+							solicitudStockConverter.entityToModelSinPedido(pedido.getSolicitudStock())
 						);
 	}
 	
@@ -59,7 +65,8 @@ public class PedidoConverter {
 							empleadoConverter.entityToModel(pedido.getVendedorAuxiliar()), 
 							null,
 							pedido.getSubtotal(), 
-							pedido.isAceptado()
+							pedido.isAceptado(),
+							solicitudStockConverter.entityToModelSinPedido(pedido.getSolicitudStock())
 						);
 	}
 }
