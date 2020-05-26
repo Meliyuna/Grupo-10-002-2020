@@ -12,6 +12,7 @@ import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.repositories.ILocalRepository;
 import com.unla.TPObjetosII.services.ILocalService;
+import com.unla.TPObjetosII.services.ILoteService;
 
 @Service("localService")
 public class LocalService implements ILocalService{
@@ -23,6 +24,10 @@ public class LocalService implements ILocalService{
 	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
+	
+	@Autowired
+	@Qualifier("loteService")
+	private ILoteService loteService;
 
 	@Override
 	public LocalModel insertOrUpdate(LocalModel localModel) throws Exception {
@@ -72,8 +77,30 @@ public class LocalService implements ILocalService{
 	}
 
 	@Override
-	public List<Local> traerLocalesConStock(int idProducto) {
-		return localRepository.localesConStock(idProducto);
+	public List<LocalModel> traerLocalesConStockDistanciaYCantidad(int idProducto, LocalModel local) throws Exception {
+		List<LocalModel> locales = this.traerLocalesConDistancia(local);
+		List<Local> localesConProd = localRepository.localesConStock(idProducto);
+
+		List<LocalModel> localesProd = new ArrayList<LocalModel>();
+
+		List<LocalModel> localesAMostrar = new ArrayList<LocalModel>();
+
+		for (Local l : localesConProd) {
+			localesProd.add(localConverter.entityToModel(l));
+		}
+		double distancia = 0;
+		int cantidad=0;
+		for (LocalModel l : locales) {
+			distancia = l.getDistancia();	
+			for (LocalModel loc : localesProd) {
+				if (loc.getIdLocal() == l.getIdLocal()) {
+					cantidad=loteService.ProductoXlocal(idProducto, loc.getIdLocal()).getCantidad();
+					loc.setCantidad(cantidad);
+					loc.setDistancia(distancia);
+					localesAMostrar.add(loc);
+				}
+			}
+		}
+		return localesAMostrar;
 	}
-	
 }

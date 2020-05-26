@@ -13,6 +13,7 @@ public class LocalModel {
 	private double longitud;
 	private double telefono;
 	private double distancia;
+	private int cantidad;
 	
 	@JsonIgnore
 	private Set<EmpleadoModel> listaEmpleado;
@@ -136,6 +137,14 @@ public class LocalModel {
 		double va1 = Math.pow(sindLat, 2) + Math.pow(sindLng, 2) * Math.cos(Math.toRadians(this.getLatitud())) * Math.cos(Math.toRadians(local.getLatitud()));
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 	
 	
