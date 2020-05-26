@@ -33,7 +33,7 @@ CREATE TABLE `carrito` (
   PRIMARY KEY (`idCarrito`),
   KEY `fkcliente_idx` (`idCliente`),
   CONSTRAINT `fkcliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,18 +116,18 @@ DROP TABLE IF EXISTS `lote`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lote` (
   `idLote` int(11) NOT NULL AUTO_INCREMENT,
-  `cantidadInicial` int(11) DEFAULT NULL,
-  `cantidadActual` int(11) DEFAULT NULL,
+  `cantidadInicial` int(11) DEFAULT '0',
+  `cantidadActual` int(11) DEFAULT '0',
   `fechaIngreso` date DEFAULT NULL,
   `idProducto` int(11) DEFAULT NULL,
-  `estado` bit(1) DEFAULT NULL,
+  `estado` bit(1) DEFAULT b'1',
   `idLocal` int(11) DEFAULT NULL,
   PRIMARY KEY (`idLote`),
   KEY `fklocal_idx` (`idLocal`),
   KEY `fkproducto_idx` (`idProducto`),
   CONSTRAINT `fklocal` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkproducto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,6 @@ CREATE TABLE `pedido` (
   `idPedido` int(11) NOT NULL AUTO_INCREMENT,
   `idProducto` int(11) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `idLocal` int(11) DEFAULT NULL,
   `idVendedorOriginal` int(11) DEFAULT NULL,
   `idVendedorAuxiliar` int(11) DEFAULT NULL,
   `subtotal` float DEFAULT NULL,
@@ -149,16 +148,14 @@ CREATE TABLE `pedido` (
   `idCarrito` int(11) DEFAULT NULL,
   PRIMARY KEY (`idPedido`),
   KEY `fkproducto2_idx` (`idProducto`),
-  KEY `fklocall_idx` (`idLocal`),
   KEY `fkvendedororigianl_idx` (`idVendedorOriginal`),
   KEY `fkvendedorauxoloar_idx` (`idVendedorAuxiliar`),
   KEY `fkcarrito_idx` (`idCarrito`),
   CONSTRAINT `fkcarrito` FOREIGN KEY (`idCarrito`) REFERENCES `carrito` (`idCarrito`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fklocall` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkproducto2` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkvendedorauxoloar` FOREIGN KEY (`idVendedorAuxiliar`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkvendedororigianl` FOREIGN KEY (`idVendedorOriginal`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +190,7 @@ CREATE TABLE `producto` (
   `precio` float DEFAULT NULL,
   `fechaAlta` date DEFAULT NULL,
   PRIMARY KEY (`idProducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,4 +231,4 @@ CREATE TABLE `solicitudstock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-21 20:37:08
+-- Dump completed on 2020-05-22 21:49:38
