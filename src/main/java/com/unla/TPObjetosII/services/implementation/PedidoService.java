@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.converters.PedidoConverter;
 import com.unla.TPObjetosII.converters.SolicitudStockConverter;
 import com.unla.TPObjetosII.entities.Local;
@@ -13,6 +14,7 @@ import com.unla.TPObjetosII.entities.Lote;
 import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.entities.Producto;
 import com.unla.TPObjetosII.entities.SolicitudStock;
+import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.models.SolicitudStockModel;
@@ -42,6 +44,7 @@ public class PedidoService implements IPedidoService {
 	@Autowired
 	@Qualifier("pedidoConverter")
 	private PedidoConverter pedidoConverter;
+	
 	
 	@Autowired
 	@Qualifier("loteService")
@@ -96,38 +99,6 @@ public class PedidoService implements IPedidoService {
 	}
 
 
-	@Override
-	public SolicitudStockModel aceptarSolicitudStock(SolicitudStockModel solicitud) {
-		SolicitudStock s=solicitudStockConverter.modelToEntity(solicitud);
-		LocalDate fechaActual = LocalDate.now();
-		boolean aceptado=true;
-		boolean pendiente=false;
-		s.setFechaCerrada(fechaActual);
-		s.setAceptado(aceptado);
-		s.setPendiente(pendiente);
-		
-		Local local=s.getLocal();
-		Pedido pedido= s.getPedido();
-		int cantidadProd=pedido.getCantidad();
-		int  idProd=pedido.getProducto().getIdProducto();
-		loteService.modificacionStockPrevio(local.getIdLocal(),idProd,cantidadProd);
-		solicitudStockRepository.save(s);
-		return solicitudStockConverter.entityToModel(s);
-	}
-
-
-	@Override
-	public SolicitudStockModel negarSolicitudStock(SolicitudStockModel solicitud) {
-		SolicitudStock s=solicitudStockConverter.modelToEntity(solicitud);
-		LocalDate fechaActual = LocalDate.now();
-		boolean aceptado=false;
-		boolean pendiente=false;
-		s.setFechaCerrada(fechaActual);
-		s.setAceptado(aceptado);
-		s.setPendiente(pendiente);
-		solicitudStockRepository.save(s);
-		return solicitudStockConverter.entityToModel(s);
-	}
 	
 	
 

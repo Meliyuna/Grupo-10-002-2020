@@ -13,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Local;
+import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.LocalModel;
+import com.unla.TPObjetosII.models.SolicitudStockModel;
+import com.unla.TPObjetosII.services.IEmpleadoService;
 import com.unla.TPObjetosII.services.ILocalService;
+import com.unla.TPObjetosII.services.IPedidoService;
+import com.unla.TPObjetosII.services.ISolicitudStockService;
 
 @RestController
 @RequestMapping("/api/local")
@@ -27,6 +34,19 @@ public class LocalRestController {
 	@Autowired
 	@Qualifier("localService")
 	private ILocalService localService;
+	
+	@Autowired
+	@Qualifier("empleadoService")
+	private IEmpleadoService empleadoService;
+	
+	@Autowired
+	@Qualifier("pedidoService")
+	private IPedidoService pedidoService;
+	
+	@Autowired
+	@Qualifier("solicitudStockService")
+	private ISolicitudStockService solicitudStockService;
+	
 	
 	@PostMapping("/alta")
 	@ResponseBody
@@ -61,6 +81,27 @@ public class LocalRestController {
 		return localService.traerLocalesConDistancia(local);
 	}
 	
+	@PostMapping("/aceptarSolicitudStock")
+	@ResponseBody
+	public SolicitudStockModel aceptarSolicutudStock(@RequestBody ObjectNode o) throws Exception{
+		SolicitudStockModel solicitud = solicitudStockService.getById((o.get("idSolicitudStock").asInt()));
+		EmpleadoModel vendedorAux=empleadoService.getEmpleado((o.get("idEmpleado").asInt()));
+		return localService.aceptarSolicitudStock(solicitud,vendedorAux);
+	}
+	
+	@PostMapping("/negarSolicitudStock")
+	@ResponseBody
+	public SolicitudStockModel negarSolicutudStock(@RequestBody ObjectNode o) throws Exception{
+		SolicitudStockModel solicitud = solicitudStockService.getById((o.get("idSolicitudStock").asInt()));
+		return localService.negarSolicitudStock(solicitud);
+	}
+	
+	@PostMapping("/traerSolicitudesStock")
+	@ResponseBody
+	public List<SolicitudStockModel> traerSolicitudesStock(@RequestBody ObjectNode o){
+		LocalModel local= localService.getById(o.get("idLocal").asInt());
+		return localService.traerSolicitudesStock(local);
+	}
 	
 	
 	
