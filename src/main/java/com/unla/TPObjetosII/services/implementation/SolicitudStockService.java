@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.services.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.SolicitudStockConverter;
 import com.unla.TPObjetosII.entities.SolicitudStock;
@@ -9,6 +10,7 @@ import com.unla.TPObjetosII.models.SolicitudStockModel;
 import com.unla.TPObjetosII.repositories.ISolicitudStockRepository;
 import com.unla.TPObjetosII.services.ISolicitudStockService;
 
+@Service("solicitudStockService")
 public class SolicitudStockService implements ISolicitudStockService {
 
 	@Autowired

@@ -14,9 +14,6 @@ import com.unla.TPObjetosII.repositories.IProductoRepository;
 import com.unla.TPObjetosII.services.IProductoService;
 
 
-
-
-
 @Service("productoService")
 public class ProductoService implements IProductoService{
 
