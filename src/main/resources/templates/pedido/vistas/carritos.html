@@ -13,6 +13,12 @@ $(document).ready(function(){
 		}
 		$("#precioTotal").val($("#aComprar").val()*$("#precioUnitario").val());
 	});
+	
+	//Actualizar max segun local seleccionado
+	$("#localSolicitar").change(function(){
+		$("#aComprar").attr("max",$("#localSolicitar option:selected").data("newmax"));
+		$("#aComprar").val(1);
+	})
 });
 
 velAnim = 250;
@@ -36,14 +42,29 @@ function verPedidos(idCarrito){
         		pedidosDeCarrito=pedidos;
         		console.log(pedidos);
         		carritoSeleccionado=idCarrito;
+        		html="";
             	$.each(pedidos,function(index,pedido){
-            		$("#tbody-tabla-pedidos").append('<tr><th scope="row">'+pedido.idPedido+'</th>'+
+            		html+='<tr><th scope="row">'+pedido.idPedido+'</th>'+
 							'<td>'+pedido.producto.nombre+'</td>'+
 							'<td>'+pedido.cantidad+'</td>'+
 							'<td>'+pedido.subtotal+'</td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verModificarPedido('+pedido.idPedido+')">modificar</button></td>'+
-							'</tr>');
+							'<td><button type="button" class="btn btn-success" onclick="verModificarPedido('+pedido.idPedido+')">modificar</button></td>';
+					if(pedido.solicitudStock==null){
+						html+='<td>Aceptado</td>';
+					}else if(pedido.solicitudStock.pendiente==true){
+						html+='<td>Pendiente</td>';
+					}else if(pedido.solicitudStock.pendiente==false){
+						if(pedido.solicitudStock.aceptado==true){
+							html+='<td>Solicitud Aceptada</td>';
+						}else{
+							html+='<td>Solicitud Rechazada</td>';
+						}
+					}
+							
+					html+='</tr>';
+							
             	});
+            	$("#tbody-tabla-pedidos").html(html);
             	$(".vista").hide();
         		$("#pedidos").show();
         		$("#contenido").show(velAnim);
@@ -124,7 +145,7 @@ function verProductos(){
 	            			html+= '<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
 	            		}
 	            		else{
-	            			html+= '<td><button type="button" class="btn btn-success" disabled onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
+	            			html+= '<td><button type="button" class="btn btn-warning" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
 	            		}
             		$("#tbody-tabla-productos").append(html)
             		}
@@ -172,7 +193,50 @@ function verAgregarPedido(idProducto){
             	$("#descripcion").html(producto.descripcion);
             	$("#aComprar").val(1);
             	$("#precioTotal").val(producto.precio);
-            	$("#aComprar").attr("max",producto.cantidad);
+            	//cargar locales con stock del producto
+            	$.ajax({
+            		url: '/api/stock/traerLocalesConStock',
+                	type: 'POST',
+                	dataType: 'json',
+                	data: JSON.stringify(json),
+                	contentType: "application/json",
+                	success: function(locales){
+                		$("#localSolicitar").html("");
+                		$.each(locales,function(index,local){
+                    		$("#localSolicitar").append('<option value="'+local.idLocal+'" data-newmax="'+ local.cantidad +'">'+
+                    									local.direccion+' - '+local.distancia+' - '+local.cantidad+'</option>');
+                    	});
+                		$("#aComprar").prop("disabled",false);
+                		//comprobar stock de mi local
+                		if(producto.cantidad>0){
+                    		$("#aComprar").attr("max",producto.cantidad);
+                    		$("#aComprar").data("maxOriginal",producto.cantidad);
+                    		$("#optionStockPropio").prop("disabled", false);
+                    		$("#optionStockPropio").prop("checked", true);
+                    		$("#selectLocalSolicitar").hide();
+                    	}else{
+                    		$("#optionStockPropio").prop("disabled", true);
+                    		$("#optionStockOtro").prop("checked", true);
+                    		verSelectLocal();
+                    	}
+                		if(locales.length!=0){
+                			$("#optionStockOtro").prop("disabled", false);
+                		}else{
+                			$("#optionStockOtro").prop("checked", false);
+                			$("#optionStockOtro").prop("disabled", true);
+                			$("#selectLocalSolicitar").hide();
+                		}
+                		if($('[name="optionStock"]:checked').val()==null){
+                			$("#buttonAgregarPedido").prop("disabled",true);
+                		}
+                		else{
+                			$("#buttonAgregarPedido").prop("disabled",false);
+                		}
+                	},
+                	error: function(response){
+                		console.log(response);
+                	}
+            	});
             	
             	$(".vista").hide();
         		$("#pedido").show();
@@ -215,8 +279,25 @@ function verModificarPedido(idPedido){
        	            	$("#nombre").val(producto.nombre);
        	            	$("#precioUnitario").val(producto.precio);
        	            	$("#descripcion").html(producto.descripcion);
+       	            	$("#selectLocalSolicitar").hide();
+       	            	$("#optionStockOtro").prop("disabled", true);
+       	            	$("#optionStockPropio").prop("disabled", true);
        	            	
        	            	$(".vista").hide();
+       	            	
+       	            	if(pedido.solicitudStock==null){
+       	            		$("#aComprar").prop("disabled",false);
+       	            		$("#aComprar").attr("max",producto.cantidad);
+       	            		$("#optionStockPropio").prop("checked", true);
+       	            	}else{
+       	            		$("#aComprar").prop("disabled",true);
+       	            		$("#optionStockOtro").prop("checked", true);
+                    		$("#textLocalSolicitar").show();
+                    		$("#localSolicitarEstatico").val(pedido.solicitudStock.local.direccion);
+       	            	}
+       	            	
+       	            	
+       	            	
        	        		$("#pedido").show();
        	        		$("#botonesModificar").show();
        	        		$("#tituloModificar").show();
@@ -273,7 +354,9 @@ function agregarPedido(){
 			"carrito":{"idCarrito":carritoSeleccionado}
 	}
 	if($('[name="optionStock"]:checked').val().includes("true")){	
-	     json.solicitudStock ={local:{idLocal:7}};
+	     json.solicitudStock ={local:{idLocal:$("#localSolicitar").val()}};
+	     console.log("Este es el local a solocasfas");
+	     console.log($("#selectLocalSolicitar").val());
 	}
 	else{
 		json.solicitudStock = null;
@@ -367,10 +450,14 @@ function eliminarCarrito(idCarrito){
 
 function verSelectLocal(){
 	$("#selectLocalSolicitar").show(velAnim);
+	$("#aComprar").attr("max",$("#localSolicitar option:selected").data("newmax"));
+	$("#aComprar").val(1);
 }
 
 function ocultarSelectLocal(){
 	$("#selectLocalSolicitar").hide(velAnim);
+	$("#aComprar").attr("max",$("#aComprar").data("maxOriginal"));
+	$("#aComprar").val(1);
 }
 </script>
 <div id="contenido">
@@ -402,6 +489,7 @@ function ocultarSelectLocal(){
 		      <th scope="col">Cantidad</th>
 		      <th scope="col">Subtotal</th>
 		      <th scope="col">Accion</th>
+		      <th scope="col">Estado</th>
 		    </tr>
 		  </thead>
 		  <tbody id="tbody-tabla-pedidos">
@@ -467,12 +555,14 @@ function ocultarSelectLocal(){
 			      <label for="aComprar">Cantidad a comprar:</label>
 			      <input type="number" class="form-control" id="aComprar" min="1">
 			    </div>
-			    <div id="selectLocalSolicitar" class="form-group col" style="display: none">
+			    <div id="selectLocalSolicitar" class="form-group col vista" style="display: none">
 			    	<label for="localSolicitar">Seleccione local:</label>
 			    	<select id="localSolicitar" class="form-control">
-			      		<option>LocalMiCasa 4k</option>
-			      		<option>MuyMuyLejano 34k</option>
 			     	</select>
+			    </div>
+			    <div id="textLocalSolicitar" class="form-group col vista" style="display: none">
+			    	<label for="localSolicitarEstatico">Local:</label>
+			    	<input id="localSolicitarEstatico" class="form-control" type="text" disabled>
 			    </div>
 			    <div class="form-group col">
 			      <label for="precioTotal">Precio Total:</label>
@@ -484,7 +574,7 @@ function ocultarSelectLocal(){
 		</form>
 		<div id="botonesAgregar" style="display: none" class="vista">
 			<button type="button" class="btn btn-primary" onclick="verProductos()">Volver</button>
-			<button type="button" class="btn btn-primary" onclick="agregarPedido()">Agregar</button>
+			<button id="buttonAgregarPedido" type="button" class="btn btn-primary" onclick="agregarPedido()">Agregar</button>
 		</div>
 		<div id="botonesModificar" style="display: none" class="vista">
 			<button type="button" class="btn btn-primary" onclick="verPedidos(carritoSeleccionado)">Volver</button>

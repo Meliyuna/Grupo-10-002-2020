@@ -15,7 +15,6 @@ public class SolicitudStockModel {
 	@JsonIgnore
 	private PedidoModel pedido;
 	
-	@JsonIgnore
 	private LocalModel local;
 	
 	public SolicitudStockModel() {}
@@ -26,6 +25,7 @@ public class SolicitudStockModel {
 		this.fechaAbierta = fechaAbierta;
 		this.fechaCerrada = fechaCerrada;
 		this.aceptado = aceptado;
+		this.pendiente = pendiente;
 		this.pedido = pedido;
 		this.local = local;
 	}
@@ -35,6 +35,7 @@ public class SolicitudStockModel {
 		this.fechaAbierta = fechaAbierta;
 		this.fechaCerrada = fechaCerrada;
 		this.aceptado = aceptado;
+		this.pendiente = pendiente;
 		this.pedido = pedido;
 		this.local = local;
 	}
