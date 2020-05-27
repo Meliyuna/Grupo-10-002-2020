@@ -67,7 +67,9 @@ public class LocalService implements ILocalService{
 		List<LocalModel> localesConDist= new ArrayList<LocalModel>();
 		double distancia;
 		for(Local l: locales) {
-			localesConDist.add(localConverter.entityToModel(l));
+			if(l.getIdLocal()!=local.getIdLocal()) {
+				localesConDist.add(localConverter.entityToModel(l));
+			}
 		}
 		for(LocalModel l: localesConDist) {
 			distancia=local.distanciaCoord(l);
