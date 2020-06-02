@@ -1,0 +1,96 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+	$(document).ready(function() {
+		//Empleados
+		$.ajax({
+        	url: '/api/empleado/traerEmpleados',
+        	type: 'POST',
+        	success: function(response){
+            	console.log(response);
+            	var stringTipo;
+            	$.each(response,function(index,empleado){
+            		if(empleado.tipoEmpleado==false){	
+       			     stringTipo="Vendedor";
+       			}
+       			else{
+       			   stringTipo = "Gerente";
+       			}
+            		$("#empleados").append(new Option(empleado.apellido+" "+ empleado.nombre+" "+empleado.dni+" "+stringTipo ,empleado.idPersona));
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
+	
+		
+		//Seleccionar Empleado a borrar 
+		$("#empleados").change(function(){
+			$(".error").css("display", "none");
+			json={"idEmpleado":$("#empleados").val()};
+			$("#formularioEmpleado").hide(1000, function(){
+				$.ajax({
+		        	url: '/api/empleado/traerEmpleado',
+		        	type: 'POST',
+	            	dataType: 'json',
+	            	data: JSON.stringify(json),
+	            	contentType: "application/json",
+		        	success: function(empleado){
+		        		console.log(empleado)
+	                	$("#apellido").val(empleado.apellido);
+		        		$("#nombre").val(empleado.nombre);
+		        		$("#dni").val(empleado.dni);
+		        		$("#franjaHoraria").val(empleado.franjaHoraria);
+		        		if(empleado.tipoEmpleado==false){
+		        			$("#radioVendedor").prop("checked", true);
+                        }
+                        else{
+                        	$("#radioGerente").prop("checked", true);
+                        }		        		
+		        		$("#formularioEmpleado").show(1000);
+		        	},
+		        	error: function(response){
+		        		console.log(response);
+		        	}
+		        });
+			});
+		});
+		
+			
+		//Borrar un empleado seleccionado
+		$("#borrar").click(function(){
+			json={"idEmpleado":$("#empleados").val()};
+			$.ajax({
+            	url: '/api/empleado/baja',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+            	success: function(response){
+                	$("#formularios").hide(1000,function(){$("#exitoBorrar").show(1000)});
+            	},
+            	error: function(response){
+            		console.log(response);	
+            	}
+        	});
+		});
+	});
+</script>
+
+		<div>
+			<h1>Borrar empleados:</h1>
+		</div>
+		<div id="formularios">
+			<div id="formularioSelectEmpleados">
+				<p>Seleccione Empleado: <select id="empleados">
+		<!--  		<option>Elija una opcion </option>   -->
+				</select>
+				</p>
+			</div>
+			<button id="borrar" type="button">Borrar</button>
+			</div>
+			
+			<div  id="exitoBorrar" style="display: none;">
+			<h1>Empleado borrado</h1>
+		</div>
+

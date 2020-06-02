@@ -1,0 +1,142 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#guardar").click(function() {
+			$(".ERROR").css("display", "none");
+			var apellido = $("#apellido").val();
+			var nombre = $("#nombre").val();
+			var fechaNacimiento= $("#fechaNacimiento").val();
+			var dni = $("#dni").val();
+			var franjaHoraria= $("#franjaHoraria").val();
+			var tipoEmpleado;
+			var idLocal=$("#locales").val();
+			
+			var error=false;
+			
+			if($("#apellido").val() == ""){
+		    //  $("#apellido").focus();			// Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
+		        $("#displayApellidoError").css("display", "block");
+		    	error=true;
+		    }	
+			if($("#nombre").val() == ""){    
+		    //    $("#nombre").focus();			
+				  $("#displayNombreError").css("display", "block");
+				  error=true;
+		    }
+			if($("#dni").val() == ""){     
+			 //       $("#dni").focus();       
+				 $("#displayDniError2").css("display", "block");
+				 error=true;
+			}
+			
+			if($("#franjaHoraria").val() == ""){
+		        
+		   //     $("#franjaHoraria").focus();
+		        $("#displayFHError").css("display", "block");
+		        error=true;
+		    }
+			
+			
+			if($('[name="tipoEmpleado"]:checked').val().includes("gerente")){	
+			     tipoEmpleado = true;
+			}
+			else{
+			   tipoEmpleado = false;
+			}
+			if(error==false){
+			json = {
+					"apellido": apellido,
+					"nombre": nombre,
+					"dni": dni,
+					"franjaHoraria":franjaHoraria,
+					"tipoEmpleado": tipoEmpleado,
+					"local": {
+						"idLocal":idLocal
+					}
+					};
+			console.log(json);
+			$.ajax({
+            	url: '/api/empleado/alta',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+            	success: function(response){
+            		$("#formularios").hide(1000,function(){$("#exitoAgregar").show(1000)});
+            	},
+            	error: function(response){
+                	console.log(response.responseJSON.message)
+                	if(response.responseJSON.message.includes("dni")){
+           			 $("#displayDniError").css("display", "block");
+           			 $("#displayDniError").html(response.responseJSON.message);
+           		}
+            	}
+        	})
+			}
+			});
+		
+		$.ajax({
+        	url: '/api/local/traerLocales',
+        	type: 'POST',
+        	success: function(response){
+            	console.log(response);
+            	$.each(response,function(index,local){
+            		$("#locales").append(new Option(local.direccion,local.idLocal))
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
+	});
+			
+</script>
+
+
+
+<div>
+		<form id="formularios">
+			<h1>Alta de empleados</h1> 
+			
+			
+			<p>Apellido: <input id="apellido" type="text" name="apellido" required="required"></p>
+			<label id="displayApellidoError" class="ERROR" style="display: none;">Complete el campo apellido</label> 
+			
+			<p>Nombre: <input id="nombre" type="text" name="nombre" required="required"></p>
+			<label id="displayNombreError" class="ERROR" style="display: none;">Complete el campo nombre</label> 
+			
+			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
+			
+			
+			<p>Dni: <input id="dni" type="number" name="dni" required="required"></p>
+			<label id="displayDniError" class="ERROR" style="display: none;"></label> 
+			<label id="displayDniError2" class="ERROR" style="display: none;">Complete el campo DNI </label> 	
+			
+			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria" required="required"></p>
+			<label id="displayFHError" class="ERROR" style="display: none;">Complete el campo franja Horaria </label> 	
+			
+			<p>
+          <label>Tipo de empleado</label>            
+          <input type = "radio"
+                 name = "tipoEmpleado"
+                 value = "vendedor" 
+                 checked="checked"/>
+                 <label>Vendedor</label> 
+          <input type = "radio"
+                 name = "tipoEmpleado"
+                 value = "gerente" />
+                 <label>Gerente</label> 
+        </p> 
+        <div>
+			<h1>Locales :</h1>
+		</div>
+		<div id="formulario">
+			<select id="locales">
+			</select>
+		</div>    	
+			<button id="guardar" type="button">Guardar</button>
+		</form>
+	</div>
+		<div  id="exitoAgregar" style="display: none;">
+			<h1>Empleado agregado</h1>
+		</div>
