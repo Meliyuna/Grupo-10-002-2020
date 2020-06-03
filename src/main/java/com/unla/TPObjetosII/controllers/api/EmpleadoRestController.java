@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -35,9 +36,9 @@ public class EmpleadoRestController {
 	@PostMapping("/alta")
 	@ResponseBody
 	public EmpleadoModel alta(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
-		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS); //un objeto que me ayuda a mapear o crear el json
-		// el disable esta para ignorar la etiqueta de JsonIgnore en LocalModel y que quede mapeado los 2
+		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
 		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
+		e.setLocal(mapper.treeToValue(empleadoNode.get("local"),LocalModel.class));
 		long dni=e.getDni();
 		if(empleadoService.getEmpleado(dni)!=null)throw new Exception("Ya existe empleado con ese dni");
 		System.out.println(empleadoService.insertOrUpdate(e));
@@ -58,9 +59,9 @@ public class EmpleadoRestController {
 	@PostMapping("/modificar")
 	@ResponseBody
 	public EmpleadoModel modificar(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
-		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS); //un objeto que me ayuda a mapear o crear el json
-		// el disable esta para ignorar la etiqueta de JsonIgnore en LocalModel y que quede mapeado los 2
+		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
 		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
+		e.setLocal(mapper.treeToValue(empleadoNode.get("local"), LocalModel.class));
 		long dni=e.getDni();
 		if(empleadoService.getEmpleado(dni)!=null)if(empleadoService.getEmpleado(dni).getIdPersona()!=e.getIdPersona()) throw new Exception("Ya existe empleado con ese dni");
 			
@@ -76,7 +77,9 @@ public class EmpleadoRestController {
 		ObjectMapper mapper = new ObjectMapper();
 		EmpleadoModel e=empleadoService.getEmpleado(o.get("idEmpleado").asInt());
 		ObjectNode empleadoNode=mapper.convertValue(e, ObjectNode.class);// empleado que tiene todos menos el local
-		ObjectNode localNode=mapper.convertValue(e.getLocal(), ObjectNode.class);
+		ObjectNode localNode = null;
+		System.out.println(e);
+		if (e.getLocal()!=null)localNode=mapper.convertValue(e.getLocal(), ObjectNode.class);
 		empleadoNode.set("local",localNode);
 		//EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	
 		return empleadoNode;

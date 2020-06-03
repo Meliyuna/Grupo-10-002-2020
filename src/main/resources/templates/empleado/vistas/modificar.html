@@ -1,6 +1,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
 	$(document).ready(function() {
+		var fecha = new Date();
+		fecha.setFullYear(fecha.getFullYear()-18);
+		var fechaString=(fecha.toISOString()).substring(0,10);
+		$("#fechaNacimiento").attr("max",fechaString);
+		
 		//Empleados
 		$.ajax({
         	url: '/api/empleado/traerEmpleados',
@@ -55,6 +60,7 @@
 		        		$("#dni").val(empleado.dni);
 		        		$("#franjaHoraria").val(empleado.franjaHoraria);
 		        		$("#locales").val(empleado.local.idLocal);
+		        		$("#fechaNacimiento").val(empleado.fechaNacimiento);
 		        		if(empleado.tipoEmpleado==false){
 		        			$("#radioVendedor").prop("checked", true);
                         }
@@ -120,6 +126,7 @@
 					"franjaHoraria": $("#franjaHoraria").val(),
 					"tipoEmpleado": tipoEmpleado,
 					"idPersona": $("#empleados").val(),
+					"fechaNacimiento":$("#fechaNacimiento").val(),
 					"local": {
 						"idLocal":$("#locales").val()
 					}
@@ -156,15 +163,15 @@
 			</div>
 			<div id="formularioEmpleado" style="display: none;">
 			
-			<p>Apellido: <input id="apellido" type="text" name="apellido" required="required"></p>
+			<p>Apellido: <input class="form-control" id="apellido" type="text" name="apellido" required="required"></p>
 			<label id="displayApellidoError" class="ERROR" style="display: none;">Complete el campo apellido</label>
 			
-			<p>Nombre: <input id="nombre" type="text" name="nombre" required="required"></p>
+			<p>Nombre: <input class="form-control" id="nombre" type="text" name="nombre" required="required"></p>
 			<label id="displayNombreError" class="ERROR" style="display: none;">Complete el campo nombre</label> 
 			
-			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
+			<p>Fecha de Nacimiento: <input id="fechaNacimiento" class="form-control" type="date" name="fechaNacimiento" ></p>
 			
-			<p>Dni: <input id="dni" type="number" name="dni" required="required"></p>
+			<p>Dni: <input class="form-control" id="dni" type="number" name="dni" required="required"></p>
 			<label id="displayDniError" class="ERROR" style="display: none;"></label> 
 			<label id="displayDniError2" class="ERROR" style="display: none;">Complete el campo DNI </label> 
 		
