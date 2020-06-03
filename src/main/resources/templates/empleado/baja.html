@@ -1,105 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script>
-	$(document).ready(function() {
-		//Empleados
-		$.ajax({
-        	url: '/api/empleado/traerEmpleados',
-        	type: 'POST',
-        	success: function(response){
-            	console.log(response);
-            	var stringTipo;
-            	$.each(response,function(index,empleado){
-            		if(empleado.tipoEmpleado==false){	
-       			     stringTipo="Vendedor";
-       			}
-       			else{
-       			   stringTipo = "Gerente";
-       			}
-            		$("#empleados").append(new Option(empleado.apellido+" "+ empleado.nombre+" "+empleado.dni+" "+stringTipo ,empleado.idPersona));
-            	});
-        	},
-        	error: function(response){
-        		console.log(response);
-        	}
-        });
-	
-		
-		//Seleccionar Empleado a borrar 
-		$("#empleados").change(function(){
-			$(".error").css("display", "none");
-			json={"idEmpleado":$("#empleados").val()};
-			$("#formularioEmpleado").hide(1000, function(){
-				$.ajax({
-		        	url: '/api/empleado/traerEmpleado',
-		        	type: 'POST',
-	            	dataType: 'json',
-	            	data: JSON.stringify(json),
-	            	contentType: "application/json",
-		        	success: function(empleado){
-		        		console.log(empleado)
-	                	$("#apellido").val(empleado.apellido);
-		        		$("#nombre").val(empleado.nombre);
-		        		$("#dni").val(empleado.dni);
-		        		$("#franjaHoraria").val(empleado.franjaHoraria);
-		        		if(empleado.tipoEmpleado==false){
-		        			$("#radioVendedor").prop("checked", true);
-                        }
-                        else{
-                        	$("#radioGerente").prop("checked", true);
-                        }		        		
-		        		$("#formularioEmpleado").show(1000);
-		        	},
-		        	error: function(response){
-		        		console.log(response);
-		        	}
-		        });
-			});
-		});
-		
-			
-		//Borrar un empleado seleccionado
-		$("#borrar").click(function(){
-			json={"idEmpleado":$("#empleados").val()};
-			$.ajax({
-            	url: '/api/empleado/baja',
-            	type: 'POST',
-            	dataType: 'json',
-            	data: JSON.stringify(json),
-            	contentType: "application/json",
-            	success: function(response){
-                	$("#formularios").hide(1000,function(){$("#exitoBorrar").show(1000)});
-            	},
-            	error: function(response){
-            		console.log(response);	
-            	}
-        	});
-		});
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin 2 - Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<!-- <script src="/js/cargarEstructura.js" type="text/javascript"></script> -->
+<script src="/js/cargarEstructura.js"></script>
+<script type="text/javascript">
+//Variables para mostrar el contenido de la pag
+var urlVista = "/empleado/vistaBaja"; //Vista a mostrar en el contenido de la pag
+var idDesplegable = "#nav-item-empleado"; //Desplegable correspondiente a la vista cargada
+var idContenidoDesplegable = "#collapseEmpleado"; //Contenido del desplegable
+var idOpcionSeleccionada = "#empleado-baja"; //Opcion seleccionada del desplegable
+
+$(document).ready(function(){
+	cargarEstructura(urlVista, function(){
+		$(idDesplegable + " .nav-link").removeClass('collapsed');
+		$(idDesplegable + " .nav-link").attr('aria-expanded','true');
+		$(idContenidoDesplegable).addClass('show');
+		$(idOpcionSeleccionada).addClass('active');
 	});
+});
 </script>
+
 </head>
-<body>
-		<div>
-			<h1>Borrar empleados:</h1>
-		</div>
-		<div id="formularios">
-			<div id="formularioSelectEmpleados">
-				<p>Seleccione Empleado: <select id="empleados">
-		<!--  		<option>Elija una opcion </option>   -->
-				</select>
-				</p>
-			</div>
-			<button id="borrar" type="button">Borrar</button>
-			</div>
-			
-			<div  id="exitoBorrar" style="display: none;">
-			<h1>Empleado borrado</h1>
-		</div>
-		
-		<div>
-			<a href="/empleado">ATRAS</a>
-		</div>
+
+<body id="page-top">
+
+
 </body>
+  
+    <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
 </html>
