@@ -38,7 +38,7 @@ public class PedidoRestController {
 		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
 		PedidoModel pedidoModel = mapper.treeToValue(pedidoNode, PedidoModel.class);
 		System.out.println(pedidoModel.getProducto().getIdProducto());
-		return pedidoService.insertOrUpdate(pedidoModel);
+		return pedidoService.insert(pedidoModel);
 	}
 	
 	@PostMapping("/traerPedidos")
