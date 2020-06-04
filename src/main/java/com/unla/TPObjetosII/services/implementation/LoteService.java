@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.LoteConverter;
 import com.unla.TPObjetosII.converters.ProductoConverter;
+import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.entities.Lote;
+import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.entities.Producto;
 import com.unla.TPObjetosII.models.LoteModel;
 import com.unla.TPObjetosII.models.ProductoModel;
@@ -155,6 +157,38 @@ public class LoteService implements ILoteService{
 		}
 		return null;
 	}
+	
+	
+	@Override
+    public boolean devolverStockPedidosCancelados(List<Pedido> listaPedido) {
+        boolean agregado=false;
+        if(!listaPedido.isEmpty()) {
+            Local local=listaPedido.get(0).getCarrito().getLocal();
+            int cantidad=0;
+            int idProducto=0;
+            for(Pedido p: listaPedido) {
+                cantidad=p.getCantidad();
+                idProducto=p.getProducto().getIdProducto();
+                List<Lote> lotes=loteRepository.lotesXproductoXlocal(idProducto, local.getIdLocal());
+                for(Lote l: lotes) {
+                    int cantidadAEntrar=l.getCantidadActual()+cantidad;
+                    if(l.getCantidadInicial()>=cantidadAEntrar) {
+                    l.setCantidadActual(cantidadAEntrar);
+                    this.insertOrUpdate(loteConverter.entityToModel(l));
+                    agregado=true;
+                    break;
+                    }
+                    else {
+                    	cantidad=cantidad-(l.getCantidadInicial()-l.getCantidadActual());
+                    	l.setCantidadActual(l.getCantidadInicial());
+                    	this.insertOrUpdate(loteConverter.entityToModel(l));
+                    }
+
+                }
+            }
+        }
+        return agregado;
+    }
 	
 	@Override
 	public List<Lote> getAll() {
