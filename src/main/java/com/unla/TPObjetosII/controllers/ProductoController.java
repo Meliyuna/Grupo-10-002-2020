@@ -84,6 +84,19 @@ public class ProductoController {
 		return mAV;
 	}
 	
+	@GetMapping("/alta")
+	public String alta() {
+		return "/producto/alta";
+	}
 	
+	@GetMapping("/modificacion")
+	public String modificacion(){
+		return "/producto/modificar";
+	}
+	
+	@GetMapping("/listado")
+	public String listado(){
+		return "/producto/listado";
+	}
 
 }
