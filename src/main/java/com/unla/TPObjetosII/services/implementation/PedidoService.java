@@ -1,26 +1,25 @@
 package com.unla.TPObjetosII.services.implementation;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.converters.PedidoConverter;
 import com.unla.TPObjetosII.converters.SolicitudStockConverter;
-import com.unla.TPObjetosII.entities.Local;
-import com.unla.TPObjetosII.entities.Lote;
+import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.entities.Pedido;
-import com.unla.TPObjetosII.entities.Producto;
 import com.unla.TPObjetosII.entities.SolicitudStock;
-import com.unla.TPObjetosII.models.EmpleadoModel;
-import com.unla.TPObjetosII.models.LocalModel;
+import com.unla.TPObjetosII.models.CarritoModel;
 import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.models.SolicitudStockModel;
+import com.unla.TPObjetosII.repositories.ICarritoRepository;
 import com.unla.TPObjetosII.repositories.ILoteRepository;
 import com.unla.TPObjetosII.repositories.IPedidoRepository;
 import com.unla.TPObjetosII.repositories.ISolicitudStockRepository;
+import com.unla.TPObjetosII.services.ICarritoService;
 import com.unla.TPObjetosII.services.ILoteService;
 import com.unla.TPObjetosII.services.IPedidoService;
 
@@ -51,10 +50,14 @@ public class PedidoService implements IPedidoService {
 	private ILoteService loteService;
 	
 	@Autowired
+	@Qualifier("carritoRepository")
+	private ICarritoRepository carritoRepository;
+	
+	@Autowired
 	@Qualifier("solicitudStockConverter")
 	private SolicitudStockConverter solicitudStockConverter;
 
-	public PedidoModel insertOrUpdate(PedidoModel pedidoModel) {
+	public PedidoModel insert(PedidoModel pedidoModel) {
 		if(pedidoModel.getSolicitudStock()!=null) {
 			SolicitudStockModel solicitud = pedidoModel.getSolicitudStock();
 			pedidoModel.setSolicitudStock(null);
@@ -62,7 +65,11 @@ public class PedidoService implements IPedidoService {
 			solicitud.setPedido(pedidoGuardado);
 			this.altaSolicitudStock(solicitud);
 			return pedidoGuardado;
-		}else return pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
+		}else {
+			int idLocal = this.carritoRepository.findByIdCarritoFetchLocal(pedidoModel.getCarrito().getIdCarrito()).getLocal().getIdLocal();
+			this.loteService.modificacionStockPrevio(idLocal, pedidoModel.getProducto().getIdProducto(), pedidoModel.getCantidad());
+			return pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
+		} 
 	}
 
 	
@@ -77,6 +84,9 @@ public class PedidoService implements IPedidoService {
 	
 	public boolean remove(int idPedido) {
 		try {
+			List<Pedido> listaPedido = new ArrayList<Pedido>();
+			listaPedido.add(this.pedidoRepository.findByIdPedido(idPedido));
+			this.loteService.devolverStockPedidosCancelados(listaPedido);
 			pedidoRepository.deleteById(idPedido);
 			return true;
 		} catch (Exception e) {

@@ -84,7 +84,7 @@ public class SolicitudStock {
 	}
 	
 	public LocalDate getFechaCerrada() {
-		return fechaAbierta;
+		return fechaCerrada;
 	}
 
 	public void setFechaCerrada(LocalDate fechaCerrada) {

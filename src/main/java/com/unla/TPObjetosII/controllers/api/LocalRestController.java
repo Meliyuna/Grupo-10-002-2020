@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import com.unla.TPObjetosII.entities.Empleado;
@@ -98,9 +99,19 @@ public class LocalRestController {
 	
 	@PostMapping("/traerSolicitudesStock")
 	@ResponseBody
-	public List<SolicitudStockModel> traerSolicitudesStock(@RequestBody ObjectNode o){
+	public ArrayNode traerSolicitudesStock(@RequestBody ObjectNode o){
 		LocalModel local= localService.getById(o.get("idLocal").asInt());
-		return localService.traerSolicitudesStock(local);
+		List<SolicitudStockModel> listaS = localService.traerSolicitudesStock(local);
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode listaNode = mapper.createArrayNode();
+		ObjectNode solNode = null;
+		for(SolicitudStockModel sol: listaS) {
+			solNode = mapper.valueToTree(sol);
+			solNode.set("pedido", ((ObjectNode)mapper.valueToTree(sol.getPedido()))
+					.set("local", mapper.valueToTree(sol.getPedido().getCarrito().getLocal())));
+			listaNode.add(solNode);
+		}
+		return listaNode;
 	}
 	
 	

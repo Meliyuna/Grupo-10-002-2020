@@ -189,6 +189,7 @@ public class LoteService implements ILoteService{
         boolean agregado=false;
         if(!listaPedido.isEmpty()) {
             Local local=listaPedido.get(0).getCarrito().getLocal();
+            System.out.println(listaPedido.get(0).getCarrito().getLocal());
             int cantidad=0;
             int idProducto=0;
             for(Pedido p: listaPedido) {
