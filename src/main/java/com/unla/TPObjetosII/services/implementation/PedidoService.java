@@ -71,7 +71,13 @@ public class PedidoService implements IPedidoService {
 			return pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
 		} 
 	}
-
+	
+	public PedidoModel update(PedidoModel pedidoModel)throws Exception{
+		Pedido pedidoViejo = pedidoRepository.findByIdPedido(pedidoModel.getIdPedido());
+		if(loteService.devolverStockPedidoModificado(pedidoViejo, pedidoConverter.modelToEntity(pedidoModel))) {
+			return pedidoConverter.entityToModel(pedidoRepository.save(pedidoConverter.modelToEntity(pedidoModel)));
+		}else throw new Exception("Ocurrio un error modificando el pedido");
+	}
 	
 	public List<Pedido> getAll() {
 		return pedidoRepository.findAllConTodo();
@@ -85,8 +91,10 @@ public class PedidoService implements IPedidoService {
 	public boolean remove(int idPedido) {
 		try {
 			List<Pedido> listaPedido = new ArrayList<Pedido>();
-			listaPedido.add(this.pedidoRepository.findByIdPedido(idPedido));
-			this.loteService.devolverStockPedidosCancelados(listaPedido);
+			Pedido pedido = this.pedidoRepository.findByIdPedido(idPedido);
+			listaPedido.add(pedido);
+			if(pedido.getSolicitudStock()==null) this.loteService.devolverStockPedidosCancelados(listaPedido);
+			//crear nuevo lote
 			pedidoRepository.deleteById(idPedido);
 			return true;
 		} catch (Exception e) {

@@ -14,6 +14,7 @@ public interface IPedidoService {
 	public List<Pedido> getAll();
 	public PedidoModel getById(int idPedido);
 	public PedidoModel insert(PedidoModel pedidoModel) throws Exception;
+	public PedidoModel update(PedidoModel pedidoModel) throws Exception;
 	public boolean remove(int idPedido);
 	public SolicitudStockModel altaSolicitudStock(SolicitudStockModel solicitud);
 	//public boolean remove(int idPedido);

@@ -40,8 +40,22 @@ public class CarritoService implements ICarritoService{
 		return carritoRepository.findAllConTodo();
 	}
 	
-	public List<Carrito> getAll(int idLocal){
-		return carritoRepository.findAllByIdLocal(idLocal); 
+	public List<CarritoModel> getAll(int idLocal){
+		List<Carrito> carritos = carritoRepository.findAllByIdLocal(idLocal);
+		List<CarritoModel> carritosModel = new ArrayList<CarritoModel>();
+		CarritoModel carritoModel = null;
+		float precio = 0;
+		for(Carrito c: carritos) {
+			carritoModel = carritoConverter.entityToModel(c);
+			precio = 0;
+			for(Pedido p: c.getListaPedido()) {
+				precio+=p.getCantidad()*p.getProducto().getPrecio();
+			}
+			carritoModel.setTotal(precio);
+			carritoModel.setCantidadPedidos(c.getListaPedido().size());
+			carritosModel.add(carritoModel);
+		}
+		return carritosModel;
 	}
 	
 	public CarritoModel getById(int idCarrito) {

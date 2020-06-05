@@ -41,7 +41,7 @@ public class CarritoRestController {
 	
 	@PostMapping("/traerCarritos")
 	@ResponseBody
-	public List<Carrito> traerCarritos(@RequestBody ObjectNode o) throws Exception {
+	public List<CarritoModel> traerCarritos(@RequestBody ObjectNode o) throws Exception {
 		return CarritoService.getAll(o.get("idLocal").asInt());
 	}
 	

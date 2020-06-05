@@ -37,8 +37,15 @@ public class PedidoRestController {
 	public PedidoModel alta (@RequestBody ObjectNode pedidoNode) throws Exception {
 		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
 		PedidoModel pedidoModel = mapper.treeToValue(pedidoNode, PedidoModel.class);
-		System.out.println(pedidoModel.getProducto().getIdProducto());
 		return pedidoService.insert(pedidoModel);
+	}
+	
+	@PostMapping("/modificar")
+	@ResponseBody
+	public PedidoModel modificar(@RequestBody ObjectNode pedidoNode) throws Exception {
+		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
+		PedidoModel pedidoModel = mapper.treeToValue(pedidoNode, PedidoModel.class);
+		return pedidoService.update(pedidoModel);
 	}
 	
 	@PostMapping("/traerPedidos")
@@ -49,9 +56,12 @@ public class PedidoRestController {
 		
 	@PostMapping("/traerPedido")
 	@ResponseBody
-	public PedidoModel traerPedido(@RequestBody ObjectNode o) throws Exception{
-		System.out.println(o.get("idPedido").asInt());
-		return pedidoService.getById(o.get("idPedido").asInt());
+	public ObjectNode traerPedido(@RequestBody ObjectNode o) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		PedidoModel pedido = pedidoService.getById(o.get("idPedido").asInt());
+		ObjectNode pedidoNode = mapper.valueToTree(pedido);
+		pedidoNode.set("local", mapper.valueToTree(pedido.getCarrito().getLocal()));
+		return pedidoNode;
 	}
 	
 	@PostMapping("/baja")
