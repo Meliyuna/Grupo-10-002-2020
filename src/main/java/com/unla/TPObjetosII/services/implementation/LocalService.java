@@ -129,9 +129,12 @@ public class LocalService implements ILocalService{
 	@Override
 	public List<SolicitudStockModel> traerSolicitudesStock(LocalModel local) {
 		List<SolicitudStockModel> lista=new ArrayList<SolicitudStockModel>();
-		for(SolicitudStock s: localRepository.traerSolicitudesStock(local.getIdLocal())) {
-			lista.add(solicitudStockConverter.entityToModel((s)));
+		Local l = localRepository.traerSolicitudesStock(local.getIdLocal());
+		if(l!=null) {
+			for(SolicitudStock s: l.getListaSolicitudStock()) {
+				lista.add(solicitudStockConverter.entityToModel((s)));
 			}
+		}
 		return lista;
 	}
 	

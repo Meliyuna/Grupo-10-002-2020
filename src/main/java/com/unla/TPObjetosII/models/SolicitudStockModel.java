@@ -2,12 +2,24 @@ package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 public class SolicitudStockModel {
 	
 	private int idSolicitudStock;
+	
+	@JsonDeserialize(using = LocalDateDeserializer.class)  
+	@JsonSerialize(using = LocalDateSerializer.class) 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate fechaAbierta;
+	@JsonDeserialize(using = LocalDateDeserializer.class)  
+	@JsonSerialize(using = LocalDateSerializer.class) 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate fechaCerrada;
 	private boolean aceptado;
 	private boolean pendiente;
@@ -57,7 +69,7 @@ public class SolicitudStockModel {
 	}
 	
 	public LocalDate getFechaCerrada() {
-		return fechaAbierta;
+		return fechaCerrada;
 	}
 
 	public void setFechaCerrada(LocalDate fechaCerrada) {
