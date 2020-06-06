@@ -10,7 +10,6 @@ function cargarEstructura(url, func){
 				type : 'get',
 				success : (function(html){
 					$("#page-content").html(html);
-					console.log("paso por aque 1");
 					func();
 				}),
 				error : (function(html){

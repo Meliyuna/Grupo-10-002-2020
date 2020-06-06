@@ -1,6 +1,10 @@
 package com.unla.TPObjetosII.models;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unla.TPObjetosII.entities.SolicitudStock;
 
 public class PedidoModel {
 	
@@ -9,7 +13,7 @@ public class PedidoModel {
 	private ProductoModel producto;
 	private int cantidad;
 	
-
+	private SolicitudStockModel solicitudStock;
 	
 	@JsonIgnore
 	private EmpleadoModel vendedorOriginal;
@@ -22,11 +26,12 @@ public class PedidoModel {
 	private boolean aceptado;
 	
 	public PedidoModel(int idPedido, ProductoModel producto, int cantidad, EmpleadoModel vendedorOriginal, EmpleadoModel vendedorAuxiliar, CarritoModel carrito,
-			float subtotal, boolean aceptado) {
+			float subtotal, boolean aceptado, SolicitudStockModel solicitudStock) {
 		super();
 		this.idPedido=idPedido;
 		this.producto = producto;
 		this.cantidad = cantidad;
+		this.solicitudStock = solicitudStock;
 		this.vendedorOriginal = vendedorOriginal;
 		this.vendedorAuxiliar = vendedorAuxiliar;
 		this.carrito = carrito;
@@ -103,6 +108,16 @@ public class PedidoModel {
 
 	public void setCarrito(CarritoModel carrito) {
 		this.carrito = carrito;
+	}
+	
+	
+
+	public SolicitudStockModel getSolicitudStock() {
+		return solicitudStock;
+	}
+
+	public void setSolicitudStock(SolicitudStockModel solicitudStock) {
+		this.solicitudStock = solicitudStock;
 	}
 
 	@Override

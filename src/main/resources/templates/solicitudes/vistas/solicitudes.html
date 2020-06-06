@@ -1,0 +1,193 @@
+<script>
+$(document).ready(function(){
+	verSolicitudes();
+});
+
+idEmpleado=sessionStorage.getItem("idEmpleado");
+idLocal=sessionStorage.getItem("idLocal");
+velAnim = 250;
+
+
+function verSolicitudes(){
+	$("#contenido").hide(velAnim,function(){
+		$("#tbody-tabla-solicitudes").html("");
+		json={"idLocal":idLocal};
+		$.ajax({
+        	url: '/api/local/traerSolicitudesStock',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success:function(solicitudes){
+        		console.log(solicitudes);
+        		$.each(solicitudes,function(index,sol){
+            		$("#tbody-tabla-solicitudes").append('<tr><th scope="row">'+sol.idSolicitudStock+'</th>'+
+							'<td>'+sol.pedido.producto.nombre+'</td>'+
+							'<td>'+sol.pedido.cantidad+'</td>'+
+							'<td>'+sol.fechaAbierta+'</td>'+
+							'<td>'+sol.pedido.local.direccion+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verSolicitud('+sol.pedido.idPedido+')">Ver</button></td>'+
+							'</tr>');
+            	});
+        		
+        		$(".vista").hide();
+        		$("#solicitudes").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error:function(response){
+        		console.log(response);
+        	}
+		});
+	});
+}
+
+function verSolicitud(idPedido){
+	$("#contenido").hide(velAnim,function(){
+		json={"idPedido":idPedido};
+		$.ajax({
+           	url: '/api/pedido/traerPedido',
+           	type: 'POST',
+           	dataType: 'json',
+           	data: JSON.stringify(json),
+           	contentType: "application/json",
+           	success: function(pedido){
+           		$("#idSolicitud").val(pedido.solicitudStock.idSolicitudStock);
+       			$("#solicitado").val(pedido.cantidad);
+       			$("#precioTotal").val(pedido.subtotal);
+       			$("#localSolicitud").val(pedido.local.direccion);
+       			$("#fecha").val(pedido.solicitudStock.fechaAbierta);
+           		
+       			json={"idProducto":pedido.producto.idProducto,"idLocal":idLocal};
+       			$.ajax({
+       	        	url: '/api/stock/traerProducto',
+       	        	type: 'POST',
+       	        	dataType: 'json',
+       	        	data: JSON.stringify(json),
+       	        	contentType: "application/json",
+       	        	success: function(producto){
+       	            	$("#nombre").val(producto.nombre);
+       	            	$("#precioUnitario").val(producto.precio);
+       	            	$("#descripcion").html(producto.descripcion);
+       	            	$("#miStock").val(producto.cantidad);
+       	            	if(producto.cantidad<pedido.cantidad){
+       	            		$("#aceptarButton").prop("disabled",true);
+       	            	}else{$("#aceptarButton").prop("disabled",false);}
+       	            	
+       	            	$(".vista").hide();
+       	        		$("#solicitud").show();
+       	        		$("#contenido").show(velAnim);
+       	        	},
+       	        	error: function(response){
+       	        		console.log(response);
+       	        	}
+       			});
+           	},
+           	error: function(response){
+           		console.log(response);
+           	}
+		});
+	});
+}
+
+function aceptarSolicitud(){
+	json={"idSolicitudStock":$("#idSolicitud").val(),"idEmpleado":idEmpleado};
+	$.ajax({
+     	url: '/api/local/aceptarSolicitudStock',
+     	type: 'POST',
+     	dataType: 'json',
+     	data: JSON.stringify(json),
+     	contentType: "application/json",
+     	success: function(response){
+     		console.log(response);
+     		verSolicitudes();
+     	},
+     	error: function(response){
+     		console.log(response);
+     	}
+	});
+}
+function rechazarSolicitud(){
+	json={"idSolicitudStock":$("#idSolicitud").val()};
+	$.ajax({
+     	url: '/api/local/negarSolicitudStock',
+     	type: 'POST',
+     	dataType: 'json',
+     	data: JSON.stringify(json),
+     	contentType: "application/json",
+     	success: function(response){
+     		console.log(response);
+     		verSolicitudes();
+     	},
+     	error: function(response){
+     		console.log(response);
+     	}
+	});
+}
+</script>
+<div id="contenido">
+	<div id="solicitudes" class="vista" style="display: none">
+		<h1>Solicitudes de Stock</h1>
+
+		<table id="tabla-solicitudes" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#id</th>
+		      <th scope="col">Producto</th>
+		      <th scope="col">Cantidad</th>
+		      <th scope="col">Fecha</th>
+		      <th scope="col">Local</th>
+		      <th scope="col">Accion</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-solicitudes">
+		  </tbody>
+		</table>
+	</div>
+	<div id="solicitud" class="vista" style="display: none">
+		<h1>Solicitud</h1>
+		<form>
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="nombre">Nombre Producto:</label>
+			      <input type="text" class="form-control" id="nombre" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="precioUnitario">Precio unitario:</label>
+			      <input type="number" class="form-control" id="precioUnitario" disabled>
+			    </div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="descripcion">Descripcion</label>
+					<textarea id="descripcion" class="form-control" rows="4" disabled></textarea>
+				</div>
+				<div class="form-group col-md-6">
+		    		<label for="localSolicitud">Local:</label>
+		    		<input id="localSolicitud" class="form-control" type="text" disabled>
+		    		<label for="fecha">Fecha:</label>
+		    		<input id="fecha" class="form-control" type="text" disabled>
+				</div>
+			</div>
+			<div class="form-row">
+			    <div class="form-group col">
+			      <label for="solicitado">Cantidad Solicitada:</label>
+			      <input type="number" class="form-control" id="solicitado" disabled>
+			    </div>
+			    <div class="form-group col">
+			      <label for="miStock">Mi Stock:</label>
+			      <input type="number" class="form-control" id="miStock" disabled>
+			    </div>				    
+			    <div class="form-group col">
+			      <label for="precioTotal">Precio Total:</label>
+			      <input type="number" class="form-control" id="precioTotal" disabled>
+			    </div>
+			</div>
+			<input id="idSolicitud" type="number" hidden="true" />
+		</form>
+		<div id="">
+			<button type="button" class="btn btn-primary" onclick="verSolicitudes()">Volver</button>
+			<button id="aceptarButton" type="button" class="btn btn-success" onclick="aceptarSolicitud()">Aceptar</button>
+			<button id="rechazarButton" type="button" class="btn btn-danger" onclick="rechazarSolicitud()">Rechazar</button>
+		</div>
+	</div>
+</div>

@@ -11,7 +11,7 @@ public interface ICarritoService {
 	public List<Carrito> getAll();
 	public CarritoModel getById(int idCarrito);
 	public CarritoModel insertOrUpdate(CarritoModel CarritoModel);
-	public List<Carrito> getAll(int idLocal);
+	public List<CarritoModel> getAll(int idLocal);
 	public boolean remove(int idCarrito);
 
 }

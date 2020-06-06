@@ -36,6 +36,21 @@ public class EmpleadoController {
 	}
 	
 	
+	@GetMapping("/vistaAlta")
+	public String vistaAlta() {
+		return "/empleado/vistas/alta";
+	}
+	
+	@GetMapping("/vistaModificacion")
+	public String vistaModificacion(){
+		return "/empleado/vistas/modificar";
+	}
+	
+	@GetMapping("/vistaBaja")
+	public String vistaBaja(){
+		return "/empleado/vistas/baja";
+	}
+	
 }
 
 

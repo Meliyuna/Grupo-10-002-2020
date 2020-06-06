@@ -25,6 +25,10 @@ public class StockRestController {
 	@Qualifier("loteService")
 	private ILoteService loteService;
 	
+	@Autowired
+	@Qualifier("localService")
+	private ILocalService localService;
+	
 	
 	@PostMapping("/traerProductos")
 	@ResponseBody
@@ -36,6 +40,14 @@ public class StockRestController {
 	@ResponseBody
 	public ProductoModel traerProducto(@RequestBody ObjectNode o) {
 		return loteService.ProductoXlocal(o.get("idProducto").asInt(), o.get("idLocal").asInt());
+	}
+	
+	@PostMapping("/traerLocalesConStock")
+	@ResponseBody
+	public List<LocalModel> traerLocalesConStockDistanciaYCantidad(@RequestBody ObjectNode o) throws Exception{
+		LocalModel local=localService.getById(o.get("idLocal").asInt());
+		int idProducto=o.get("idProducto").asInt();
+		return localService.traerLocalesConStockDistanciaYCantidad(idProducto, local);
 	}
 
 }

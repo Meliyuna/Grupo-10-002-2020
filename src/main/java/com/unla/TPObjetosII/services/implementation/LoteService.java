@@ -10,9 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.LoteConverter;
 import com.unla.TPObjetosII.converters.ProductoConverter;
+import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.entities.Lote;
+import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.entities.Producto;
 import com.unla.TPObjetosII.models.LoteModel;
+import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.models.ProductoModel;
 import com.unla.TPObjetosII.repositories.ILoteRepository;
 import com.unla.TPObjetosII.services.ILoteService;
@@ -113,20 +116,126 @@ public class LoteService implements ILoteService{
 		}
 		return productosDelLocal;
 	}
+
+	@Override
+	public ProductoModel ProductoXlocal(int idProducto, int idLocal) {
+		List<Lote> lotes = loteRepository.lotesXproductoXlocal(idProducto, idLocal);
+		if (!lotes.isEmpty()) {
+			int cantidad = 0;
+			ProductoModel producto = productoConverter.entityToModel(lotes.get(0).getProducto());
+			for (Lote l : lotes) {
+				cantidad += l.getCantidadActual();
+			}
+			producto.setCantidad(cantidad);
+			return producto;
+		} else {
+			ProductoModel producto = productoConverter.entityToModel(productoRepository.findByIdProducto(idProducto));
+			producto.setCantidad(0);
+			return producto;
+		}
+	}
 	
 	@Override
-	public ProductoModel ProductoXlocal(int idProducto, int idLocal ){
+	public List<Lote> modificacionStockPrevio(int idLocal, int idProducto,int cantidadProd) {
 		List<Lote> lotes= loteRepository.lotesXproductoXlocal(idProducto, idLocal);
-		if (!lotes.isEmpty()) {
-		int cantidad=0;
-		ProductoModel producto = productoConverter.entityToModel(lotes.get(0).getProducto());
-		for(Lote l: lotes) {
-			cantidad += l.getCantidadActual();
+		if(!lotes.isEmpty()) {
+		int cantRestante=cantidadProd;
+		for(Lote l: lotes) {	
+			int cantNuevaLote = l.getCantidadActual()-cantRestante;
+		    if(cantNuevaLote<0){
+		    	cantRestante=cantRestante-l.getCantidadActual();
+		    	l.setCantidadActual(0);
+		     //   cantRestante = cantRestante + cantNuevaLote; // si es negativa es una resta
+		        this.insertOrUpdate(loteConverter.entityToModel(l));
+		    }
+		    else{
+		        l.setCantidadActual(cantNuevaLote);
+		        this.insertOrUpdate(loteConverter.entityToModel(l));
+		        break;
+		    }
+		}			
+			return lotes;
 		}
-		producto.setCantidad(cantidad);
-		return producto;
-		}else return null;
+		return null;
 	}
+	
+	
+	@Override
+	public List<Lote> modificacionStockPrevioSuma(int idLocal, int idProducto,int cantidadProd) {
+		List<Lote> lotes= loteRepository.lotesXproductoXlocal(idProducto, idLocal);
+		if(!lotes.isEmpty()) {
+		int cantRestante=cantidadProd;
+		for(Lote l: lotes) {	
+			int cantNuevaLote = l.getCantidadActual()+cantRestante;
+		    if(cantNuevaLote>l.getCantidadInicial()){
+		    	cantRestante=cantRestante-(l.getCantidadInicial()-l.getCantidadActual());
+		    	l.setCantidadActual(l.getCantidadInicial());	  
+		        this.insertOrUpdate(loteConverter.entityToModel(l));
+		    }
+		    else{
+		        l.setCantidadActual(cantNuevaLote);
+		        this.insertOrUpdate(loteConverter.entityToModel(l));
+		        break;
+		    }
+		}			
+			return lotes;
+		}
+		return null;
+	}
+	
+	
+	@Override
+    public boolean devolverStockPedidosCancelados(List<Pedido> listaPedido) {
+        boolean agregado=false;
+        if(!listaPedido.isEmpty()) {
+            Local local=listaPedido.get(0).getCarrito().getLocal();
+            System.out.println(listaPedido.get(0).getCarrito().getLocal());
+            int cantidad=0;
+            int idProducto=0;
+            for(Pedido p: listaPedido) {
+                cantidad=p.getCantidad();
+                idProducto=p.getProducto().getIdProducto();
+                List<Lote> lotes=loteRepository.lotesXproductoXlocal(idProducto, local.getIdLocal());
+                for(Lote l: lotes) {
+                    int cantidadAEntrar=l.getCantidadActual()+cantidad;
+                    if(l.getCantidadInicial()>=cantidadAEntrar) {
+                    l.setCantidadActual(cantidadAEntrar);
+                    this.insertOrUpdate(loteConverter.entityToModel(l));
+                    agregado=true;
+                    break;
+                    }
+                    else {
+                    	cantidad=cantidad-(l.getCantidadInicial()-l.getCantidadActual());
+                    	l.setCantidadActual(l.getCantidadInicial());
+                    	this.insertOrUpdate(loteConverter.entityToModel(l));
+                    }
+
+                }
+            }
+        }
+        return agregado;
+    }
+	
+	@Override
+	public boolean devolverStockPedidoModificado(Pedido pedidoAnterior, Pedido pedidoNuevo) {
+		boolean cambiado = false;
+		Pedido viejo = pedidoAnterior;
+		Pedido nuevo = pedidoNuevo;
+		int cantidadNuevo = nuevo.getCantidad();
+		int cantidadViejo = viejo.getCantidad();
+		Local local = viejo.getCarrito().getLocal();
+		int idProducto = viejo.getProducto().getIdProducto();
+		int cantidadAAgregar = cantidadViejo - cantidadNuevo;
+		if (cantidadAAgregar < 0) {
+			this.modificacionStockPrevio(local.getIdLocal(), idProducto, cantidadNuevo - cantidadViejo);
+			cambiado=true;
+		} else {
+			this.modificacionStockPrevioSuma(local.getIdLocal(), idProducto, cantidadAAgregar);
+			cambiado=true;
+		}
+		return cambiado;
+	}
+
 	
 	@Override
 	public List<Lote> getAll() {
@@ -134,6 +243,7 @@ public class LoteService implements ILoteService{
 		return null;
 	}
 
+	
 
 	
 

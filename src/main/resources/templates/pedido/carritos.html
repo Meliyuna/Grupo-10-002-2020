@@ -22,13 +22,11 @@
 <script type="text/javascript">
 //Variables para mostrar el contenido de la pag
 var urlVista = "/pedido/vistaCarritos"; //Vista a mostrar en el contenido de la pag
-var idContenidoDesplegable = "#collapsePedido"; //Contenido del desplegable
-var idOpcionSeleccionada = "#pedido-stock"; //Opcion seleccionada del desplegable
+var idNavItem = "#nav-item-pedido"; //Opcion seleccionada del desplegable
 
 $(document).ready(function(){
 	cargarEstructura(urlVista, function(){
-		$('#collapsePedido').collapse()
-		$(idOpcionSeleccionada).addClass('active');
+		$(idNavItem).addClass('active');
 	});
 });
 </script>

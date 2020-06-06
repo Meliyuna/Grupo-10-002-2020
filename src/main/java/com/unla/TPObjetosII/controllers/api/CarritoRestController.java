@@ -41,28 +41,25 @@ public class CarritoRestController {
 	
 	@PostMapping("/traerCarritos")
 	@ResponseBody
-	public List<Carrito> traerCarritos(@RequestBody ObjectNode o) throws Exception {
+	public List<CarritoModel> traerCarritos(@RequestBody ObjectNode o) throws Exception {
 		return CarritoService.getAll(o.get("idLocal").asInt());
 	}
 	
 	@PostMapping("/traerCarrito")
 	@ResponseBody
 	public CarritoModel traerCarrito(@RequestBody ObjectNode o) throws Exception{
-		System.out.println(o.get("idCarrito").asInt());
 		return CarritoService.getById(o.get("idCarrito").asInt());
 	}
 	
 	@PostMapping("/traerListaPedidos")
 	@ResponseBody
 	public Set<PedidoModel> traerListaPedidos(@RequestBody ObjectNode o) throws Exception{
-		System.out.println(o.get("idCarrito").asInt());
 		return CarritoService.getById(o.get("idCarrito").asInt()).getListaPedido();
 	}
 	
 	@PostMapping("/baja")
 	@ResponseBody
 	public Boolean baja (@RequestBody ObjectNode o) throws Exception{
-		System.out.println(o.get("idCarrito").asInt());
 		if(CarritoService.remove(o.get("idCarrito").asInt())==false) throw new Exception("Error al eliminar el Carrito");
 		return true;
 	}

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.unla.TPObjetosII.entities.Local;
+import com.unla.TPObjetosII.entities.SolicitudStock;
 
 @Repository ("localRepository")
 public interface ILocalRepository extends JpaRepository<Local, Serializable>{
@@ -20,4 +21,10 @@ public interface ILocalRepository extends JpaRepository<Local, Serializable>{
 	@Query("select l from Local l where l.baja='0'")
 	public abstract List<Local> findAllLocal();
 	
+	@Query("select l from Local l join fetch l.listaLote lot join fetch lot.producto p where p.idProducto=(:idProducto) group by l having SUM(lot.cantidadActual)>0")
+    public abstract List<Local> localesConStock(int idProducto);
+	
+	@Query("select l from Local l left join fetch l.listaSolicitudStock sol left join fetch sol.pedido pe join fetch pe.producto join fetch pe.carrito ca join fetch ca.local where l.idLocal=(:idLocal) and sol.pendiente='1' ")
+	public abstract Local traerSolicitudesStock(int idLocal);
+
 }

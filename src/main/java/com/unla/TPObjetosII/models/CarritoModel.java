@@ -19,6 +19,8 @@ public class CarritoModel {
 	private ClienteModel cliente;
 	@JsonIgnore
 	private LocalModel local;
+	
+	private int cantidadPedidos;
 
 	public CarritoModel() {
 	}
@@ -79,6 +81,16 @@ public class CarritoModel {
 
 	public void setLocal(LocalModel local) {
 		this.local = local;
+	}
+
+	
+	
+	public int getCantidadPedidos() {
+		return cantidadPedidos;
+	}
+
+	public void setCantidadPedidos(int cantidadPedidos) {
+		this.cantidadPedidos = cantidadPedidos;
 	}
 
 	@Override

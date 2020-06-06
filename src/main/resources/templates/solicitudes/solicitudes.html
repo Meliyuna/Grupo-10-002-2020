@@ -21,17 +21,12 @@
 <script src="/js/cargarEstructura.js"></script>
 <script type="text/javascript">
 //Variables para mostrar el contenido de la pag
-var urlVista = "/empleado/vistaAlta"; //Vista a mostrar en el contenido de la pag
-var idDesplegable = "#nav-item-empleado"; //Desplegable correspondiente a la vista cargada
-var idContenidoDesplegable = "#collapseEmpleado"; //Contenido del desplegable
-var idOpcionSeleccionada = "#empleado-alta"; //Opcion seleccionada del desplegable
+var urlVista = "/solicitudes/vistaSolicitudes"; //Vista a mostrar en el contenido de la pag
+var idNavItem = "#nav-item-solicitudes"; //id nav-item de opcion seleccionada
 
 $(document).ready(function(){
 	cargarEstructura(urlVista, function(){
-		$(idDesplegable + " .nav-link").removeClass('collapsed');
-		$(idDesplegable + " .nav-link").attr('aria-expanded','true');
-		$(idContenidoDesplegable).addClass('show');
-		$(idOpcionSeleccionada).addClass('active');
+		$(idNavItem).addClass('active');
 	});
 });
 </script>

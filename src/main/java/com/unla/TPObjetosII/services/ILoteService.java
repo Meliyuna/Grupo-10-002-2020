@@ -3,6 +3,7 @@ package com.unla.TPObjetosII.services;
 import java.util.List;
 
 import com.unla.TPObjetosII.entities.Lote;
+import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.models.LoteModel;
 import com.unla.TPObjetosII.models.ProductoModel;
 
@@ -14,5 +15,9 @@ public interface ILoteService {
 	public List<ProductoModel> ProductosXlocal(int idLocal);
 	public ProductoModel ProductoXlocal(int idProducto, int idLocal);
 	public List<ProductoModel> CantidadProductoXlocal(int idLocal);
+	public List<Lote> modificacionStockPrevio(int idLocal, int idProducto,int cantidadProd);
+	public List<Lote> modificacionStockPrevioSuma(int idLocal, int idProducto,int cantidadProd);
+	public boolean devolverStockPedidosCancelados(List<Pedido> listaPedido);
+	public boolean devolverStockPedidoModificado(Pedido pedidoAnterior,Pedido pedidoNuevo);
 
 }
