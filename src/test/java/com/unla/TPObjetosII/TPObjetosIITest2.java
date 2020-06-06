@@ -1,6 +1,8 @@
 package com.unla.TPObjetosII;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Local;
+import com.unla.TPObjetosII.entities.Lote;
 import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.entities.Producto;
 import com.unla.TPObjetosII.repositories.IEmpleadoRepository;
 import com.unla.TPObjetosII.repositories.ILocalRepository;
+import com.unla.TPObjetosII.repositories.ILoteRepository;
 import com.unla.TPObjetosII.repositories.IPedidoRepository;
 import com.unla.TPObjetosII.repositories.IProductoRepository;
 
@@ -28,6 +32,10 @@ public class TPObjetosIITest2 {
 	private IProductoRepository prRepo;
 	
 	@Autowired
+	@Qualifier("loteRepository")
+	private ILoteRepository loteRepo;
+	
+	@Autowired
 	@Qualifier("localRepository")
 	private ILocalRepository lRepo;
 	
@@ -35,41 +43,19 @@ public class TPObjetosIITest2 {
 	@Qualifier("empleadoRepository")
 	private IEmpleadoRepository eRepo;
 	
-	
 	@Test
-	void verEmpleadosGuille() {
-		System.out.println(eRepo.findAllConLocal());
-	}
-	
-	
-/*	@Test
-	void agregarEmpleadoGuille() {
-		LocalDate fecha= LocalDate.of(1995,9,23);
-		Local local=lRepo.findByIdLocal(2);
-		//eRepo.save(new Empleado("Lucas","Medrana",fecha,30123102,"tarde-noche",false,local));
-		System.out.println(eRepo.findAllConLocal());
-	}
-*/	
-	
-	@Test
-	void agregarProductoGuille() {
-		LocalDate fecha= LocalDate.of(2019,5,23);
-		prRepo.save(new Producto("Campera addidas","blanco y negro talla L",2750f,fecha));
-		System.out.println(prRepo.findAll());
-	}
-	
-	
-	@Test
-	void agregarPedido() {
-		
-		Producto p= prRepo.findByNombre("Zapatilla nike gris");
-		Producto p2= prRepo.findByNombre("Campera addidas");
-		Local l=lRepo.findByIdLocal(1);
-		Empleado e=eRepo.findByIdEmpleado(1);
-		Empleado e2=eRepo.findByIdEmpleado(3);
-//		pedRepo.save(new Pedido(p,100,e,null,100000,true));
-//		pedRepo.save(new Pedido(p2,150,e2,null,19500,true));
-		System.out.println(pedRepo.findAllConTodo());
+	void agregarLotes() {
+		List<Producto> productos = prRepo.findAll();
+		List<Local> locales = lRepo.findAll();
+		for(Local l: locales) {
+			for(Producto p:productos) {
+				Random r = new Random(System.currentTimeMillis());
+				int inicial = r.nextInt(100);
+				int actual = r.nextInt(inicial);
+				Lote lote = new Lote(inicial,actual, LocalDate.now(), p,true,l);
+				loteRepo.save(lote);
+			}
+		}
 	}
 
 }

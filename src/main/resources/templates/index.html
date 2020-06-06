@@ -49,7 +49,7 @@
         		sessionStorage.setItem("idEmpleado",$("#empleados").val());
         		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
         		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
-        		$(location).attr('href','/local/alta');
+        		$(location).attr('href','/pedido/carritos');
         	},
         	error: function(response){
         		console.log(response)
@@ -78,11 +78,11 @@
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
                   </div>
                   <form class="user">
                     <div class="form-group">
-                      <select id="empleados"></select>
+                      <select class="form-control" id="empleados" style="text-align: center;"></select>
                     </div>
                     <a id="login" href="#" class="btn btn-primary btn-user btn-block">
                       Login
@@ -90,12 +90,12 @@
                     <hr>
                   </form>
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="forgot-password.html">Forgot Password?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
-                  </div>
+<!--                   <div class="text-center"> -->
+<!--                     <a class="small" href="forgot-password.html">Forgot Password?</a> -->
+<!--                   </div> -->
+<!--                   <div class="text-center"> -->
+<!--                     <a class="small" href="register.html">Create an Account!</a> -->
+<!--                   </div> -->
                 </div>
               </div>
             </div>
