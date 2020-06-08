@@ -1,15 +1,20 @@
 package com.unla.TPObjetosII.services.implementation;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.CarritoConverter;
+import com.unla.TPObjetosII.converters.ProductoConverter;
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.models.CarritoModel;
+import com.unla.TPObjetosII.models.ProductoModel;
 import com.unla.TPObjetosII.repositories.ICarritoRepository;
 import com.unla.TPObjetosII.services.ICarritoService;
 import com.unla.TPObjetosII.services.ILoteService;
@@ -30,6 +35,10 @@ public class CarritoService implements ICarritoService{
 	@Autowired
 	@Qualifier("carritoConverter")
 	private CarritoConverter carritoConverter;
+	
+	@Autowired
+	@Qualifier("productoConverter")
+	private ProductoConverter productoConverter;
 
 	public CarritoModel insertOrUpdate(CarritoModel carritoModel) {				
 		return carritoConverter.entityToModel(carritoRepository.save(carritoConverter.modelToEntity(carritoModel)));
@@ -77,6 +86,44 @@ public class CarritoService implements ICarritoService{
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public List<ProductoModel> carritosConPedidos(int idLocal) {
+		List<Carrito> carritos=carritoRepository.findAllConPedidos(idLocal);
+		List<ProductoModel> productos = new ArrayList<ProductoModel>();
+		int cantidad=0;
+		ProductoModel producto = null;
+		for(Carrito c: carritos) {
+			Set<Pedido> pedidos=c.getListaPedido();
+			for(Pedido p: pedidos) {
+				if(encontrarProducto(p.getProducto().getIdProducto(),productos)) {
+					devolverProducto(p.getProducto().getIdProducto(),productos).setCantidad(p.getCantidad() + devolverProducto(p.getProducto().getIdProducto(), productos).getCantidad());
+				}else {
+					producto = productoConverter.entityToModel(p.getProducto());
+					cantidad = p.getCantidad();	
+					productos.add(producto);
+				}
+				
+			}
+			
+		}
+		Collections.sort(productos,Collections.reverseOrder());
+		return productos;
+		
+	}
+	
+	public boolean encontrarProducto (int idProducto, List<ProductoModel> productos) {
+		for(ProductoModel p: productos) {
+			if(p.getIdProducto()==idProducto)return true;
+		}
+		return false;
+	}
+
+	public ProductoModel devolverProducto(int idProducto, List<ProductoModel> productos) {
+		for(ProductoModel p: productos) {
+			if(p.getIdProducto()==idProducto)return p;
+		}
+		return null;
 	}
 	
 

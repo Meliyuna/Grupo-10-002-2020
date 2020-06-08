@@ -7,7 +7,8 @@ public class ViewRouteHelper {
 	public final static String PRODUCTO_FORMULARIO = "producto/vistas/productoFormulario";
 	public final static String PRODUCTO_ACTUALIZAR = "producto/vistas/actualizar";
 	public final static String PRODUCTO_PARCIAL = "producto/vistas/parcial";
+	public final static String RANKING ="ranking/vistas/ranking";
 	
 	//Redirects
-	public final static String PRODUCTO_REDIRECT ="/productos/";
+	public final static String PRODUCTO_REDIRECT ="/productos/listado";
 }

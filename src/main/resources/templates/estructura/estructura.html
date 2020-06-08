@@ -112,7 +112,23 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Solicitudes</span></a>
       </li>
-
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Informes
+      </div>
+      
+      
+      <li id="nav-item-ranking" class="nav-item">
+        <a  class="nav-ranking" href="/rankings">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Ranking</span></a>
+      </li>
+      
+      
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -229,5 +245,6 @@
 <script>
 $(document).ready(function(){
 	$("#nombreUsuario").html(sessionStorage.getItem("apellidoEmpleado")+ " " + sessionStorage.getItem("nombreEmpleado") + " | " + sessionStorage.getItem("direccionLocal"));
+	$("#linkrank").attr("href","/ranking/"+sessionStorage.getItem("idLocal"));
 });
 </script>
