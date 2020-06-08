@@ -10,14 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.converters.LocalConverter;
+import com.unla.TPObjetosII.converters.PedidoConverter;
 import com.unla.TPObjetosII.converters.SolicitudStockConverter;
 import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.entities.SolicitudStock;
 import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.LocalModel;
+import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.models.SolicitudStockModel;
 import com.unla.TPObjetosII.repositories.ILocalRepository;
+import com.unla.TPObjetosII.repositories.IPedidoRepository;
 import com.unla.TPObjetosII.repositories.ISolicitudStockRepository;
 import com.unla.TPObjetosII.services.ILocalService;
 import com.unla.TPObjetosII.services.ILoteService;
@@ -30,8 +33,20 @@ public class LocalService implements ILocalService{
 	private ILocalRepository localRepository;
 	
 	@Autowired
+	@Qualifier("pedidoRepository")
+	private IPedidoRepository pedidoRepository;
+	
+	@Autowired
 	@Qualifier("localConverter")
 	private LocalConverter localConverter;
+	
+	@Autowired
+	@Qualifier("pedidoConverter")
+	private PedidoConverter pedidoConverter;
+	
+	@Autowired
+	@Qualifier("pedidoService")
+	private PedidoService pedidoService;
 	
 	@Autowired
 	@Qualifier("solicitudStockConverter")
@@ -139,9 +154,12 @@ public class LocalService implements ILocalService{
 	}
 	
 	@Override
-	public SolicitudStockModel aceptarSolicitudStock(SolicitudStockModel solicitud,EmpleadoModel vendedorAux) {
+	public SolicitudStockModel aceptarSolicitudStock(SolicitudStockModel solicitud,EmpleadoModel vendedorAux) throws Exception{
 		SolicitudStock s=solicitudStockConverter.modelToEntity(solicitud);
 		LocalDate fechaActual = LocalDate.now();
+		if(s==null)throw new Exception("La solicitud fue eliminada");
+		if(!s.getPendiente()&&!s.isAceptado()) throw new Exception("La solicitud ya fue rechazada");
+		if(!s.getPendiente()&&s.isAceptado()) throw new Exception("La solicitud ya fue aceptada");
 		boolean aceptado=true;
 		boolean pendiente=false;
 		s.setFechaCerrada(fechaActual);
@@ -149,10 +167,11 @@ public class LocalService implements ILocalService{
 		s.setPendiente(pendiente);
 		
 		Local local=s.getLocal();
-		Pedido pedido= s.getPedido();
-		s.getPedido().setVendedorAuxiliar(empleadoConverter.modelToEntity(vendedorAux));
+		Pedido pedido= pedidoRepository.findByIdPedido(s.getPedido().getIdPedido());
+		pedido.setVendedorAuxiliar(empleadoConverter.modelToEntity(vendedorAux));
 		int cantidadProd=pedido.getCantidad();
 		int  idProd=pedido.getProducto().getIdProducto();
+		pedidoRepository.save(pedido);
 		loteService.modificacionStockPrevio(local.getIdLocal(),idProd,cantidadProd);
 		solicitudStockRepository.save(s);
 		return solicitudStockConverter.entityToModel(s);
@@ -160,8 +179,10 @@ public class LocalService implements ILocalService{
 
 
 	@Override
-	public SolicitudStockModel negarSolicitudStock(SolicitudStockModel solicitud) {
+	public SolicitudStockModel negarSolicitudStock(SolicitudStockModel solicitud) throws Exception{
 		SolicitudStock s=solicitudStockConverter.modelToEntity(solicitud);
+		if(s==null)throw new Exception("La solicitud fue eliminada");
+		if(!s.getPendiente()&&s.isAceptado()) throw new Exception("La solicitud ya fue aceptada");
 		LocalDate fechaActual = LocalDate.now();
 		boolean aceptado=false;
 		boolean pendiente=false;

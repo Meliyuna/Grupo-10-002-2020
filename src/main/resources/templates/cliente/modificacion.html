@@ -36,6 +36,7 @@
 		        		$("#nombre").val(cliente.nombre);
 		        		$("#dni").val(cliente.dni);
 		        		$("#email").val(cliente.email);
+		        		$("#fechaNacimiento").val(cliente.fechaNacimiento);
 		        		$("#formularioCliente").show(1000);      		
 		        		
 		        	},
@@ -54,7 +55,8 @@
 					"nombre": $("#nombre").val(),
 					"dni": $("#dni").val(),
 					"email": $("#email").val(),
-					"idPersona": $("#clientes").val()
+					"idPersona": $("#clientes").val(),
+					"fechaNacimiento": $("#fechaNacimiento").val()
 			};
 			$.ajax({
             	url: '/api/cliente/alta',
@@ -92,6 +94,7 @@
 				<p>Apellido: <input id="apellido" type="text"></p>
 				<p>Nombre: <input id="nombre" type="text"><span id="errorDNI" class="error" style="display: none;"></span></p>
 				<p>DNI: <input id="dni" type="number"></p>
+				<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
 				<p>Email: <input id="email" type="text"></p>
 				<button id="modificar" type="button">MODIFICAR</button>
 			</div>

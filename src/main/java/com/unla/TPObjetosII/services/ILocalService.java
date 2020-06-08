@@ -16,6 +16,6 @@ public interface ILocalService {
 	public List<LocalModel> traerLocalesConDistancia(LocalModel local) throws Exception;
 	public List<LocalModel> traerLocalesConStockDistanciaYCantidad(int idProducto,LocalModel local) throws Exception;
 	public List<SolicitudStockModel> traerSolicitudesStock(LocalModel local);
-	public SolicitudStockModel aceptarSolicitudStock(SolicitudStockModel solicitud,EmpleadoModel vendedorAux);
-	public SolicitudStockModel negarSolicitudStock(SolicitudStockModel solicitud);
+	public SolicitudStockModel aceptarSolicitudStock(SolicitudStockModel solicitud,EmpleadoModel vendedorAux)throws Exception;
+	public SolicitudStockModel negarSolicitudStock(SolicitudStockModel solicitud)throws Exception;
 }
