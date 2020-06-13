@@ -57,7 +57,6 @@ public class ProductoController {
 	
 	@PostMapping("/actualizar")
 	public RedirectView productoModicado(@ModelAttribute("producto") ProductoModel productoModel) {
-		System.out.println(productoModel.getIdProducto());
 		productoService.insertOrUpdate(productoModel);
 		return new RedirectView(ViewRouteHelper.PRODUCTO_REDIRECT);
 	}

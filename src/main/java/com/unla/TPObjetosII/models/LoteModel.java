@@ -44,6 +44,11 @@ public class LoteModel {
 
 
 
+	public LoteModel() {
+		super();
+	}
+
+
 	public int getIdLote() {
 		return idLote;
 	}

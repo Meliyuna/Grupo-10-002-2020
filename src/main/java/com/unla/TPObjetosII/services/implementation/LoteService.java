@@ -242,8 +242,7 @@ public class LoteService implements ILoteService{
 	
 	@Override
 	public List<Lote> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return loteRepository.findAll();
 	}
 
 	

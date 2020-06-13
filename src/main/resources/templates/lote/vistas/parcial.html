@@ -1,0 +1,31 @@
+<div>
+
+
+<form action="#" th:action="@{/lotes/actualizar}" th:object="${lote}" method="post">
+	<input type="hidden" th:field="*{idLote}" />
+	<p>Cantidad Inicial: <input type="number" th:field="*{cantidadInicial}" /></p>
+	<p>Cantidad Actual: <input type="number" th:field="*{cantidadActual}" /></p>
+
+	<p>Producto:</p>
+	<select  th:field="*{producto.idProducto}">
+		<option th:each="producto : ${productos}"
+		th:value="${producto.idProducto}" 
+		th:text="${producto.nombre}" />
+		</option>
+	</select>
+
+	<p>Local:</p>
+	<select  th:field="*{local.idLocal}">
+		<option th:each="local : ${locales}"
+		th:value="${local.idLocal}" 
+		th:text="${local.direccion}" />
+		</option>
+	</select>
+
+	<input type="hidden" th:field="*{fechaIngreso}">
+	<input type="submit" value="modificar"/>
+</form>
+<form action="#" th:action="@{/lotes/eliminar/{id}(id=${lote.idLote})}" method="post">
+	<input type="submit" value="eliminar" />
+</form>
+</div>
