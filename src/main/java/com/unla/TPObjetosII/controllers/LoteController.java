@@ -63,7 +63,7 @@ public class LoteController {
 	
 	@PostMapping("/")
 	public RedirectView nuevoLote(@ModelAttribute("lote") LoteModel loteModel) {
-		loteModel.setFechaIngreso(LocalDate.now().plusDays(1));
+		loteModel.setFechaIngreso(LocalDate.now());
 		loteModel.setEstado(true);
 		loteService.insertOrUpdate(loteModel);
 		return new RedirectView(ViewRouteHelper.LOTE_REDIRECT);
@@ -80,6 +80,7 @@ public class LoteController {
 	
 	@PostMapping("/actualizar")
 	public RedirectView loteModicado(@ModelAttribute("lote") LoteModel loteModel) {
+		loteModel.setEstado(true);
 		loteService.insertOrUpdate(loteModel);
 		return new RedirectView(ViewRouteHelper.LOTE_REDIRECT);
 	}

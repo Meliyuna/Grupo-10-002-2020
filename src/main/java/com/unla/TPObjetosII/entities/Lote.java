@@ -39,7 +39,7 @@ public class Lote {
 	private boolean estado;
 	
 	@JsonIgnore
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
 	
