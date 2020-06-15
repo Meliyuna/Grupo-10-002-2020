@@ -88,6 +88,40 @@ function verPedidos(idCarrito){
 	});
 }
 
+
+function verFactura(idCarrito){
+	$("#contenido").hide(velAnim,function(){
+		$("#tbody-tabla-factura").html("");
+		$("#tbody-tabla-factura-2").html("");
+		json={"idCarrito":idCarrito};
+		$.ajax({
+			url: '/api/carrito/mostrarFactura',
+			type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(carrito){
+        		
+        		$.each(carrito.listaPedido,function(index,pedido){
+        			$("#tbody-tabla-factura").append('<tr><th scope="row">'+index+'</th>'+
+							'<td>'+pedido.producto.nombre+'</td>'+
+							'<td>'+pedido.cantidad+'</td>'+
+							'<td>'+pedido.subtotal+'</td>'+								
+        				'</tr>');
+            	});	
+        		$("#tbody-tabla-factura-2").append('<tr><th scope="row">'+carrito.total+'</th></tr>');   	
+        //		$("#clientes").show();
+       			$(".vista").hide();  //oculto todos los menus
+       			$("#factura").show();
+        		$("#contenido").show(velAnim); 
+		},
+		error: function(response){
+			console.log(response);
+    	}	
+	});
+ });
+}
+
 function verCarritos(){
 	$("#contenido").hide(velAnim,function(){
 		json={"idLocal":idLocal};
@@ -104,7 +138,8 @@ function verCarritos(){
             		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
 							'<td>'+carrito.cantidadPedidos+'</td>'+
 							'<td>$'+carrito.total+'</td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">modificar</button></td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">Modificar</button></td>'+
+							'<td><button type="button" class="btn btn-success" onclick="verFactura('+carrito.idCarrito+')">Realizar Factura</button></td>'+
 							'</tr>');
             	});
             	$(".vista").hide();
@@ -478,6 +513,7 @@ function ocultarSelectLocal(){
 		      <th scope="col">Pedidos</th>
 		      <th scope="col">Precio Total</th>
 		      <th scope="col">Accion</th>
+		      <th scope="col">Accion</th>
 		    </tr>
 		  </thead>
 		  <tbody id="tbody-tabla-carritos">
@@ -587,6 +623,31 @@ function ocultarSelectLocal(){
 			<button id="modificarButton" type="button" class="btn btn-warning" onclick="modificarPedido()">Modificar</button>
 			<button type="button" class="btn btn-danger" onclick="eliminarPedido()">Eliminar</button>
 		</div>
+	</div>
+	<div id="factura" class="vista" style="display: none">
+		<h1>Factura</h1>
+		<table id="tabla-factura" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Nombre del Producto</th>
+		      <th scope="col">Cantidad</th>
+		      <th scope="col">Subtotal</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-factura">
+		  </tbody>
+		</table>
+		<table id="tabla-factura-2" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Total</th>   
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-factura-2">
+		  </tbody>
+		</table>
+	
 	</div>
 	<div id="error" class="vista" style="display: none"></div>
 </div>

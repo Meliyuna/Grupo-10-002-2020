@@ -7,10 +7,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.CarritoConverter;
+import com.unla.TPObjetosII.converters.FacturaConverter;
+import com.unla.TPObjetosII.converters.LocalConverter;
 import com.unla.TPObjetosII.entities.Carrito;
+import com.unla.TPObjetosII.entities.Factura;
+import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.models.CarritoModel;
+import com.unla.TPObjetosII.models.FacturaModel;
+import com.unla.TPObjetosII.models.LocalModel;
+import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.repositories.ICarritoRepository;
+import com.unla.TPObjetosII.repositories.IFacturaRepository;
 import com.unla.TPObjetosII.services.ICarritoService;
 import com.unla.TPObjetosII.services.ILoteService;
 
@@ -24,12 +32,24 @@ public class CarritoService implements ICarritoService{
 	private ICarritoRepository carritoRepository;
 	
 	@Autowired
+	@Qualifier("facturaRepository")
+	private IFacturaRepository facturaRepository;
+	
+	@Autowired
 	@Qualifier("loteService")
 	private ILoteService loteService;
 	
 	@Autowired
 	@Qualifier("carritoConverter")
 	private CarritoConverter carritoConverter;
+	
+	@Autowired
+	@Qualifier("localConverter")
+	private LocalConverter localConverter;
+	
+	@Autowired
+	@Qualifier("facturaConverter")
+	private FacturaConverter facturaConverter;
 
 	public CarritoModel insertOrUpdate(CarritoModel carritoModel) {				
 		return carritoConverter.entityToModel(carritoRepository.save(carritoConverter.modelToEntity(carritoModel)));
@@ -77,6 +97,28 @@ public class CarritoService implements ICarritoService{
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public CarritoModel getByIdConTodo(int idCarrito) {
+		CarritoModel c=carritoConverter.entityToModel(carritoRepository.findCarritoConTodo(idCarrito));
+		int precio = 0;
+		for(PedidoModel p: c.getListaPedido()) {
+			precio+=p.getCantidad()*p.getProducto().getPrecio();
+		}
+		c.setTotal(precio);
+		c.setCantidadPedidos(c.getListaPedido().size());
+		return c;
+	}
+
+	@Override
+	public FacturaModel generarFactura(int idCarrito) {
+		LocalModel local=localConverter.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
+		Local l=localConverter.modelToEntity(local);
+		Carrito c=carritoRepository.findCarritoConTodo(idCarrito);
+		Factura f= new Factura(c,null);
+		facturaRepository.save(f);
+		return facturaConverter.entityToModel(f);
 	}
 	
 

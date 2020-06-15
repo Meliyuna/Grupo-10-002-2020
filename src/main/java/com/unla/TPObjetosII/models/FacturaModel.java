@@ -7,15 +7,28 @@ public class FacturaModel {
 	private int idFactura;
 	
 	@JsonIgnore
-	private LocalModel local;
+	private ClienteModel cliente;
+	
+
 	
 	@JsonIgnore
 	private CarritoModel carrito;
 	
-	public FacturaModel(LocalModel local, CarritoModel carrito) {
+	
+	public FacturaModel() {
+	}
+	
+	public FacturaModel(int idFactura,CarritoModel carrito,ClienteModel cliente) {
 		super();
-		this.local = local;
+		this.idFactura=idFactura;
 		this.carrito = carrito;
+		this.cliente=cliente;
+	}
+	
+	public FacturaModel(LocalModel local, CarritoModel carrito,ClienteModel cliente) {
+		super();
+		this.carrito = carrito;
+		this.cliente=cliente;
 	}
 
 	public int getIdFactura() {
@@ -26,13 +39,7 @@ public class FacturaModel {
 		this.idFactura = idFactura;
 	}
 
-	public LocalModel getLocal() {
-		return local;
-	}
-
-	public void setLocal(LocalModel local) {
-		this.local = local;
-	}
+	
 
 	public CarritoModel getCarrito() {
 		return carrito;
@@ -41,11 +48,22 @@ public class FacturaModel {
 	public void setCarrito(CarritoModel carrito) {
 		this.carrito = carrito;
 	}
+	
+	
+
+	public ClienteModel getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteModel cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public String toString() {
-		return "Factura [idFactura=" + idFactura + ", local=" + local + ", carrito=" + carrito + "]";
+		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", carrito=" + carrito + "]";
 	}
+
 	
 	
 	

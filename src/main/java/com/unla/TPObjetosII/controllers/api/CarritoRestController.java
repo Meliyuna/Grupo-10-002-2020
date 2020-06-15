@@ -15,9 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unla.TPObjetosII.models.CarritoModel;
+import com.unla.TPObjetosII.models.EmpleadoModel;
+import com.unla.TPObjetosII.models.FacturaModel;
+import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.models.PedidoModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.services.ICarritoService;
@@ -64,6 +69,29 @@ public class CarritoRestController {
 		return true;
 	}
 	
+	@PostMapping("/mostrarFactura")
+	@ResponseBody
+	public ObjectNode mostrarFactura(@RequestBody ObjectNode o) throws Exception {
+		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
+		CarritoModel c= CarritoService.getByIdConTodo((o.get("idCarrito").asInt()));
+		ObjectNode carritoNode=mapper.valueToTree(c);
+		ArrayNode pedidosNode=mapper.createArrayNode();
+		for(PedidoModel p: c.getListaPedido()) {
+			pedidosNode.add(mapper.valueToTree(p)); //por cada pedido que tenga la lista se agrega al arrayNode
+		}
+		carritoNode.set("listaPedido", pedidosNode); 
+		return carritoNode;
+	}
+	
+	@PostMapping("/generarfactura")
+	@ResponseBody
+	public FacturaModel generarFactura(@RequestBody ObjectNode facturaNode) throws Exception {
+		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
+		FacturaModel f= mapper.treeToValue(facturaNode, FacturaModel.class);	//convierte el object node a facturaModel
+		int idCarrito=facturaNode.get("idCarrito").asInt();
+		f.setCarrito(CarritoService.getById(idCarrito));
+		return CarritoService.generarFactura(f.getIdFactura());
+	}
 	
 
 }

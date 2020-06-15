@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.unla.TPObjetosII.entities.Carrito;
+import com.unla.TPObjetosII.entities.Factura;
 
 @Repository("carritoRepository")
 
@@ -25,10 +26,15 @@ import com.unla.TPObjetosII.entities.Carrito;
 	@Query("SELECT c FROM Carrito c join fetch c.local WHERE c.idCarrito=(:idCarrito)")
 	public abstract Carrito findByIdCarritoFetchLocal(int idCarrito);
 	
+	@Query("select c from Carrito c join fetch c.listaPedido pedidos join fetch pedidos.producto p WHERE c.idCarrito=(:idCarrito)")
+	public abstract Carrito findCarritoConTodo(int idCarrito);
+	
 	@Query("SELECT c from Carrito c ")	
 	public abstract List<Carrito> findAllConTodo();
 	
 	@Query("select c from Carrito c join fetch c.local l where l.idLocal = (:idLocal)")
 	public abstract List<Carrito> findAllByIdLocal(int idLocal);
+	
+	
 	
 }

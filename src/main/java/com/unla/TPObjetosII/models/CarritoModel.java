@@ -15,23 +15,26 @@ public class CarritoModel {
 	private LocalDateTime fecha;
 	private float total;
 	
-	@JsonIgnore
-	private ClienteModel cliente;
+	
 	@JsonIgnore
 	private LocalModel local;
 	
+	@JsonIgnore
+	private FacturaModel factura;
+	
 	private int cantidadPedidos;
+	
+	private boolean facturable;
 
 	public CarritoModel() {
 	}
 
-	public CarritoModel(int idCarrito, Set<PedidoModel> listaPedido, LocalDateTime fecha, float total, ClienteModel cliente) {
+	public CarritoModel(int idCarrito, Set<PedidoModel> listaPedido, LocalDateTime fecha, float total) {
 		super();
 		this.idCarrito=idCarrito;
 		this.listaPedido = listaPedido;
 		this.fecha = fecha;
 		this.total = total;
-		this.cliente = cliente;
 	}
 
 	public int getIdCarrito() {
@@ -66,14 +69,7 @@ public class CarritoModel {
 		this.total = total;
 	}
 
-	public ClienteModel getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(ClienteModel cliente) {
-		this.cliente = cliente;
-	}
-
+	
 	
 	public LocalModel getLocal() {
 		return local;
@@ -85,6 +81,14 @@ public class CarritoModel {
 
 	
 	
+	public FacturaModel getFactura() {
+		return factura;
+	}
+
+	public void setFactura(FacturaModel factura) {
+		this.factura = factura;
+	}
+
 	public int getCantidadPedidos() {
 		return cantidadPedidos;
 	}
@@ -93,10 +97,18 @@ public class CarritoModel {
 		this.cantidadPedidos = cantidadPedidos;
 	}
 
+	public boolean getFacturable() {
+		return facturable;
+	}
+
+	public void setFacturable(boolean facturable) {
+		this.facturable = facturable;
+	}
+
 	@Override
 	public String toString() {
 		return "Carrito [idCarrito=" + idCarrito + ", listaPedido=" + listaPedido + ", fecha=" + fecha + ", total="
-				+ total + ", cliente=" + cliente + "]";
+				+ total+ "]";
 	}
 
 	

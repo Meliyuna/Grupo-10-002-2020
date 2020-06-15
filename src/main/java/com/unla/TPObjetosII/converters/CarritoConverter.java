@@ -40,8 +40,8 @@ public class CarritoConverter {
 		CarritoModel carritoModel = new CarritoModel(	carrito.getIdCarrito(), 
 									np, 
 									carrito.getFecha(), 
-									carrito.getTotal(), 
-									clienteConverter.entityToModel(carrito.getCliente()));
+									carrito.getTotal() 
+									);
 		carritoModel.setLocal(localConverter.entityToModel(carrito.getLocal()));
 		return carritoModel;
 	}
@@ -60,8 +60,7 @@ public class CarritoConverter {
 		Carrito carrito = new Carrito(	carritoModel.getIdCarrito(), 
 									np,
 									carritoModel.getFecha(), 
-									carritoModel.getTotal(), 
-									clienteConverter.modelToEntity(carritoModel.getCliente()));
+									carritoModel.getTotal());
 		carrito.setLocal(localConverter.modelToEntity(carritoModel.getLocal()));
 		return carrito;
 	}

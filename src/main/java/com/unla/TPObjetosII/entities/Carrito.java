@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -37,26 +38,28 @@ public class Carrito {
 
 	private float total;
 	
-	@JsonIgnore
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="IDCLIENTE")
-	private Cliente cliente;
+	
 	
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "carrito", fetch=FetchType.LAZY)
+	@JoinColumn(name="IDFACTURA")
+	private Factura factura;
 
 	public Carrito() {
 	}
 
-	public Carrito(int idCarrito, Set<Pedido> listaPedido, LocalDateTime fecha, float total, Cliente cliente) {
+	public Carrito(int idCarrito, Set<Pedido> listaPedido, LocalDateTime fecha, float total) {
 		super();
 		this.idCarrito=idCarrito;
 		this.listaPedido = listaPedido;
 		this.fecha = fecha;
 		this.total = total;
-		this.cliente = cliente;
+		
 	}
 
 	public int getIdCarrito() {
@@ -91,13 +94,7 @@ public class Carrito {
 		this.total = total;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+	
 	
 
 	public Local getLocal() {
@@ -108,10 +105,20 @@ public class Carrito {
 		this.local = local;
 	}
 
+	
+	
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
 	@Override
 	public String toString() {
 		return "Carrito [idCarrito=" + idCarrito + ", listaPedido=" + listaPedido + ", fecha=" + fecha + ", total="
-				+ total + ", cliente=" + cliente + "]";
+				+ total + "]";
 	}
 
 	
