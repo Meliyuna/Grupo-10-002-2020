@@ -68,7 +68,7 @@
           <i class="fas fa-fw fa-cog"></i>
           <span>Producto</span>
         </a>
-        <div id="collapseProducto" class="collapse" aria-labelledby="headingLocal" data-parent="#accordionSidebar">
+        <div id="collapseProducto" class="collapse" aria-labelledby="headingProducto" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">ABM Producto</h6>
             <a id="producto-listado" class="collapse-item" href="/productos/listado">Listado</a>
@@ -121,13 +121,20 @@
         Informes
       </div>
       
-      
       <li id="nav-item-ranking" class="nav-item">
-        <a  class="nav-ranking" href="/rankings">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRanking" aria-expanded="true" aria-controls="collapseRranking">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Ranking</span></a>
-      </li>
-      
+          <span>Ranking</span>
+        </a>
+        <div id="collapseRanking" class="collapse" aria-labelledby="headingProducto" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Informes</h6>
+            <a id="Ranking-general" class="collapse-item" href="/rankings">Prods de todos los locales</a>
+            <a id="Ranking-fechas" class="collapse-item" href="/rankings/fechas">Productos entre fechas</a>
+          </div>
+        </div>
+
+  
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

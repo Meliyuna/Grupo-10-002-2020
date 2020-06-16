@@ -1,0 +1,33 @@
+<h2>Ranking Productos Mas Vendidos</h2>
+
+<form  method="POST" name="formFechas" id="formFechas" action="">
+<table>
+  <tr>
+    <th><p>Desde: <input name=fechaDesde type="datetime-local" th:field="${desde}"/></p></th>
+    <th><p>Hasta: <input name="fechaHasta" type="datetime-local" th:field="${hasta}"></p></th>
+  </tr>
+	<th><button type="submit" id="filtrar">Filtrar</button></th>
+</table>
+</form>
+ 
+<div id="div-select-fechas" class="row"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+		$("filtrar").click(function() {	
+			var id = sessionStorage.getItem("idLocal");
+			if($.isNumeric(id)){
+				$.ajax({ 
+					method: "POST",
+				 	url: "/rankin/tabla/" + id,
+				})
+				.done(function(result) {
+					$("#div-select-fechas").html(result);
+				})
+				.fail(function() {
+					alert("error");
+				});
+			}else $("#div-select-fechas").html();
+		});
+</script>
+ 
