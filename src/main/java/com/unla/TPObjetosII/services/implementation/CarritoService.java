@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.unla.TPObjetosII.converters.CarritoConverter;
+import com.unla.TPObjetosII.converters.ClienteConverter;
+import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.converters.FacturaConverter;
 import com.unla.TPObjetosII.converters.LocalConverter;
 import com.unla.TPObjetosII.entities.Carrito;
+import com.unla.TPObjetosII.entities.Cliente;
+import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Factura;
 import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.entities.Pedido;
@@ -20,6 +24,8 @@ import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.repositories.ICarritoRepository;
 import com.unla.TPObjetosII.repositories.IFacturaRepository;
 import com.unla.TPObjetosII.services.ICarritoService;
+import com.unla.TPObjetosII.services.IClienteService;
+import com.unla.TPObjetosII.services.IEmpleadoService;
 import com.unla.TPObjetosII.services.ILoteService;
 
 
@@ -40,8 +46,24 @@ public class CarritoService implements ICarritoService{
 	private ILoteService loteService;
 	
 	@Autowired
+	@Qualifier("clienteService")
+	private IClienteService clienteService;
+	
+	@Autowired
+	@Qualifier("empleadoService")
+	private IEmpleadoService empleadoService;
+	
+	@Autowired
 	@Qualifier("carritoConverter")
 	private CarritoConverter carritoConverter;
+	
+	@Autowired
+	@Qualifier("clienteConverter")
+	private ClienteConverter clienteConverter;
+	
+	@Autowired
+	@Qualifier("empleadoConverter")
+	private EmpleadoConverter empleadoConverter;
 	
 	@Autowired
 	@Qualifier("localConverter")
@@ -112,11 +134,14 @@ public class CarritoService implements ICarritoService{
 	}
 
 	@Override
-	public FacturaModel generarFactura(int idCarrito) {
+	public FacturaModel generarFactura(int idCarrito,int idCliente, int idEmpleado) {
 		LocalModel local=localConverter.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
 		Local l=localConverter.modelToEntity(local);
-		Carrito c=carritoRepository.findCarritoConTodo(idCarrito);
-		Factura f= new Factura(c,null);
+		Carrito carrito=carritoConverter.modelToEntity(this.getByIdConTodo(idCarrito));
+		carrito.setLocal(l);
+		Cliente cliente=clienteConverter.modelToEntity(clienteService.getById(idCliente));
+		Empleado empleado=empleadoConverter.modelToEntity(empleadoService.getEmpleado(idEmpleado));
+		Factura f= new Factura(carrito,cliente,empleado);
 		facturaRepository.save(f);
 		return facturaConverter.entityToModel(f);
 	}

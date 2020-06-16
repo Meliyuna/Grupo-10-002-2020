@@ -33,21 +33,29 @@ public class Factura {
 	@JoinColumn(name="IDCLIENTE")
 	private Cliente cliente;
 	
+	@JsonIgnore
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDEMPLEADOFACTURA")
+	private Empleado empleado;
+	
+	
 	public Factura(){
 		
 	}
 	
-	public Factura(int idFactura, Carrito carrito,Cliente cliente) {
+	public Factura(int idFactura, Carrito carrito,Cliente cliente,Empleado empleado) {
 		super();
 		this.idFactura=idFactura;
 		this.carrito = carrito;
 		this.cliente=cliente;
+		this.empleado=empleado;
 	}
 	
-	public Factura(Carrito carrito,Cliente cliente) {
+	public Factura(Carrito carrito,Cliente cliente,Empleado empleado) {
 		super();
 		this.carrito = carrito;
 		this.cliente=cliente;
+		this.empleado=empleado;
 	}
 
 
@@ -77,11 +85,24 @@ public class Factura {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	
+
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
+	}
 
 	@Override
 	public String toString() {
-		return "Factura [idFactura=" + idFactura + ", carrito=" + carrito + ", cliente=" + cliente + "]";
+		return "Factura [idFactura=" + idFactura + ", carrito=" + carrito + ", cliente=" + cliente + ", empleado="
+				+ empleado + "]";
 	}
+
+	
 
 	
 	

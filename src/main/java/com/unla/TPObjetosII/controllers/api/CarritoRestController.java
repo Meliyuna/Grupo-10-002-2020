@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.unla.TPObjetosII.models.CarritoModel;
+import com.unla.TPObjetosII.models.ClienteModel;
 import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.FacturaModel;
 import com.unla.TPObjetosII.models.LocalModel;
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.services.ICarritoService;
+import com.unla.TPObjetosII.services.IClienteService;
+import com.unla.TPObjetosII.services.IEmpleadoService;
 
 @RestController
 @RequestMapping("/api/carrito")
@@ -35,6 +38,14 @@ public class CarritoRestController {
 	@Autowired
 	@Qualifier("carritoService")
 	private ICarritoService CarritoService;
+	
+	@Autowired
+	@Qualifier("clienteService")
+	private IClienteService clienteService;
+	
+	@Autowired
+	@Qualifier("empleadoService")
+	private IEmpleadoService empleadoService;
 	
 	@PostMapping("/alta")
 	@ResponseBody
@@ -83,14 +94,36 @@ public class CarritoRestController {
 		return carritoNode;
 	}
 	
+	@PostMapping("/buscarCliente")
+	@ResponseBody
+	public ClienteModel buscarClientePorDni(@RequestBody ObjectNode o)throws Exception{
+		ClienteModel c=clienteService.getByDni((o.get("dni").asInt()));
+		System.out.println(o.get("dni").asInt());
+		System.out.println(c);
+		if(c==null)throw new Exception("El cliente no existe");
+		return c;
+	}
+	
+	@PostMapping("/altaCliente")
+	@ResponseBody
+	public ClienteModel altaCliente(@RequestBody ClienteModel cliente)throws Exception{
+		System.out.println(clienteService.insertOrUpdate(cliente));
+		return cliente;
+	}
+	
+	@PostMapping("/traerEmpleado")
+	@ResponseBody
+	public EmpleadoModel traerEmpleado(@RequestBody ObjectNode o) {
+		return empleadoService.getEmpleado(o.get("idEmpleado").asInt());
+	}
+	
 	@PostMapping("/generarfactura")
 	@ResponseBody
-	public FacturaModel generarFactura(@RequestBody ObjectNode facturaNode) throws Exception {
-		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
-		FacturaModel f= mapper.treeToValue(facturaNode, FacturaModel.class);	//convierte el object node a facturaModel
-		int idCarrito=facturaNode.get("idCarrito").asInt();
-		f.setCarrito(CarritoService.getById(idCarrito));
-		return CarritoService.generarFactura(f.getIdFactura());
+	public FacturaModel generarFactura(@RequestBody ObjectNode o) throws Exception {
+		int idCarrito=o.get("idCarrito").asInt();
+		int  idCliente=o.get("idCliente").asInt();
+		int idEmpleado=o.get("idEmpleado").asInt();
+		return CarritoService.generarFactura(idCarrito, idCliente, idEmpleado);
 	}
 	
 

@@ -1,6 +1,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	verCarritos();
+	traerEmpleado();
 	
 	//Actualizar precio total de nuevo pedido
 	$("#aComprar").change(function(){
@@ -110,7 +111,6 @@ function verFactura(idCarrito){
         				'</tr>');
             	});	
         		$("#tbody-tabla-factura-2").append('<tr><th scope="row">'+carrito.total+'</th></tr>');   	
-        //		$("#clientes").show();
        			$(".vista").hide();  //oculto todos los menus
        			$("#factura").show();
         		$("#contenido").show(velAnim); 
@@ -121,6 +121,106 @@ function verFactura(idCarrito){
 	});
  });
 }
+
+
+
+function buscarCliente(){
+	   $("#mostrar-cliente").hide(velAnim);
+	   $("#altaCliente").hide(velAnim);
+       $("#buscarCliente").show(velAnim); 	
+}
+
+$("#buscar").click(function() {
+	$(".ERROR").css("display", "none");
+	json = {"dni":$("#dniBuscar").val()};
+	$.ajax({
+    	url: '/api/carrito/buscarCliente',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(cliente){
+    		$("#apellidoCli").val(cliente.apellido);
+    		$("#nombreCli").val(cliente.nombre);
+    		$("#dni").val(cliente.dni);		
+    		$("#fechaNacimientoCli").val(cliente.fechaNacimiento);
+    		$("#emailCli").val(cliente.email);
+    		$("#mostrar-cliente").show(velAnim);	
+    	},
+    	error: function(response){
+    		$("#displayDniError").css("display", "block");
+    		$("#displayDniError").html(response.responseJSON.message);
+    	}
+	})
+});
+
+
+function altaCliente(){
+	$("#mostrar-cliente").hide(velAnim);
+	$("#buscarCliente").hide(velAnim); 
+	$("#altaCliente").show(velAnim);
+	
+}
+
+$("#guardarCliente").click(function(){
+	$(".ERROR").css("display", "none");
+	var nombre = $("#nombreNuevo").val();
+	var apellido = $("#apellidoNuevo").val();
+	var dni = $("#dniNuevo").val();
+	var email = $("#emailNuevo").val();
+	var fechaNacimiento= $("#fechaNacimientoNuevo").val();
+	json = {					
+			"apellido": apellido, 
+			"nombre": nombre, 					
+			"dni": dni, 		
+			"fechaNacimiento": fechaNacimiento,
+			"email": email
+	};
+	$.ajax({
+    	url: '/api/carrito/altaCliente',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(response){
+    		$("#altaCliente").hide(velAnim);
+    		$("#apellidoCli").val(apellido);
+    		$("#nombreCli").val(nombre);
+    		$("#dni").val(dni);		
+    		$("#fechaNacimientoCli").val(fechaNacimiento);
+    		$("#emailCli").val(email);
+    		$("#mostrar-cliente").show(velAnim);
+    	},
+    	error: function(response){
+        	if(response.responseJSON.message.includes("DNI")){
+   			 $("#errorDNI").css("display", "block");
+   			 $("#errorDNI").html(response.responseJSON.message);
+        	}
+    	}
+	})
+});
+
+function traerEmpleado(){
+	json={ "idEmpleado":idEmpleado};
+	$.ajax({
+    	url: '/api/carrito/traerEmpleado',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(empleado){
+    		console.log(empleado)
+        	$("#apellidoEmp").val(empleado.apellido);
+    		$("#nombreEmp").val(empleado.nombre);
+    		$("#mostrar-empleado-factura").show(velAnim);	
+    	},
+    	error: function(response){
+    		console.log(response)
+        	
+    	}
+    });
+}
+
 
 function verCarritos(){
 	$("#contenido").hide(velAnim,function(){
@@ -647,6 +747,72 @@ function ocultarSelectLocal(){
 		  <tbody id="tbody-tabla-factura-2">
 		  </tbody>
 		</table>
+		<table id="tabla-factura-3" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Cliente</th>   
+		    </tr>
+		  </thead>  
+		</table>
+		<div id="factura-cliente" class="table table-hover">		
+          				<p></p>           
+          					<input type = "radio" name = "opcionCli" checked="checked" onclick="buscarCliente()"/>
+                 		<label>Buscar cliente existente por dni:</label> 
+          					<input type = "radio" name = "opcionCli" onclick="altaCliente()"/>
+                 		<label>Crear cliente nuevo:</label>
+		</div>
+		<div id="buscarCliente" class="form-row">
+		        <p>DNI: <input id="dniBuscar" class="form-control" type="number" name="dniBuscar"></p> 
+		        <button id="buscar" type="button" class="btn btn-success">Buscar</button>	
+		        <label id="displayDniError" class="ERROR" style="display: none;"></label> 
+		</div>
+		<div id="mostrar-cliente" class="form-fow" style="display:none">
+			<div class="form-group col-md-6">
+			      <p>Apellido: <input class="form-control" id="apellidoCli" type="text" name="apellido" disabled></p>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombreCli" type="text" name="nombre" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Dni: <input id="dni" class="form-control" type="number" name="dni" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Fecha de Nacimiento: <input id="fechaNacimientoCli" class="form-control" type="date" name="fechaNacimiento" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Email: <input id="emailCli" class="form-control" type="text" name="emailCli" disabled></p> 
+			    </div>
+		</div>
+		
+		<div id="altaCliente" class="form-fow" style="display:none">
+			<p>Nombre: <input class="form-control" id="nombreNuevo" type="text" name="nombre"></p>
+			<p>Apellido: <input class="form-control" id="apellidoNuevo" type="text" name="apellido"></p>
+			<p>DNI: <input class="form-control" id="dniNuevo" type="number" name="dni"></p>
+			<label id="errorDNI" class="ERROR" style="display: none;"></label> 
+			<p>Fecha de Nacimiento: <input class="form-control" id="fechaNacimientoNuevo" type="date" name="fechaNacimiento"></p>
+			<p>Email: <input  class="form-control" id="emailNuevo" type="text" name="email"></p>
+			<button id="guardarCliente" type="button" class="btn btn-success">Guardar</button>
+		</div>
+		
+		<table id="tabla-factura-4" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Empleado en factura</th>   
+		    </tr>
+		  </thead>  
+		</table>
+		
+		<div id="mostrar-empleado-factura" class="form-fow" style="display:none">
+			<div class="form-group col-md-6">
+			      <p>Apellido: <input class="form-control" id="apellidoEmp" type="text" name="apellido" disabled></p>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombreEmp" type="text" name="nombre" disabled></p> 
+			    </div>
+		</div>
+		
+		<button type="button" class="btn btn-primary" onclick="generarFactura()">Realizar Factura</button>
+		<button type="button" class="btn btn-danger" onclick="verCarritos()">Atras</button>
 	
 	</div>
 	<div id="error" class="vista" style="display: none"></div>

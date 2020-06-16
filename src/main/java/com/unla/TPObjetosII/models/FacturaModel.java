@@ -14,21 +14,26 @@ public class FacturaModel {
 	@JsonIgnore
 	private CarritoModel carrito;
 	
+	@JsonIgnore
+	private EmpleadoModel empleado;
+	
 	
 	public FacturaModel() {
 	}
 	
-	public FacturaModel(int idFactura,CarritoModel carrito,ClienteModel cliente) {
+	public FacturaModel(int idFactura,CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado) {
 		super();
 		this.idFactura=idFactura;
 		this.carrito = carrito;
 		this.cliente=cliente;
+		this.empleado=empleado;
 	}
 	
-	public FacturaModel(LocalModel local, CarritoModel carrito,ClienteModel cliente) {
+	public FacturaModel(LocalModel local, CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado) {
 		super();
 		this.carrito = carrito;
 		this.cliente=cliente;
+		this.empleado=empleado;
 	}
 
 	public int getIdFactura() {
@@ -59,10 +64,23 @@ public class FacturaModel {
 		this.cliente = cliente;
 	}
 
+	
+	
+	public EmpleadoModel getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(EmpleadoModel empleado) {
+		this.empleado = empleado;
+	}
+
 	@Override
 	public String toString() {
-		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", carrito=" + carrito + "]";
+		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", carrito=" + carrito + ", empleado="
+				+ empleado + "]";
 	}
+
+	
 
 	
 	
