@@ -108,6 +108,13 @@
 		        error=true;
 		    }
 			
+			if($("#fechaNacimiento").val() == ""){
+		        
+			//     $("#fechaNacimiento").focus();
+				 $("#displayFNacError").css("display", "block");
+				 error=true;
+			}
+			
 			
 			
 			$(".error").css("display", "none");
@@ -157,51 +164,61 @@
 		</div>
 		<div id="formularios">
 			<div id="formularioSelectEmpleados">
-				<p>Seleccione Empleado: <select id="empleados">
+				<p>Seleccione Empleado: <select id="empleados" class="form-control">
 				</select>
 				</p>
 			</div>
 			<div id="formularioEmpleado" style="display: none;">
 			
-			<p>Apellido: <input class="form-control" id="apellido" type="text" name="apellido" required="required"></p>
-			<label id="displayApellidoError" class="ERROR" style="display: none;">Complete el campo apellido</label>
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <p>Apellido: <input class="form-control" id="apellido" type="text" name="apellido" required="required"></p>
+					<label id="displayApellidoError" class="ERROR" style="display: none;">Complete el campo apellido</label> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombre" type="text" name="nombre" required="required"></p>
+					<label id="displayNombreError" class="ERROR" style="display: none;">Complete el campo nombre</label> 
+			    </div>
+			</div>
 			
-			<p>Nombre: <input class="form-control" id="nombre" type="text" name="nombre" required="required"></p>
-			<label id="displayNombreError" class="ERROR" style="display: none;">Complete el campo nombre</label> 
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <p>Fecha de Nacimiento: <input id="fechaNacimiento" class="form-control" type="date" name="fechaNacimiento" required="required"></p>
+					<label id="displayFNacError" class="ERROR" style="display: none;">Complete el campo fecha de nacimiento</label>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Dni: <input id="dni" class="form-control" type="number" name="dni" required="required"></p>
+					<label id="displayDniError" class="ERROR" style="display: none;"></label> 
+					<label id="displayDniError2" class="ERROR" style="display: none;">Complete el campo DNI </label>  
+			    </div>
+			</div>
 			
-			<p>Fecha de Nacimiento: <input id="fechaNacimiento" class="form-control" type="date" name="fechaNacimiento" ></p>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<p>Franja Horaria: <input id="franjaHoraria" class="form-control" type="text" name="franjaHoraria" required="required"></p>
+						<label id="displayFHError" class="ERROR" style="display: none;">Complete el campo franja Horaria </label>
+				</div>
+				<div class="form-group col-md-6">
+          				<label>Tipo de empleado</label>            
+          					<input type = "radio"  name = "tipoEmpleado" id="radioVendedor" value = "vendedor" />
+                 		<label>Vendedor</label> 
+          	<input type = "radio" name = "tipoEmpleado" id="radioGerente" value = "gerente" />
+                		 <label>Gerente</label> 
+       		 	</div>
+			</div>
 			
-			<p>Dni: <input class="form-control" id="dni" type="number" name="dni" required="required"></p>
-			<label id="displayDniError" class="ERROR" style="display: none;"></label> 
-			<label id="displayDniError2" class="ERROR" style="display: none;">Complete el campo DNI </label> 
-		
-			<p>Franja Horaria: <input id="franjaHoraria" type="text" name="franjaHoraria" required="required"></p>
-			<label id="displayFHError" class="ERROR" style="display: none;">Complete el campo franja Horaria </label>	
-			
-			
-			<p>
-          	<label>Tipo de empleado</label>            
-          	<input type = "radio"
-                 name = "tipoEmpleado"
-                 id="radioVendedor"
-                 value = "vendedor" />
-                 <label>Vendedor</label> 
-          	<input type = "radio"
-                 name = "tipoEmpleado"
-                 id="radioGerente"
-                 value = "gerente" />
-                 <label>Gerente</label> 
-       		 </p> 
+          	
        		 
        		 <div id="formulario">
-			<select id="locales">
+			<select id="locales" class="form-control">
 			</select>
 		</div>
-		
-			<button id="modificar" type="button">MODIFICAR</button>
+			<p></p>
+			<button id="modificar" class="btn btn-primary">MODIFICAR</button>
 			</div>
 		</div>
 		
 		<div  id="exitoModificar" style="display: none;">
 			<h1>Empleado Modificado</h1>
+			<button onClick="window.location.reload();" class="btn btn-primary">Recargar</button>
 		</div>

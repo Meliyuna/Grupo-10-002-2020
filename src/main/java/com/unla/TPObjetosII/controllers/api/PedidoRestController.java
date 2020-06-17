@@ -37,7 +37,12 @@ public class PedidoRestController {
 	public PedidoModel alta (@RequestBody ObjectNode pedidoNode) throws Exception {
 		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
 		PedidoModel pedidoModel = mapper.treeToValue(pedidoNode, PedidoModel.class);
-		return pedidoService.insert(pedidoModel);
+		try {
+			pedidoModel = pedidoService.insert(pedidoModel);
+		} catch (Exception e) {
+			throw new Exception("Error en alta de pedido:"+ e.getMessage());
+		}
+		return pedidoModel;
 	}
 	
 	@PostMapping("/modificar")

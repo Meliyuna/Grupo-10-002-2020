@@ -5,15 +5,17 @@
 <script>
 	$(document).ready(function() {
 		$("#guardar").click(function() {
+			
 			var nombre = $("#nombre").val();
 			var apellido = $("#apellido").val();
 			var dni = $("#dni").val();
 			var email = $("#email").val();
-			//var fechaNac = $("#fechaDeNacimiento").val();
+			var fechaNacimiento= $("#fechaNacimiento").val();
 			json = {					
 					"apellido": apellido, 
 					"nombre": nombre, 					
-					"dni": dni, 					 
+					"dni": dni, 		
+					"fechaNacimiento": fechaNacimiento,
 					"email": email
 			};
 			console.log(json);
@@ -48,7 +50,7 @@
 			<p>Nombre: <input id="nombre" type="text" name="nombre"></p>
 			<p>Apellido: <input id="apellido" type="text" name="apellido"></p>
 			<p>DNI: <input id="dni" type="number" name="dni"></p>
-			<p>Fecha de Nacimiento: <input id="fechaDeNacimiento" type="date" name="fechaDeNacimiento"></p>
+			<p>Fecha de Nacimiento: <input id="fechaNacimiento" type="date" name="fechaNacimiento"></p>
 			<p>Email: <input id="email" type="text" name="email"></p>
 			<button id="guardar" type="button">Guardar</button>		
 	</div>

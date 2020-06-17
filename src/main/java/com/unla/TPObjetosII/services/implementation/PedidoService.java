@@ -57,7 +57,7 @@ public class PedidoService implements IPedidoService {
 	@Qualifier("solicitudStockConverter")
 	private SolicitudStockConverter solicitudStockConverter;
 
-	public PedidoModel insert(PedidoModel pedidoModel) {
+	public PedidoModel insert(PedidoModel pedidoModel)throws Exception {
 		if(pedidoModel.getSolicitudStock()!=null) {
 			SolicitudStockModel solicitud = pedidoModel.getSolicitudStock();
 			pedidoModel.setSolicitudStock(null);
