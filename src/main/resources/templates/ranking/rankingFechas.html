@@ -22,8 +22,8 @@
 <script type="text/javascript">
 //Variables para mostrar el contenido de la pag
 
-var urlVista = "/solicitudes/vistaSolicitudes"; //Vista a mostrar en el contenido de la pag
-var idNavItem = "#nav-item-solicitudes"; //id nav-item de opcion seleccionada
+var urlVista = "/rankings/fechas/"+ sessionStorage.getItem("idLocal"); //Vista a mostrar en el contenido de la pag
+var idNavItem = "#nav-item-ranking"; //id nav-item de opcion seleccionada
 
 $(document).ready(function(){
 	cargarEstructura(urlVista, function(){
