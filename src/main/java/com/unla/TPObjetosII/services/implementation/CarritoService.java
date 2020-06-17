@@ -20,6 +20,8 @@ import com.unla.TPObjetosII.entities.Factura;
 import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.models.CarritoModel;
+import com.unla.TPObjetosII.models.ClienteModel;
+import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.FacturaModel;
 import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.models.PedidoModel;
@@ -140,6 +142,12 @@ public class CarritoService implements ICarritoService{
 		LocalModel local = localConverter
 				.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
 		Local l = localConverter.modelToEntity(local);
+		CarritoModel car=this.getById(idCarrito);
+		if(car==null) throw new Exception("El carrito no existe");
+		ClienteModel cli=clienteService.getById(idCliente);
+		if(cli==null) throw new Exception("El cliente no existe");
+		EmpleadoModel e=empleadoService.getEmpleado(idEmpleado);
+		if(e==null)throw new Exception("El empleado no existe");
 		Carrito carrito = carritoConverter.modelToEntity(this.getByIdConTodo(idCarrito));
 		Set<Pedido> pedidos = carrito.getListaPedido();
 		System.out.println(pedidos);
