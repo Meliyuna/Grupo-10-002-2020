@@ -28,6 +28,8 @@ public class Empleado extends Persona{
 	@JoinColumn(name="IDLOCAL")
 	private Local local;
 	
+	private String password;
+	
 	
 	public Empleado(){
 		
@@ -74,6 +76,16 @@ public class Empleado extends Persona{
 	public void setLocal(Local local) {
 		this.local = local;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 
 	@Override
 	public String toString() {

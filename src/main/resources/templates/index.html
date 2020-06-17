@@ -21,39 +21,39 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
-		//Empleados
-	$.ajax({
-      	url: '/api/empleado/traerEmpleados',
-      	type: 'POST',
-      	success: function(response){
-          	console.log(response);
-          	$.each(response,function(index,empleado){
-          		$("#empleados").append(new Option(empleado.apellido+" "+ empleado.nombre+" "+empleado.dni ,empleado.idPersona));
-          	});
-      	},
-      	error: function(response){
-      		console.log(response);
-      	}
-    });
 	$("#login").click(function(){
-		json={"idEmpleado":$("#empleados").val()};
+		json={"nombre":$("#nombreUsuario").val(),"password":$("#password").val()};
 		$.ajax({
-        	url: '/api/empleado/traerEmpleado',
+        	url: '/login',
         	type: 'POST',
         	dataType: 'json',
         	data: JSON.stringify(json),
         	contentType: "application/json",
-        	success: function(empleado){
-        		sessionStorage.setItem("idLocal",empleado.local.idLocal);
-        		sessionStorage.setItem("direccionLocal",empleado.local.direccion);
-        		sessionStorage.setItem("idEmpleado",$("#empleados").val());
-        		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
-        		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
+        	success: function(data,status){
+        		console.log(data);
         		$(location).attr('href','/pedido/carritos');
         	},
-        	error: function(response){
-        		console.log(response)
-            	
+        	error: function(jqXHR){
+        		json={"nombre":$("#nombreUsuario").val()};
+        		$.ajax({
+                	url: '/api/empleado/traerEmpleadoPorNombre',
+                	type: 'POST',
+                	dataType: 'json',
+                	data: JSON.stringify(json),
+                	contentType: "application/json",
+                	success: function(empleado){
+                		sessionStorage.setItem("idLocal",empleado.local.idLocal);
+                		sessionStorage.setItem("direccionLocal",empleado.local.direccion);
+                		sessionStorage.setItem("idEmpleado",empleado.idPersona);
+                		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
+                		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
+                		sessionStorage.setItem("Authorization",jqXHR.getResponseHeader("Authorization"));
+                		$(location).attr('href','/pedido/carritos');
+                	},
+                	error: function(response){
+                		console.log(response);
+                	}
+        		});	
         	}
         });
 	});
@@ -81,8 +81,11 @@
                     <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
                   </div>
                   <form class="user">
+                     <div class="form-group">
+                      <input id="nombreUsuario" type="email" class="form-control form-control-user" aria-describedby="emailHelp" placeholder="Nombre de Usuario...">
+                    </div>
                     <div class="form-group">
-                      <select class="form-control" id="empleados" style="text-align: center;"></select>
+                      <input id="password" type="password" class="form-control form-control-user" placeholder="Password">
                     </div>
                     <a id="login" href="#" class="btn btn-primary btn-user btn-block">
                       Login

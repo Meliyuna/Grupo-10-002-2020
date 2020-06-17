@@ -85,6 +85,20 @@ public class EmpleadoRestController {
 		return empleadoNode;
 	}
 	
+	@PostMapping("/traerEmpleadoPorNombre")
+	@ResponseBody
+	public ObjectNode traerEmpleadoPorNombre(@RequestBody ObjectNode o) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		EmpleadoModel e=empleadoService.getEmpleadoPorNombre(o.get("nombre").asText());
+		ObjectNode empleadoNode=mapper.convertValue(e, ObjectNode.class);// empleado que tiene todos menos el local
+		ObjectNode localNode = null;
+		System.out.println(e);
+		if (e.getLocal()!=null)localNode=mapper.convertValue(e.getLocal(), ObjectNode.class);
+		empleadoNode.set("local",localNode);
+		//EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	
+		return empleadoNode;
+	}
+	
 	@PostMapping("/baja")
 	@ResponseBody
 	public Boolean baja(@RequestBody ObjectNode o) throws Exception{

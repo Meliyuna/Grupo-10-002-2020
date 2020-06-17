@@ -57,6 +57,11 @@ public class EmpleadoService implements IEmpleadoService {
 	public EmpleadoModel getEmpleado(long dni) {
 		return empleadoConverter.entityToModel(empleadoRepository.traerEmpleadoPorDni(dni));
 	}
+
+	@Override
+	public EmpleadoModel getEmpleadoPorNombre(String nombre) {
+		return empleadoConverter.entityToModel(empleadoRepository.findByNombre(nombre));
+	}
 	
 
 }
