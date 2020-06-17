@@ -46,9 +46,7 @@ public class RankingController {
 		return mAV;
 	}
 	@PostMapping("/tabla/{id}")
-//	public ModelAndView rankingFechas(@PathVariable("id") int id, @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta) {
 	public ModelAndView rankingFechas(@PathVariable("id") int id,@RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,@RequestParam("hasta")@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta)	{
-		System.out.println(desde);
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.RANKING_TABLA_PRODUCTO_FECHAS);
 		mAV.addObject("productos",carritoService.carritosConPedidosEntreFechas(id, desde, hasta));
 		

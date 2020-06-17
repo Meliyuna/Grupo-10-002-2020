@@ -35,6 +35,6 @@ import com.unla.TPObjetosII.entities.Carrito;
 	@Query("SELECT c from Carrito c join fetch c.listaPedido l join fetch c.local lo where lo.idLocal = (:idLocal)")	
 	public abstract List<Carrito> findAllConPedidos(int idLocal);
 	
-	@Query("SELECT c from Carrito c join fetch c.listaPedido l join fetch c.local lo where lo.idLocal = (:idLocal) and c.fecha BETWEEN (:fechaDesde) and (:fechaHasta)")	
+	@Query("SELECT c from Carrito c join fetch c.local lo where lo.idLocal = (:idLocal) and c.fecha BETWEEN (:fechaDesde) and (:fechaHasta)")	
 	public abstract List<Carrito> findAllConPedidosEntreFechas(int idLocal, LocalDateTime fechaDesde, LocalDateTime fechaHasta);
 }

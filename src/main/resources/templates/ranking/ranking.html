@@ -21,13 +21,17 @@
 <script src="/js/cargarEstructura.js"></script>
 <script type="text/javascript">
 //Variables para mostrar el contenido de la pag
-
 var urlVista = "/rankings/general"; //Vista a mostrar en el contenido de la pag
-var idNavItem = "#nav-item-ranking"; //id nav-item de opcion seleccionada
+var idDespegable = "#nav-item-ranking"; //id nav-item de opcion seleccionada
+var idContenidoDesplegable = "#collapseRanking"; //Contenido del desplegable
+var idOpcionSeleccionada = "#Ranking-general"; //Opcion seleccionada del desplegable
 
 $(document).ready(function(){
 	cargarEstructura(urlVista, function(){
-		$(idNavItem).addClass('active');
+		$(idDesplegable + " .nav-link").removeClass('collapsed');
+		$(idDesplegable + " .nav-link").attr('aria-expanded','true');
+		$(idContenidoDesplegable).addClass('show');
+		$(idOpcionSeleccionada).addClass('active');
 	});
 });
 </script>

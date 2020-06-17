@@ -1,31 +1,45 @@
-<div>
 
-
-<form action="#" th:action="@{/lotes/actualizar}" th:object="${lote}" method="post">
-	<input type="hidden" th:field="*{idLote}" />
-	<p>Cantidad Inicial: <input type="number" th:field="*{cantidadInicial}" /></p>
-	<p>Cantidad Actual: <input type="number" th:field="*{cantidadActual}" /></p>
-
-	<p>Producto:</p>
-	<select  th:field="*{producto.idProducto}">
-		<option th:each="producto : ${productos}"
-		th:value="${producto.idProducto}" 
-		th:text="${producto.nombre}" />
-		</option>
-	</select>
-
-	<p>Local:</p>
-	<select  th:field="*{local.idLocal}">
-		<option th:each="local : ${locales}"
-		th:value="${local.idLocal}" 
-		th:text="${local.direccion}" />
-		</option>
-	</select>
-
-	<input type="hidden" th:field="*{fechaIngreso}">
-	<input type="submit" value="modificar"/>
-</form>
-<form action="#" th:action="@{/lotes/eliminar/{id}(id=${lote.idLote})}" method="post">
-	<input type="submit" value="eliminar" />
-</form>
+<div class="col-6">
+	<form action="#" th:action="@{/lotes/actualizar}" th:object="${lote}" method="post">
+		<input type="hidden" th:field="*{idLote}" />
+		
+		<div class="form-group row">
+					<label class="col-2 col-form-label">Producto</label>
+					<select  th:field="*{producto.idProducto}" class="form-control col-10" >
+						<option th:each="producto : ${productos}"
+						th:value="${producto.idProducto}" 
+						th:text="${producto.nombre}" />
+						</option>
+					</select>
+					</div>
+					
+					<div class="form-group row">
+					<label class="col-2 col-form-label">Local</label>
+					<select  th:field="*{local.idLocal}" class="form-control col-10" >
+						<option th:each="local : ${locales}"
+						th:value="${local.idLocal}" 
+						th:text="${local.direccion}" />
+						</option>
+					</select>
+					</div>
+					
+					<div class="form-group row">
+					<label class="col-2 col-form-label">Cantidad Inicial</label>
+					<input type="number" th:field="*{cantidadInicial}" class="form-control col-10"  />
+					</div>	
+					
+					<div class="form-group row">
+					<label class="col-2 col-form-label">Cantidad Actual</label>
+					<input type="number" th:field="*{cantidadActual}" class="form-control col-10" />
+					</div>
+		
+			<input type="hidden" th:field="*{fechaIngreso}">
+			<input type="submit" value="modificar" class="btn btn-success"/>
+	</form>
+	
+	<br>
+	
+	<form action="#" th:action="@{/lotes/eliminar/{id}(id=${lote.idLote})}" method="post">
+		<input type="submit" value="eliminar" class="btn btn-danger"/>
+	</form>
 </div>
