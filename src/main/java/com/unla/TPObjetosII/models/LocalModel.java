@@ -46,7 +46,7 @@ public class LocalModel {
 		return idLocal;
 	}
 
-	protected void setIdLocal(int idLocal) {
+	public void setIdLocal(int idLocal) {
 		this.idLocal = idLocal;
 	}
 

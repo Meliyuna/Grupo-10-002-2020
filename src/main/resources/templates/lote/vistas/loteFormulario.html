@@ -1,0 +1,24 @@
+<h2>Nuevo Lote</h2>
+
+<form action="#" th:action="@{/lotes/}" th:object="${lote}" method="post">
+	<p>Cantidad Inicial: <input type="number" th:field="*{cantidadInicial}" /></p>
+	<p>Cantidad Actual: <input type="number" th:field="*{cantidadActual}" /></p>
+	
+	<p>Producto:</p>
+	<select  th:field="*{producto.idProducto}">
+		<option th:each="producto : ${productos}"
+		th:value="${producto.idProducto}" 
+		th:text="${producto.nombre}" />
+		</option>
+	</select>
+	
+	<p>Local:</p>
+	<select  th:field="*{local.idLocal}">
+		<option th:each="local : ${locales}"
+		th:value="${local.idLocal}" 
+		th:text="${local.direccion}" />
+		</option>
+	</select>
+	
+	<input type="submit" value="subir"/>
+</form>
