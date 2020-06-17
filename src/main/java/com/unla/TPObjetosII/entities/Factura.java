@@ -1,5 +1,7 @@
 package com.unla.TPObjetosII.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,24 +40,28 @@ public class Factura {
 	@JoinColumn(name="IDEMPLEADOFACTURA")
 	private Empleado empleado;
 	
+	@Column(name="FECHAFACTURADO")
+	private LocalDateTime fechaFacturado;
 	
 	public Factura(){
 		
 	}
 	
-	public Factura(int idFactura, Carrito carrito,Cliente cliente,Empleado empleado) {
+	public Factura(int idFactura, Carrito carrito,Cliente cliente,Empleado empleado,LocalDateTime fecha) {
 		super();
 		this.idFactura=idFactura;
 		this.carrito = carrito;
 		this.cliente=cliente;
 		this.empleado=empleado;
+		this.fechaFacturado=fecha;
 	}
 	
-	public Factura(Carrito carrito,Cliente cliente,Empleado empleado) {
+	public Factura(Carrito carrito,Cliente cliente,Empleado empleado,LocalDateTime fecha) {
 		super();
 		this.carrito = carrito;
 		this.cliente=cliente;
 		this.empleado=empleado;
+		this.fechaFacturado=fecha;
 	}
 
 
@@ -96,11 +102,21 @@ public class Factura {
 		this.empleado = empleado;
 	}
 
+	public LocalDateTime getFechaFacturado() {
+		return fechaFacturado;
+	}
+
+	public void setFechaFacturado(LocalDateTime fechaFacturado) {
+		this.fechaFacturado = fechaFacturado;
+	}
+
 	@Override
 	public String toString() {
 		return "Factura [idFactura=" + idFactura + ", carrito=" + carrito + ", cliente=" + cliente + ", empleado="
-				+ empleado + "]";
+				+ empleado + ", fechaFacturado=" + fechaFacturado + "]";
 	}
+
+	
 
 	
 

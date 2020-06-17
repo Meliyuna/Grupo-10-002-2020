@@ -45,7 +45,7 @@ public class FacturaConverter {
 		CarritoModel carrito=carritoConverter.entityToModel(factura.getCarrito());
 		ClienteModel cliente=clienteConverter.entityToModel(factura.getCliente());
 		EmpleadoModel empleado=empleadoConverter.entityToModel(factura.getEmpleado());
-		return new FacturaModel(factura.getIdFactura(),carrito,cliente,empleado);
+		return new FacturaModel(factura.getIdFactura(),carrito,cliente,empleado,factura.getFechaFacturado());
 	}
 	
 	
@@ -54,7 +54,7 @@ public class FacturaConverter {
 		Carrito carrito=carritoConverter.modelToEntity(factura.getCarrito());
 		Cliente cliente=clienteConverter.modelToEntity((factura.getCliente()));
 		Empleado empleado=empleadoConverter.modelToEntity(factura.getEmpleado());
-		return new Factura(factura.getIdFactura(),carrito,cliente,empleado);
+		return new Factura(factura.getIdFactura(),carrito,cliente,empleado,factura.getFechaFacturado());
 	}
 
 }

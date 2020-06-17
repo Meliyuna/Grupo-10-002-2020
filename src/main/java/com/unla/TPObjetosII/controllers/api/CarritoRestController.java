@@ -107,8 +107,7 @@ public class CarritoRestController {
 	@PostMapping("/altaCliente")
 	@ResponseBody
 	public ClienteModel altaCliente(@RequestBody ClienteModel cliente)throws Exception{
-		System.out.println(clienteService.insertOrUpdate(cliente));
-		return cliente;
+		return clienteService.insertOrUpdate(cliente);
 	}
 	
 	@PostMapping("/traerEmpleado")
@@ -117,7 +116,7 @@ public class CarritoRestController {
 		return empleadoService.getEmpleado(o.get("idEmpleado").asInt());
 	}
 	
-	@PostMapping("/generarfactura")
+	@PostMapping("/generarFactura")
 	@ResponseBody
 	public FacturaModel generarFactura(@RequestBody ObjectNode o) throws Exception {
 		int idCarrito=o.get("idCarrito").asInt();

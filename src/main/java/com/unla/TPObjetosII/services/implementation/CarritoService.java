@@ -1,6 +1,8 @@
 package com.unla.TPObjetosII.services.implementation;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -134,17 +136,33 @@ public class CarritoService implements ICarritoService{
 	}
 
 	@Override
-	public FacturaModel generarFactura(int idCarrito,int idCliente, int idEmpleado) {
-		LocalModel local=localConverter.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
-		Local l=localConverter.modelToEntity(local);
-		Carrito carrito=carritoConverter.modelToEntity(this.getByIdConTodo(idCarrito));
+	public FacturaModel generarFactura(int idCarrito, int idCliente, int idEmpleado) throws Exception {
+		LocalModel local = localConverter
+				.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
+		Local l = localConverter.modelToEntity(local);
+		Carrito carrito = carritoConverter.modelToEntity(this.getByIdConTodo(idCarrito));
+		Set<Pedido> pedidos = carrito.getListaPedido();
+		System.out.println(pedidos);
+		for (Pedido p : pedidos) {
+			if (p.getSolicitudStock() != null) {
+				if (p.getSolicitudStock().getPendiente() == true)
+					throw new Exception("Imposible realizar factura solicitud Stock pendiente");
+			}
+		}
 		carrito.setLocal(l);
-		Cliente cliente=clienteConverter.modelToEntity(clienteService.getById(idCliente));
-		Empleado empleado=empleadoConverter.modelToEntity(empleadoService.getEmpleado(idEmpleado));
-		Factura f= new Factura(carrito,cliente,empleado);
+		Cliente cliente = clienteConverter.modelToEntity(clienteService.getById(idCliente));
+		Empleado empleado = empleadoConverter.modelToEntity(empleadoService.getEmpleado(idEmpleado));
+		LocalDateTime ahora = LocalDateTime.now();
+		Factura f = new Factura(carrito, cliente, empleado, ahora);
+		List<Factura> facturas = facturaRepository.findAll();
+		if (!facturas.isEmpty()) {
+			for (Factura i : facturas) {
+				if (i.getCarrito().getIdCarrito() == f.getCarrito().getIdCarrito())
+					throw new Exception("Ya existe factura con ese Carrito");
+			}
+		}
 		facturaRepository.save(f);
 		return facturaConverter.entityToModel(f);
 	}
-	
 
 }

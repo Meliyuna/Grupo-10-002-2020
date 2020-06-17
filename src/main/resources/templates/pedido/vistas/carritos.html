@@ -2,6 +2,7 @@
 $(document).ready(function(){
 	verCarritos();
 	traerEmpleado();
+
 	
 	//Actualizar precio total de nuevo pedido
 	$("#aComprar").change(function(){
@@ -92,6 +93,8 @@ function verPedidos(idCarrito){
 
 function verFactura(idCarrito){
 	$("#contenido").hide(velAnim,function(){
+		carritoSeleccionado=idCarrito;
+		
 		$("#tbody-tabla-factura").html("");
 		$("#tbody-tabla-factura-2").html("");
 		json={"idCarrito":idCarrito};
@@ -125,6 +128,13 @@ function verFactura(idCarrito){
 
 
 function buscarCliente(){
+		$("#realizar-factura").prop("disabled",true);
+		$("#idCli").val("");
+		$("#apellidoCli").val("");
+		$("#nombreCli").val("");
+		$("#dni").val("");		
+		$("#fechaNacimientoCli").val("");
+		$("#emailCli").val("");
 	   $("#mostrar-cliente").hide(velAnim);
 	   $("#altaCliente").hide(velAnim);
        $("#buscarCliente").show(velAnim); 	
@@ -140,11 +150,13 @@ $("#buscar").click(function() {
     	data: JSON.stringify(json),
     	contentType: "application/json",
     	success: function(cliente){
+    		$("#idCli").val(cliente.idPersona);
     		$("#apellidoCli").val(cliente.apellido);
     		$("#nombreCli").val(cliente.nombre);
     		$("#dni").val(cliente.dni);		
     		$("#fechaNacimientoCli").val(cliente.fechaNacimiento);
     		$("#emailCli").val(cliente.email);
+    		$("#realizar-factura").prop("disabled",false);
     		$("#mostrar-cliente").show(velAnim);	
     	},
     	error: function(response){
@@ -156,6 +168,7 @@ $("#buscar").click(function() {
 
 
 function altaCliente(){
+	$("#realizar-factura").prop("disabled",true);
 	$("#mostrar-cliente").hide(velAnim);
 	$("#buscarCliente").hide(velAnim); 
 	$("#altaCliente").show(velAnim);
@@ -164,6 +177,7 @@ function altaCliente(){
 
 $("#guardarCliente").click(function(){
 	$(".ERROR").css("display", "none");
+	var idPersona;
 	var nombre = $("#nombreNuevo").val();
 	var apellido = $("#apellidoNuevo").val();
 	var dni = $("#dniNuevo").val();
@@ -182,13 +196,15 @@ $("#guardarCliente").click(function(){
     	dataType: 'json',
     	data: JSON.stringify(json),
     	contentType: "application/json",
-    	success: function(response){
+    	success: function(cliente){
     		$("#altaCliente").hide(velAnim);
+    		$("#idCli").val(cliente.idPersona);
     		$("#apellidoCli").val(apellido);
     		$("#nombreCli").val(nombre);
     		$("#dni").val(dni);		
     		$("#fechaNacimientoCli").val(fechaNacimiento);
     		$("#emailCli").val(email);
+    		$("#realizar-factura").prop("disabled",false);
     		$("#mostrar-cliente").show(velAnim);
     	},
     	error: function(response){
@@ -215,10 +231,34 @@ function traerEmpleado(){
     		$("#mostrar-empleado-factura").show(velAnim);	
     	},
     	error: function(response){
-    		console.log(response)
-        	
+    		console.log(response)	
     	}
     });
+}
+
+function generarFactura(){
+	$(".ERRORFACTURA").css("display", "none");
+	json={
+			"idCarrito":carritoSeleccionado,
+			"idCliente":$("#idCli").val(),
+			"idEmpleado":idEmpleado
+	};
+	$.ajax({
+    	url: '/api/carrito/generarFactura',
+    	type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(response){
+    		$(".vista").hide(velAnim); 
+    		$("#exito-agregar").show(velAnim);
+    	},
+    	error: function(response){
+    		 $("#error-factura-1").css("display", "block");
+ 			 $("#error-factura-1").html(response.responseJSON.message);
+    	}
+	})
+	
 }
 
 
@@ -756,10 +796,13 @@ function ocultarSelectLocal(){
 		</table>
 		<div id="factura-cliente" class="table table-hover">		
           				<p></p>           
-          					<input type = "radio" name = "opcionCli" checked="checked" onclick="buscarCliente()"/>
+          					<input type = "radio" name = "opcionCli" value="radioOpc1" checked="checked" onclick="buscarCliente()"/>
                  		<label>Buscar cliente existente por dni:</label> 
-          					<input type = "radio" name = "opcionCli" onclick="altaCliente()"/>
+          					<input type = "radio" name = "opcionCli" value="radioOpc2" onclick="altaCliente()"/>
                  		<label>Crear cliente nuevo:</label>
+                 		
+                 		
+                 		
 		</div>
 		<div id="buscarCliente" class="form-row">
 		        <p>DNI: <input id="dniBuscar" class="form-control" type="number" name="dniBuscar"></p> 
@@ -767,7 +810,8 @@ function ocultarSelectLocal(){
 		        <label id="displayDniError" class="ERROR" style="display: none;"></label> 
 		</div>
 		<div id="mostrar-cliente" class="form-fow" style="display:none">
-			<div class="form-group col-md-6">
+				<input type="hidden" id="idCli" name="id" > 	
+			<div class="form-group col-md-6">       
 			      <p>Apellido: <input class="form-control" id="apellidoCli" type="text" name="apellido" disabled></p>
 			    </div>
 			    <div class="form-group col-md-6">
@@ -811,9 +855,18 @@ function ocultarSelectLocal(){
 			    </div>
 		</div>
 		
-		<button type="button" class="btn btn-primary" onclick="generarFactura()">Realizar Factura</button>
-		<button type="button" class="btn btn-danger" onclick="verCarritos()">Atras</button>
+		<button id="realizar-factura" type="button" class="btn btn-primary" onclick="generarFactura()" disabled>Realizar Factura</button>
+		<label id="error-factura-1" class="ERRORFACTURA" style="display: none;"></label>
+		<button type="button" class="btn btn-danger" onclick="window.location.reload();">Atras</button>
 	
 	</div>
+
 	<div id="error" class="vista" style="display: none"></div>
+	
 </div>
+	<div  id="exito-agregar" style="display: none;">
+			<h1>Factura agregado</h1>
+			<p></p> 
+			<p></p> 
+			<button id="recargar" onClick="window.location.reload();" class="btn btn-primary">Recargar</button>	
+		</div>

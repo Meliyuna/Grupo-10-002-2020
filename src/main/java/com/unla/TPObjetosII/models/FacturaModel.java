@@ -1,5 +1,7 @@
 package com.unla.TPObjetosII.models;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class FacturaModel {
@@ -18,15 +20,18 @@ public class FacturaModel {
 	private EmpleadoModel empleado;
 	
 	
+	private LocalDateTime fechaFacturado;
+	
 	public FacturaModel() {
 	}
 	
-	public FacturaModel(int idFactura,CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado) {
+	public FacturaModel(int idFactura,CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado,LocalDateTime fecha) {
 		super();
 		this.idFactura=idFactura;
 		this.carrito = carrito;
 		this.cliente=cliente;
 		this.empleado=empleado;
+		this.setFechaFacturado(fecha);
 	}
 	
 	public FacturaModel(LocalModel local, CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado) {
@@ -74,11 +79,21 @@ public class FacturaModel {
 		this.empleado = empleado;
 	}
 
+	public LocalDateTime getFechaFacturado() {
+		return fechaFacturado;
+	}
+
+	public void setFechaFacturado(LocalDateTime fechaFacturado) {
+		this.fechaFacturado = fechaFacturado;
+	}
+
 	@Override
 	public String toString() {
 		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", carrito=" + carrito + ", empleado="
-				+ empleado + "]";
+				+ empleado + ", fechaFacturado=" + fechaFacturado + "]";
 	}
+
+	
 
 	
 

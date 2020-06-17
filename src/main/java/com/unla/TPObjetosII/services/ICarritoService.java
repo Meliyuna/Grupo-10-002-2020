@@ -14,7 +14,7 @@ public interface ICarritoService {
 	public CarritoModel insertOrUpdate(CarritoModel CarritoModel);
 	public List<CarritoModel> getAll(int idLocal);
 	public boolean remove(int idCarrito);
-	public FacturaModel generarFactura(int idCarrito, int idCliente, int idEmpleado);
+	public FacturaModel generarFactura(int idCarrito, int idCliente, int idEmpleado) throws Exception;
 	public CarritoModel getByIdConTodo(int idCarrito);
 	
 
