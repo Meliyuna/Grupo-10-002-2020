@@ -1,6 +1,8 @@
 package com.unla.TPObjetosII.converters;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class CarritoConverter {
 	public CarritoModel entityToModel(Carrito carrito) {
 		if (carrito==null) return null;
 		Set<Pedido> p = carrito.getListaPedido();
-		Set<PedidoModel> np = new HashSet<PedidoModel>();
+		List<PedidoModel> np = new ArrayList<PedidoModel>();
 		
 		for (Pedido ped: p) {
 			np.add(pedidosConverter.entityToModelNoCarrito(ped));			
@@ -49,7 +51,7 @@ public class CarritoConverter {
 	@SuppressWarnings("unused")
 	public Carrito modelToEntity(CarritoModel carritoModel) {
 		if (carritoModel==null) return null;
-		Set<PedidoModel> p = carritoModel.getListaPedido();
+		List<PedidoModel> p = carritoModel.getListaPedido();
 		Set<Pedido> np = new HashSet<Pedido>();;
 		
 		if(p!=null) {

@@ -2,7 +2,7 @@ package com.unla.TPObjetosII.models;
 
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -11,7 +11,7 @@ public class CarritoModel {
 	private int idCarrito;
 	
 	@JsonIgnore
-	private Set<PedidoModel> listaPedido;
+	private List<PedidoModel> listaPedido;
 	private LocalDateTime fecha;
 	private float total;
 	
@@ -29,7 +29,7 @@ public class CarritoModel {
 	public CarritoModel() {
 	}
 
-	public CarritoModel(int idCarrito, Set<PedidoModel> listaPedido, LocalDateTime fecha, float total) {
+	public CarritoModel(int idCarrito, List<PedidoModel> listaPedido, LocalDateTime fecha, float total) {
 		super();
 		this.idCarrito=idCarrito;
 		this.listaPedido = listaPedido;
@@ -45,11 +45,11 @@ public class CarritoModel {
 		this.idCarrito = idCarrito;
 	}
 
-	public Set<PedidoModel> getListaPedido() {
+	public List<PedidoModel> getListaPedido() {
 		return listaPedido;
 	}
 
-	public void setListaPedido(Set<PedidoModel> listaPedido) {
+	public void setListaPedido(List<PedidoModel> listaPedido) {
 		this.listaPedido = listaPedido;
 	}
 

@@ -87,16 +87,25 @@ public class CarritoService implements ICarritoService{
 	}
 	
 	public List<CarritoModel> getAll(int idLocal){
-		List<Carrito> carritos = carritoRepository.findAllByIdLocal(idLocal);
+		Set<Carrito> carritos = carritoRepository.findAllByIdLocal(idLocal);
 		List<CarritoModel> carritosModel = new ArrayList<CarritoModel>();
 		CarritoModel carritoModel = null;
 		float precio = 0;
+		boolean facturable;
 		for(Carrito c: carritos) {
+			facturable=true;
 			carritoModel = carritoConverter.entityToModel(c);
 			precio = 0;
 			for(Pedido p: c.getListaPedido()) {
 				precio+=p.getCantidad()*p.getProducto().getPrecio();
+				if(p.getSolicitudStock()!=null) {
+					if(p.getSolicitudStock().getPendiente()) {
+						facturable=false;
+					}
+				}
 			}
+			if(c.getListaPedido().size()==0)facturable=false;
+			carritoModel.setFacturable(facturable);
 			carritoModel.setTotal(precio);
 			carritoModel.setCantidadPedidos(c.getListaPedido().size());
 			carritosModel.add(carritoModel);

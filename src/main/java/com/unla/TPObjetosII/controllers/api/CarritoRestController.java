@@ -1,6 +1,7 @@
 package com.unla.TPObjetosII.controllers.api;
 
 import java.net.URISyntaxException;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.entities.Carrito;
+import com.unla.TPObjetosII.entities.Pedido;
 import com.unla.TPObjetosII.services.ICarritoService;
 import com.unla.TPObjetosII.services.IClienteService;
 import com.unla.TPObjetosII.services.IEmpleadoService;
@@ -69,7 +71,7 @@ public class CarritoRestController {
 	
 	@PostMapping("/traerListaPedidos")
 	@ResponseBody
-	public Set<PedidoModel> traerListaPedidos(@RequestBody ObjectNode o) throws Exception{
+	public List<PedidoModel> traerListaPedidos(@RequestBody ObjectNode o) throws Exception{
 		return CarritoService.getById(o.get("idCarrito").asInt()).getListaPedido();
 	}
 	

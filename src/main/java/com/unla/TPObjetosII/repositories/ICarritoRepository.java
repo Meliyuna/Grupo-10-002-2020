@@ -3,6 +3,7 @@ package com.unla.TPObjetosII.repositories;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +21,7 @@ import com.unla.TPObjetosII.entities.Factura;
 	public abstract Carrito findByFecha(LocalDate fecha);
 	
 	
-	@Query("SELECT c FROM Carrito c WHERE c.idCarrito=(:idCarrito)")
+	@Query("SELECT c FROM Carrito c  left join fetch c.listaPedido p WHERE c.idCarrito=(:idCarrito)")
 	public abstract Carrito findByIdCarrito(int idCarrito);
 	
 	@Query("SELECT c FROM Carrito c join fetch c.local WHERE c.idCarrito=(:idCarrito)")
@@ -32,8 +33,8 @@ import com.unla.TPObjetosII.entities.Factura;
 	@Query("SELECT c from Carrito c ")	
 	public abstract List<Carrito> findAllConTodo();
 	
-	@Query("select c from Carrito c join fetch c.local l where l.idLocal = (:idLocal)")
-	public abstract List<Carrito> findAllByIdLocal(int idLocal);
+	@Query("select c from Carrito c join fetch c.local l left join fetch c.listaPedido p left join fetch p.solicitudStock where l.idLocal = (:idLocal)")
+	public abstract Set<Carrito> findAllByIdLocal(int idLocal);
 	
 	
 	

@@ -2,7 +2,8 @@
 $(document).ready(function(){
 	verCarritos();
 	traerEmpleado();
-
+	
+	
 	
 	//Actualizar precio total de nuevo pedido
 	$("#aComprar").change(function(){
@@ -275,12 +276,17 @@ function verCarritos(){
         	success: function(carritos){
         		console.log(carritos);
             	$.each(carritos,function(index,carrito){
-            		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
-							'<td>'+carrito.cantidadPedidos+'</td>'+
-							'<td>$'+carrito.total+'</td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">Modificar</button></td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verFactura('+carrito.idCarrito+')">Realizar Factura</button></td>'+
-							'</tr>');
+            		html='<tr><th scope="row">'+carrito.idCarrito+'</th>'+
+					'<td>'+carrito.cantidadPedidos+'</td>'+
+					'<td>$'+carrito.total+'</td>'+
+					'<td><button type="button" class="btn btn-info" onclick="verPedidos('+carrito.idCarrito+')">Ver</button></td>';
+					if(carrito.facturable){
+						html+='<td><button type="button" class="btn btn-success" onclick="verFactura('+carrito.idCarrito+')">Realizar Factura</button></td>';
+					}else{
+						html+='<td><button type="button" class="btn btn-warning" disabled>No Facturable</button></td>';
+					}
+					html+='</tr>';
+            		$("#tbody-tabla-carritos").append(html);
             	});
             	$(".vista").hide();
         		$("#carritos").show();
@@ -331,6 +337,7 @@ function verProductos(){
             		$("#tbody-tabla-productos").append(html)
             		}
             	});
+            	
             	$(".vista").hide();
         		$("#productos").show();
         		$("#contenido").show(velAnim);
@@ -515,7 +522,8 @@ function agregarCarrito(){
     		$("#tbody-tabla-carritos").append('<tr><th scope="row">'+carrito.idCarrito+'</th>'+
 					'<td>0</td>'+
 					'<td>$'+carrito.total+'</td>'+
-					'<td><button type="button" class="btn btn-success" onclick="verPedidos('+carrito.idCarrito+')">modificar</button></td>'+
+					'<td><button type="button" class="btn btn-info" onclick="verPedidos('+carrito.idCarrito+')">Ver</button></td>'+
+					'<td><button type="button" class="btn btn-warning" disabled>No Facturable</button></td>'+
 					'</tr>');
     	},
     	error: function(response){
@@ -652,8 +660,8 @@ function ocultarSelectLocal(){
 		      <th scope="col">#id</th>
 		      <th scope="col">Pedidos</th>
 		      <th scope="col">Precio Total</th>
-		      <th scope="col">Accion</th>
-		      <th scope="col">Accion</th>
+		      <th scope="col">Detalle</th>
+		      <th scope="col">Factura</th>
 		    </tr>
 		  </thead>
 		  <tbody id="tbody-tabla-carritos">
@@ -682,7 +690,7 @@ function ocultarSelectLocal(){
 	</div>
 	<div id="productos" class="vista" style="display: none">
 		<h1>Productos</h1>
-		<table id="tabla-productos" class="table table-hover">
+		<table id="tabla-productos" class="table table-hover display">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">#</th>

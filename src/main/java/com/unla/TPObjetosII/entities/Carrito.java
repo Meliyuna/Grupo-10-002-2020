@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -32,6 +33,7 @@ public class Carrito {
 	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinColumn(name="IDCARRITO")
+	@OrderBy("idPedido ASC")
 	private Set<Pedido> listaPedido;
 
 	private LocalDateTime fecha;
@@ -47,7 +49,6 @@ public class Carrito {
 	
 	@JsonIgnore
 	@OneToOne(mappedBy = "carrito", fetch=FetchType.LAZY)
-	@JoinColumn(name="IDFACTURA")
 	private Factura factura;
 
 	public Carrito() {
