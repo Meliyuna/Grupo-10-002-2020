@@ -1,8 +1,13 @@
 <script type="text/javascript">
+var dataTableProducto=null;
 $(document).ready(function(){
 	verCarritos();
 	traerEmpleado();
-	
+	dataTableProducto = $('#tabla-productos').DataTable({
+		"columnDefs":[{"searchable": false, "targets": 4 }],
+		"lengthChange": false,
+		"pageLength": 8
+	});
 	
 	
 	//Actualizar precio total de nuevo pedido
@@ -23,6 +28,7 @@ $(document).ready(function(){
 		$("#aComprar").val(1);
 	})
 });
+
 
 velAnim = 250;
 carritoSeleccionado= 0;
@@ -316,6 +322,8 @@ function verProductos(){
         	success: function(response){
             	console.log(response)
             	$("#tbody-tabla-productos").html("");
+            	dataTableProducto.clear();
+            	dataTableProducto.draw();
             	$.each(response,function(index,producto){
             		var productoAgregado=false;
             		$.each(pedidosDeCarrito,function(index,pedido){
@@ -323,21 +331,23 @@ function verProductos(){
             				productoAgregado=true;
             			}
             		});
+            		var botonAccion;
+            		if(producto.cantidad!=0){
+            			botonAccion= '<button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button>'
+            		}
+            		else{
+            			botonAccion= '<button type="button" class="btn btn-warning" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button>'
+            		}
             		if(productoAgregado==false){
-            			html='<tr><th scope="row">'+index+'</th>'+
-						'<td>'+producto.nombre+'</td>'+
-						'<td>$'+producto.precio+'</td>'+
-						'<td>'+producto.cantidad+'</td>';
-	            		if(producto.cantidad!=0){
-	            			html+= '<td><button type="button" class="btn btn-success" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
-	            		}
-	            		else{
-	            			html+= '<td><button type="button" class="btn btn-warning" onclick="verAgregarPedido('+producto.idProducto+')">agregar</button></td></tr>'
-	            		}
-            		$("#tbody-tabla-productos").append(html)
+            			dataTableProducto.row.add([
+            				index,
+            				producto.nombre,
+            				producto.precio,
+            				producto.cantidad,
+            				botonAccion
+            			]).draw();;
             		}
             	});
-            	
             	$(".vista").hide();
         		$("#productos").show();
         		$("#contenido").show(velAnim);
