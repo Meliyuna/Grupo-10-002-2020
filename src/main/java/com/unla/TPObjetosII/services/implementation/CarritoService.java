@@ -136,20 +136,31 @@ public class CarritoService implements ICarritoService{
 
 	@Override
 	public CarritoModel getByIdConTodo(int idCarrito) {
-		CarritoModel c=carritoConverter.entityToModel(carritoRepository.findCarritoConTodo(idCarrito));
+		CarritoModel c = carritoConverter.entityToModel(carritoRepository.findCarritoConTodo(idCarrito));
+		List<PedidoModel> listaPedido = c.getListaPedido();
+		List<PedidoModel> listaSinRechazo = new ArrayList<PedidoModel>();
+		for (PedidoModel i : listaPedido) {
+			if (i.getSolicitudStock() != null) {
+				if (i.getSolicitudStock().isAceptado() == true) {
+					listaSinRechazo.add(i);
+				}
+			}
+			else listaSinRechazo.add(i);
+		}
 		int precio = 0;
-		for(PedidoModel p: c.getListaPedido()) {
-			precio+=p.getCantidad()*p.getProducto().getPrecio();
+		for (PedidoModel p : listaSinRechazo) {
+			precio += p.getCantidad() * p.getProducto().getPrecio();
 		}
 		c.setTotal(precio);
-		c.setCantidadPedidos(c.getListaPedido().size());
+		c.setListaPedido(listaSinRechazo);
+		c.setCantidadPedidos(listaSinRechazo.size());
+		System.out.println(listaSinRechazo);
 		return c;
 	}
 
 	@Override
 	public FacturaModel generarFactura(int idCarrito, int idCliente, int idEmpleado) throws Exception {
-		LocalModel local = localConverter
-				.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
+		LocalModel local = localConverter.entityToModel(carritoRepository.findByIdCarritoFetchLocal(idCarrito).getLocal());
 		Local l = localConverter.modelToEntity(local);
 		CarritoModel car=this.getById(idCarrito);
 		if(car==null) throw new Exception("El carrito no existe");
@@ -174,8 +185,7 @@ public class CarritoService implements ICarritoService{
 		List<Factura> facturas = facturaRepository.findAll();
 		if (!facturas.isEmpty()) {
 			for (Factura i : facturas) {
-				if (i.getCarrito().getIdCarrito() == f.getCarrito().getIdCarrito())
-					throw new Exception("Ya existe factura con ese Carrito");
+				if (i.getCarrito().getIdCarrito() == f.getCarrito().getIdCarrito()) throw new Exception("Ya existe factura con ese Carrito");
 			}
 		}
 		facturaRepository.save(f);

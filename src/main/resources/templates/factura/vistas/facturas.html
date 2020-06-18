@@ -1,0 +1,121 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	verFacturas();
+
+velAnim = 250;
+carritoSeleccionado= 0;
+productoSeleccionado = 0;
+idLocal=sessionStorage.getItem("idLocal");
+idEmpleado=sessionStorage.getItem("idEmpleado");
+pedidosDeCarrito = null;
+
+
+function verFacturas(){
+	json={"idLocal":idLocal};
+	$("#tbody-tabla-facturas").html("");
+	$.ajax({
+		url: '/api/factura/traerFacturas',
+		type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(factura){
+    		
+    		$.each(factura.carrito.listaPedido,function(index,pedido){
+    			$("#tbody-tabla-facturas").append('<tr><th scope="row">'+index+'</th>'+
+						'<td>'+pedido.producto.nombre+'</td>'+
+						'<td>'+pedido.cantidad+'</td>'+
+						'<td>'+pedido.subtotal+'</td>'+								
+    				'</tr>');
+        	});	
+    		$("#tbody-tabla-facturas").append('<tr><th scope="row">'+factura.carrito.total+'</th></tr>');   	
+   			
+   			$("#factura").show();
+	},
+	error: function(response){
+		console.log(response);
+	}	
+});
+	
+}
+
+
+
+</script>
+<div id="factura" class="vista" style="display: none">
+		<h1>Factura</h1>
+		<table id="tabla-factura" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Nombre del Producto</th>
+		      <th scope="col">Cantidad</th>
+		      <th scope="col">Subtotal</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-facturas">
+		  </tbody>
+		</table>
+		
+		<table id="tabla-factura-2" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Total</th>   
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-factura-2">
+		  </tbody>
+		</table>
+		
+		<table id="tabla-factura-3" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Cliente</th>   
+		    </tr>
+		  </thead>  
+		</table>
+
+		<div id="mostrar-cliente" class="form-fow" style="display:none">
+				<input type="hidden" id="idCli" name="id" > 	
+			<div class="form-group col-md-6">       
+			      <p>Apellido: <input class="form-control" id="apellidoCli" type="text" name="apellido" disabled></p>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombreCli" type="text" name="nombre" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Dni: <input id="dni" class="form-control" type="number" name="dni" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Fecha de Nacimiento: <input id="fechaNacimientoCli" class="form-control" type="date" name="fechaNacimiento" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Email: <input id="emailCli" class="form-control" type="text" name="emailCli" disabled></p> 
+			    </div>
+		</div>
+		
+		
+		
+		<table id="tabla-factura-4" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Empleado en factura</th>   
+		    </tr>
+		  </thead>  
+		</table>
+		
+		<div id="mostrar-empleado-factura" class="form-fow" style="display:none">
+			<div class="form-group col-md-6">
+			      <p>Apellido: <input class="form-control" id="apellidoEmp" type="text" name="apellido" disabled></p>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombreEmp" type="text" name="nombre" disabled></p> 
+			    </div>
+		</div>
+		
+		
+		
+	
+	</div>
+
+
