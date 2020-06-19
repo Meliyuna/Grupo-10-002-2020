@@ -27,6 +27,7 @@ import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.repositories.ICarritoRepository;
 import com.unla.TPObjetosII.repositories.IFacturaRepository;
+import com.unla.TPObjetosII.repositories.IPedidoRepository;
 import com.unla.TPObjetosII.services.ICarritoService;
 import com.unla.TPObjetosII.services.IClienteService;
 import com.unla.TPObjetosII.services.IEmpleadoService;
@@ -44,6 +45,10 @@ public class CarritoService implements ICarritoService{
 	@Autowired
 	@Qualifier("facturaRepository")
 	private IFacturaRepository facturaRepository;
+	
+	@Autowired
+	@Qualifier("pedidoRepository")
+	private IPedidoRepository pedidoRepository;
 	
 	@Autowired
 	@Qualifier("loteService")
@@ -124,9 +129,12 @@ public class CarritoService implements ICarritoService{
 			List<Pedido> pedidos = new ArrayList<Pedido>();
 			for(Pedido p: carrito.getListaPedido()) {
 				pedidos.add(p);
+				p.setBaja(true);
+				pedidoRepository.save(p);
 			}
 			this.loteService.devolverStockPedidosCancelados(pedidos);
-			carritoRepository.delete(carrito);
+			carrito.setBaja(true);
+			carritoRepository.save(carrito);
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();

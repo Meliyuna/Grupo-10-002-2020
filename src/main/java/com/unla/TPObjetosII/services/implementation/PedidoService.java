@@ -95,7 +95,8 @@ public class PedidoService implements IPedidoService {
 			listaPedido.add(pedido);
 			if(pedido.getSolicitudStock()==null) this.loteService.devolverStockPedidosCancelados(listaPedido);
 			//crear nuevo lote
-			pedidoRepository.deleteById(idPedido);
+			pedido.setBaja(true);
+			pedidoRepository.save(pedido);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

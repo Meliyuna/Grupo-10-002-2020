@@ -6,7 +6,7 @@ $(document).ready(function(){
 	dataTableProducto = $('#tabla-productos').DataTable({
 		"columnDefs":[{"searchable": false, "targets": 4 }],
 		"lengthChange": false,
-		"pageLength": 8
+		"pageLength": 8,
 	});
 	
 	
@@ -323,7 +323,6 @@ function verProductos(){
             	console.log(response)
             	$("#tbody-tabla-productos").html("");
             	dataTableProducto.clear();
-            	dataTableProducto.draw();
             	$.each(response,function(index,producto){
             		var productoAgregado=false;
             		$.each(pedidosDeCarrito,function(index,pedido){
@@ -345,9 +344,10 @@ function verProductos(){
             				producto.precio,
             				producto.cantidad,
             				botonAccion
-            			]).draw();;
+            			]);
             		}
             	});
+            	dataTableProducto.draw();
             	$(".vista").hide();
         		$("#productos").show();
         		$("#contenido").show(velAnim);

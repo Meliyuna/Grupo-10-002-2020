@@ -51,6 +51,8 @@ public class Carrito {
 	@OneToOne(mappedBy = "carrito", fetch=FetchType.LAZY)
 	private Factura factura;
 
+	private boolean baja;
+	
 	public Carrito() {
 	}
 
@@ -110,6 +112,14 @@ public class Carrito {
 	
 	public Factura getFactura() {
 		return factura;
+	}
+
+	public boolean isBaja() {
+		return baja;
+	}
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 
 	public void setFactura(Factura factura) {
