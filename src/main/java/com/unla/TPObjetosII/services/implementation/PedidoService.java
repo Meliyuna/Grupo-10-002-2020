@@ -58,6 +58,7 @@ public class PedidoService implements IPedidoService {
 	private SolicitudStockConverter solicitudStockConverter;
 
 	public PedidoModel insert(PedidoModel pedidoModel)throws Exception {
+		//TODO VERIFICAR SI EL CARRITO YA FUE FACTURADO
 		if(pedidoModel.getSolicitudStock()!=null) {
 			SolicitudStockModel solicitud = pedidoModel.getSolicitudStock();
 			pedidoModel.setSolicitudStock(null);

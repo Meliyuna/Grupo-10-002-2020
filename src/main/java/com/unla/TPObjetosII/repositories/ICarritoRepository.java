@@ -33,9 +33,9 @@ import com.unla.TPObjetosII.entities.Factura;
 	@Query("SELECT c from Carrito c where c.baja='0'")	
 	public abstract List<Carrito> findAllConTodo();
 	
-	@Query("select c from Carrito c join fetch c.local l left join fetch c.listaPedido p left join fetch p.solicitudStock "
-			+ "where l.idLocal = (:idLocal) and c.baja='0' and (p is NULL or p.baja='0') order by c.idCarrito")
-	public abstract Set<Carrito> findAllByIdLocal(int idLocal);
+	@Query("select c from Carrito c join fetch c.local l left join fetch c.listaPedido p left join fetch p.solicitudStock left join fetch c.factura f "
+			+ "where l.idLocal = (:idLocal) and c.baja='0' and (p is NULL or p.baja='0') and f is NULL order by c.idCarrito")
+	public abstract Set<Carrito> findAllByIdLocalSinFacturar(int idLocal);
 	
 	
 	

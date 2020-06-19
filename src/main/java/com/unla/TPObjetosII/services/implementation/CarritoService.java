@@ -91,8 +91,8 @@ public class CarritoService implements ICarritoService{
 		return carritoRepository.findAllConTodo();
 	}
 	
-	public List<CarritoModel> getAll(int idLocal){
-		Set<Carrito> carritos = carritoRepository.findAllByIdLocal(idLocal);
+	public List<CarritoModel> getAllSinFacturar(int idLocal){
+		Set<Carrito> carritos = carritoRepository.findAllByIdLocalSinFacturar(idLocal);
 		List<CarritoModel> carritosModel = new ArrayList<CarritoModel>();
 		CarritoModel carritoModel = null;
 		float precio = 0;

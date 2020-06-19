@@ -60,7 +60,7 @@ public class CarritoRestController {
 	@PostMapping("/traerCarritos")
 	@ResponseBody
 	public List<CarritoModel> traerCarritos(@RequestBody ObjectNode o) throws Exception {
-		return CarritoService.getAll(o.get("idLocal").asInt());
+		return CarritoService.getAllSinFacturar(o.get("idLocal").asInt());
 	}
 	
 	@PostMapping("/traerCarrito")
