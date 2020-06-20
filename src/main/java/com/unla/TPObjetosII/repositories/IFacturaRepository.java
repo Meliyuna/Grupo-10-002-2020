@@ -23,4 +23,7 @@ public interface IFacturaRepository extends JpaRepository<Factura, Serializable>
 	
 	@Query("select f from Factura f join fetch f.carrito carr join fetch carr.listaPedido p join fetch carr.local l join fetch f.empleado e join fetch f.cliente cli")
 	public abstract List<Factura> findAllConTodo();
+	
+	@Query("select f from Factura f join fetch f.carrito carr join fetch carr.listaPedido pedidos join fetch pedidos.producto p join fetch f.empleado e join fetch f.cliente c where f.idFactura=(:idFactura)")
+	public abstract Factura findByIdFacturaConTodo(int idFactura);
 }

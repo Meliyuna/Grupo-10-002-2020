@@ -46,5 +46,26 @@ public class FacturaRestController {
 		return facturasNode;
 	}
 	
+	@PostMapping("/verFacturaDetalle")
+	@ResponseBody
+	public ObjectNode verFacturaDetalle(@RequestBody ObjectNode o) throws Exception {
+		int idFactura=o.get("idFactura").asInt();
+		FacturaModel f=facturaService.verFacturaDetalle(idFactura);
+		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
+		ObjectNode facturaNode=mapper.valueToTree(f);
+		ObjectNode carritoNode=mapper.valueToTree(f.getCarrito());
+		ObjectNode clienteNode=mapper.valueToTree(f.getCliente());
+		ObjectNode empleadoNode=mapper.valueToTree(f.getEmpleado());
+		ArrayNode pedidosNode=mapper.createArrayNode();
+		for(PedidoModel p: f.getCarrito().getListaPedido()) {
+			pedidosNode.add(mapper.valueToTree(p)); //por cada pedido que tenga la lista se agrega al arrayNode
+		}
+		carritoNode.set("listaPedido", pedidosNode);
+		facturaNode.set("cliente", clienteNode);
+		facturaNode.set("empleado", empleadoNode);
+		facturaNode.set("carrito", carritoNode);
+		return facturaNode;
+	}
+	
 
 }
