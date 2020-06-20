@@ -5,16 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/factura")
+@RequestMapping("/facturas")
 public class FacturaController {
 	
 	@GetMapping("")
 	public String index() {
-		return "/factura/facturas";
+		return "/facturas/facturas";
 	}
 
 	@GetMapping("/vistaFacturas")
 	public String facturas() {
-		return "/factura/vistas/facturas";
+		return "/facturas/vistas/facturas";
 	}
 }

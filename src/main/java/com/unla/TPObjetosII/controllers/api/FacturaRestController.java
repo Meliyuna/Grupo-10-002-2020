@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.models.FacturaModel;
+import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.services.IFacturaService;
 
 @RestController
@@ -26,9 +29,21 @@ public class FacturaRestController {
 	
 	@PostMapping("/traerFacturas")
 	@ResponseBody
-	public List<FacturaModel> traerFacturas(@RequestBody ObjectNode o) throws Exception {
+	public ArrayNode traerFacturas(@RequestBody ObjectNode o) throws Exception {
 		int idLocal=o.get("idLocal").asInt();
-		return facturaService.traerFacturas(idLocal);
+		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
+		ArrayNode facturasNode=mapper.createArrayNode();
+		for(FacturaModel f: facturaService.traerFacturas(idLocal)) {
+			ObjectNode facturaNode=mapper.valueToTree(f);
+			ObjectNode carritoNode=mapper.valueToTree(f.getCarrito());
+			ObjectNode clienteNode=mapper.valueToTree(f.getCliente());
+			ObjectNode empleadoNode=mapper.valueToTree(f.getEmpleado());
+			facturaNode.set("carrito", carritoNode);
+			facturaNode.set("cliente", clienteNode);
+			facturaNode.set("empleado", empleadoNode);
+			facturasNode.add(facturaNode);
+		}
+		return facturasNode;
 	}
 	
 

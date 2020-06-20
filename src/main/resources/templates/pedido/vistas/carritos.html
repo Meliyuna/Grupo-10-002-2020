@@ -116,6 +116,7 @@ function verFactura(idCarrito){
         		$.each(carrito.listaPedido,function(index,pedido){
         			$("#tbody-tabla-factura").append('<tr><th scope="row">'+index+'</th>'+
 							'<td>'+pedido.producto.nombre+'</td>'+
+							'<td>'+pedido.producto.precio+'</td>'+
 							'<td>'+pedido.cantidad+'</td>'+
 							'<td>'+pedido.subtotal+'</td>'+								
         				'</tr>');
@@ -789,6 +790,7 @@ function ocultarSelectLocal(){
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Nombre del Producto</th>
+		      <th scope="col">Precio unitario</th>
 		      <th scope="col">Cantidad</th>
 		      <th scope="col">Subtotal</th>
 		    </tr>
