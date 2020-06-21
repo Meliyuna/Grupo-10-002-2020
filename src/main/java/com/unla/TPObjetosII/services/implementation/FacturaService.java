@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.services.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +36,7 @@ public class FacturaService implements IFacturaService{
 	
 	@Override
 	public List<FacturaModel> traerFacturas(int idLocal) {
-		List<Factura> f =facturaRepository.findAllConTodo();
+		Set<Factura> f =facturaRepository.findAllConTodo();
 		List<FacturaModel> facturas =new ArrayList<FacturaModel>();
 		for (Factura i : f) {
 			if (i.getCarrito().getLocal().getIdLocal() == idLocal) {

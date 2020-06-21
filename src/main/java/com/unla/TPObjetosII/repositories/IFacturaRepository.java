@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.repositories;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +20,10 @@ public interface IFacturaRepository extends JpaRepository<Factura, Serializable>
 	public abstract Factura findByIdFacturaFetchYCarrito(int idFactura);
 
 	@Query("SELECT f FROM Factura f join fetch f.carrito c join fetch c.local l")
-	public abstract List<Factura> traerFacturas();
+	public abstract Set<Factura> traerFacturas();
 	
 	@Query("select f from Factura f join fetch f.carrito carr join fetch carr.listaPedido p join fetch carr.local l join fetch f.empleado e join fetch f.cliente cli")
-	public abstract List<Factura> findAllConTodo();
+	public abstract Set<Factura> findAllConTodo();
 	
 	@Query("select f from Factura f join fetch f.carrito carr join fetch carr.listaPedido pedidos join fetch pedidos.producto p join fetch f.empleado e join fetch f.cliente c where f.idFactura=(:idFactura)")
 	public abstract Factura findByIdFacturaConTodo(int idFactura);
