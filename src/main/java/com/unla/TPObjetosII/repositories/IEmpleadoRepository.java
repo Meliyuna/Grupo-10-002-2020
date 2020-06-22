@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.unla.TPObjetosII.entities.Empleado;
+import com.unla.TPObjetosII.models.EmpleadoModel;
 
 
 
@@ -29,7 +30,6 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializabl
  	
 	
 	public abstract Empleado findByNombre(String nombre);
-	
 	
 
 }

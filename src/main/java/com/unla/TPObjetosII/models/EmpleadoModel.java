@@ -12,6 +12,8 @@ public class EmpleadoModel extends PersonaModel{
 	@JsonIgnore
 	private LocalModel local;
 	
+	private float sueldo;
+	
 
 	public EmpleadoModel() {
 		
@@ -60,12 +62,24 @@ public class EmpleadoModel extends PersonaModel{
 	public void setLocal(LocalModel local) {
 		this.local = local;
 	}
+	
+	
 
+	public float getSueldo() {
+		return sueldo;
+	}
+
+	public void setSueldo(float sueldo) {
+		this.sueldo = sueldo;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Empleado [ idPersona=" + idPersona + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento="
 				+ fechaNacimiento + ", dni=" + dni + ", franjaHoraria=" + franjaHoraria + ", tipoEmpleado=" + tipoEmpleado + ", local=" + local
-				+ "] \n";
+				+ ", sueldo=" + sueldo+"] \n";
 	}
 	
 	
