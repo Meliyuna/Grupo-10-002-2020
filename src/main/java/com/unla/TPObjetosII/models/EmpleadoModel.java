@@ -14,6 +14,10 @@ public class EmpleadoModel extends PersonaModel{
 	
 	private float sueldo;
 	
+	private float comOriginal;
+	
+	private float comAuxiliar;
+	
 
 	public EmpleadoModel() {
 		
@@ -75,6 +79,22 @@ public class EmpleadoModel extends PersonaModel{
 	
 	
 	
+	public float getComOriginal() {
+		return comOriginal;
+	}
+
+	public void setComOriginal(float comOriginal) {
+		this.comOriginal = comOriginal;
+	}
+
+	public float getComAuxiliar() {
+		return comAuxiliar;
+	}
+
+	public void setComAuxiliar(float comAuxiliar) {
+		this.comAuxiliar = comAuxiliar;
+	}
+
 	@Override
 	public String toString() {
 		return "Empleado [ idPersona=" + idPersona + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento="

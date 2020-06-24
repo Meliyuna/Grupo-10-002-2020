@@ -103,23 +103,37 @@ public class EmpleadoRestController {
 	@PostMapping("/mostrarSueldos") //Calcula el sueldo del empleado usando una base de 30k
 	@ResponseBody
 	public List<EmpleadoModel> mostrarSueldos () throws Exception {
-		EmpleadoConverter empleadoConverter = new EmpleadoConverter();
+		//EmpleadoConverter empleadoConverter = new EmpleadoConverter();
 		List <EmpleadoModel> emp = new ArrayList<EmpleadoModel>();
 		List <Empleado> e = empleadoService.getAll();
 		List <Pedido> p = pedidoService.getAll();
 		float comision = 0;
+		float comOriginal =0;
+		float comAuxiliar=0;
 		for (Empleado aux : e) {
 			EmpleadoModel em = new EmpleadoModel(aux.getIdPersona(), aux.getApellido(), aux.getNombre(), aux.getFechaNacimiento(), aux.getDni(), aux.getFranjaHoraria(), aux.isTipoEmpleado());
 			for (Pedido ped :p) {
 				if (ped.getVendedorOriginal().getIdPersona()==aux.getIdPersona())
-					if (ped.getVendedorAuxiliar()==null)
-						comision+=ped.getSubtotal()*0.05;		
-					else comision+=ped.getSubtotal()*0.03;
-				if (ped.getVendedorAuxiliar()!=null && ped.getVendedorAuxiliar().getIdPersona()==aux.getIdPersona())
-					comision+=ped.getSubtotal()*0.02;					
+					if (ped.getVendedorAuxiliar()==null) {
+						comision+=ped.getSubtotal()*0.05;
+						comOriginal+=ped.getSubtotal()*0.05;
+					}
+					else {
+						comision+=ped.getSubtotal()*0.03;
+						comOriginal+=ped.getSubtotal()*0.03;
+					}
+				if (ped.getVendedorAuxiliar()!=null && ped.getVendedorAuxiliar().getIdPersona()==aux.getIdPersona()) {
+					comision+=ped.getSubtotal()*0.02;
+					comAuxiliar+=ped.getSubtotal()*0.02;
+				}
 			}
 			em.setSueldo(30000+comision);
+			em.setComOriginal(comOriginal);
+			em.setComAuxiliar(comAuxiliar);
 			emp.add(em);
+			comision=0;
+			comOriginal=0;
+			comAuxiliar=0;
 		}
 		return emp;
 	}

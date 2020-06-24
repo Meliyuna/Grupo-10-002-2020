@@ -24,7 +24,9 @@ function verEmpleados(){
 							'<td>'+empleado.apellido+'</td>'+
 							'<td>'+empleado.nombre+'</td>'+
 							'<td>'+empleado.sueldo+'</td>'+
-							'<td><button type="button" class="btn btn-success" onclick="verDatosEmpleado('+empleado.idPersona+')">Detalle</button></td>'+	
+							'<td>'+empleado.comOriginal+'</td>'+
+							'<td>'+empleado.comAuxiliar+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="detEmpleado('+empleado.idPersona+')">Detalle</button></td>'+	
 							'</tr>');							
             	});            	
             	$(".vista").hide();
@@ -43,6 +45,48 @@ function verEmpleados(){
 		
 	});
 }
+
+
+function detEmpleado(idPersona){
+	var fecha = new Date();
+	fecha.setFullYear(fecha.getFullYear()-18);
+	var fechaString=(fecha.toISOString()).substring(0,10);
+	$("#fechaNacimiento").attr("max",fechaString);	
+	
+	
+	$("#contenido").hide(velAnim,function(){
+		json={"idEmpleado":idPersona};
+		$.ajax({
+        	url: '/api/empleado/traerEmpleado',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(empleado){       		
+            	console.log(empleado);
+               	$("#apellido").val(empleado.apellido);
+        		$("#nombre").val(empleado.nombre);
+        		$("#dni").val(empleado.dni);
+        		$("#franjaHoraria").val(empleado.franjaHoraria);        		
+        		$("#fechaNacimiento").val(empleado.fechaNacimiento);
+        		$("#local").val(empleado.local.direccion);        		
+            	$(".vista").hide();
+        		$("#detalle").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#detalle").show();
+        		$("#error").html("Error detalle de empleado");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
+		
+	});
+}
+
 </script>
 
 
@@ -59,6 +103,7 @@ function verEmpleados(){
 		      <th scope="col">Salario</th>
 		      <th scope="col">Comision Local</th>
 		      <th scope="col">Comision Aux</th>
+		      <th scope="col"> </th>  
 		      
 		    </tr>
 		  </thead>
@@ -66,30 +111,40 @@ function verEmpleados(){
 		  </tbody>
 		</table>
 	</div>	
-	<div id="empleados" class="vista" style="display: none">
-		<h1>Sueldos</h1>
+	<div id="detalle" class="vista" style="display: none">
+		<h1>Detalle Empleado</h1>
 		<form>
-			<div class="form-row">
-			    <div class="form-group col-md-6">
-			      <label for="idPersona">Id Empleado</label>
-			      <input type="text" class="form-control" id="idPersona" disabled>
-			    </div>
+			<div class="form-row">			    
 			    <div class="form-group col-md-6">
 			      <label for="apellido">Apellido</label>
 			      <input type="text" class="form-control" id="apellido" disabled>
 			    </div>
 			    <div class="form-group col-md-6">
 			      <label for="nombre">Nombre</label>
-			      <input type="text" class="form-control" id="rombre" disabled>
+			      <input type="text" class="form-control" id="nombre" disabled>
 			    </div>
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-6">
-					<label for="sueldo">Salario</label>
-					<textarea id="sueldo" class="form-control" rows="4" disabled></textarea>
-				</div>				
+			      <label for="dni">DNI</label>
+			      <input type="text" class="form-control" id="dni" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="franjaHoraria">Franja Horaria</label>
+			      <input type="text" class="form-control" id="franjaHoraria" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="fechaNacimiento">Fecha de Nacimiento</label>
+			      <input type="date" class="form-control" id="fechaNacimiento" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			    	<label for="local">Local</label>
+					<input type="text" class="form-control" id="local" disabled>
+				</div>
 			</div>			
 			<input id="idPersona" type="text" hidden="true" />
+			<p></p>
+			<button id="atras" class="btn btn-primary">Atras</button>
 		</form>
 		
 	</div>
