@@ -21,7 +21,7 @@ import com.unla.TPObjetosII.entities.Factura;
 	public abstract Carrito findByFecha(LocalDate fecha);
 	
 	
-	@Query("SELECT c FROM Carrito c left join fetch c.listaPedido p WHERE c.idCarrito=(:idCarrito) and c.baja='0' and (p is NULL or p.baja='0')")
+	@Query("SELECT c FROM Carrito c left join fetch c.listaPedido p WHERE c.idCarrito=(:idCarrito) and c.baja='0'")
 	public abstract Carrito findByIdCarrito(int idCarrito);
 	
 	@Query("SELECT c FROM Carrito c join fetch c.local WHERE c.idCarrito=(:idCarrito) and c.baja='0'")
@@ -34,7 +34,7 @@ import com.unla.TPObjetosII.entities.Factura;
 	public abstract List<Carrito> findAllConTodo();
 	
 	@Query("select c from Carrito c join fetch c.local l left join fetch c.listaPedido p left join fetch p.solicitudStock left join fetch c.factura f "
-			+ "where l.idLocal = (:idLocal) and c.baja='0' and (p is NULL or p.baja='0') and f is NULL order by c.idCarrito")
+			+ "where l.idLocal = (:idLocal) and c.baja='0' and f is NULL order by c.idCarrito")
 	public abstract Set<Carrito> findAllByIdLocalSinFacturar(int idLocal);
 	
 	

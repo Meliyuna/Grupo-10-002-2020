@@ -94,6 +94,7 @@ public class CarritoService implements ICarritoService{
 	public List<CarritoModel> getAllSinFacturar(int idLocal){
 		Set<Carrito> carritos = carritoRepository.findAllByIdLocalSinFacturar(idLocal);
 		List<CarritoModel> carritosModel = new ArrayList<CarritoModel>();
+		List<Pedido> pedidosBaja = new ArrayList<Pedido>();
 		CarritoModel carritoModel = null;
 		float precio = 0;
 		boolean facturable;
@@ -102,12 +103,19 @@ public class CarritoService implements ICarritoService{
 			carritoModel = carritoConverter.entityToModel(c);
 			precio = 0;
 			for(Pedido p: c.getListaPedido()) {
-				precio+=p.getCantidad()*p.getProducto().getPrecio();
-				if(p.getSolicitudStock()!=null) {
-					if(p.getSolicitudStock().getPendiente()) {
-						facturable=false;
+				if(!p.isBaja()) {
+					precio+=p.getCantidad()*p.getProducto().getPrecio();
+					if(p.getSolicitudStock()!=null) {
+						if(p.getSolicitudStock().getPendiente()) {
+							facturable=false;
+						}
 					}
+				}else {
+					pedidosBaja.add(p);
 				}
+			}
+			for(Pedido p:pedidosBaja) {
+				c.getListaPedido().remove(p);
 			}
 			if(c.getListaPedido().size()==0)facturable=false;
 			carritoModel.setFacturable(facturable);
@@ -119,7 +127,15 @@ public class CarritoService implements ICarritoService{
 	}
 	
 	public CarritoModel getById(int idCarrito) {
-		return carritoConverter.entityToModel(carritoRepository.findByIdCarrito(idCarrito));
+		Carrito carrito = carritoRepository.findByIdCarrito(idCarrito);
+		List<Pedido> pedidosBaja = new ArrayList<Pedido>();
+		for(Pedido p:carrito.getListaPedido()) {
+			if(p.isBaja()) pedidosBaja.add(p);
+		}
+		for(Pedido p:pedidosBaja) {
+			carrito.getListaPedido().remove(p);
+		}
+		return carritoConverter.entityToModel(carrito);
 	}
 
 	
