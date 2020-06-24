@@ -33,7 +33,7 @@ public class RankingController {
 	@GetMapping("/general")
 	public ModelAndView ranking(){
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.RANKING);
-		mAV.addObject("productos",carritoService.carritosConPedidos());
+		mAV.addObject("productos",carritoService.carritosFacturadosConPedidos());
 		return mAV;
 	}
 	
@@ -41,7 +41,7 @@ public class RankingController {
 	public ModelAndView rankingFechas(@PathVariable("id") int id) {
 	
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.RANKING_FECHAS);
-		mAV.addObject("productos",carritoService.carritosConPedidos(id));
+		mAV.addObject("productos",carritoService.carritosFacturadosConPedidos(id));
 
 		return mAV;
 	}

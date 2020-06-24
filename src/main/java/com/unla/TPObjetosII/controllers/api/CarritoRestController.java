@@ -1,6 +1,8 @@
 package com.unla.TPObjetosII.controllers.api;
 
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +56,7 @@ public class CarritoRestController {
 	public CarritoModel alta (@RequestBody ObjectNode carritoNode) throws Exception {
 		ObjectMapper mapper = new ObjectMapper().disable(MapperFeature.USE_ANNOTATIONS);
 		CarritoModel carritoModel = mapper.treeToValue(carritoNode, CarritoModel.class);
+		carritoModel.setFecha(LocalDateTime.now());
 		return CarritoService.insertOrUpdate(carritoModel);
 	}
 	

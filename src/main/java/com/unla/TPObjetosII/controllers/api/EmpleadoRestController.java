@@ -106,7 +106,7 @@ public class EmpleadoRestController {
 		//EmpleadoConverter empleadoConverter = new EmpleadoConverter();
 		List <EmpleadoModel> emp = new ArrayList<EmpleadoModel>();
 		List <Empleado> e = empleadoService.getAll();
-		List <Pedido> p = pedidoService.getAll();
+		List <Pedido> p = pedidoService.getAllFacturados();
 		float comision = 0;
 		float comOriginal =0;
 		float comAuxiliar=0;

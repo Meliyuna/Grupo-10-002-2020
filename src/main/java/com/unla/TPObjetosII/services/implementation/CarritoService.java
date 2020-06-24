@@ -15,6 +15,7 @@ import com.unla.TPObjetosII.converters.CarritoConverter;
 import com.unla.TPObjetosII.converters.ClienteConverter;
 import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.converters.FacturaConverter;
+import com.unla.TPObjetosII.converters.LocalConverter;
 import com.unla.TPObjetosII.converters.ProductoConverter;
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.entities.Cliente;
@@ -224,8 +225,9 @@ public class CarritoService implements ICarritoService{
 		return facturaConverter.entityToModel(f);
 	}
 	
-	public List<ProductoModel> carritosConPedidos() {
-		List<Carrito> carritos=carritoRepository.findAllConTodo();
+	public List<ProductoModel> carritosFacturadosConPedidos() {
+		List<Carrito> carritos=carritoRepository.findAllFacturados();
+		for(Carrito c: carritos) c.setListaPedido(pedidoRepository.findAll(c.getIdCarrito()));
 		List<ProductoModel> productos = new ArrayList<ProductoModel>();
 		int cantidad=0;
 		ProductoModel producto = null;
@@ -247,8 +249,9 @@ public class CarritoService implements ICarritoService{
 		
 	}
 	
-	public List<ProductoModel> carritosConPedidos(int idLocal) {
-		List<Carrito> carritos=carritoRepository.findAllConPedidos(idLocal);
+	public List<ProductoModel> carritosFacturadosConPedidos(int idLocal) {
+		List<Carrito> carritos=carritoRepository.findAllFacturados(idLocal);
+		for(Carrito c: carritos) c.setListaPedido(pedidoRepository.findAll(c.getIdCarrito()));
 		List<ProductoModel> productos = new ArrayList<ProductoModel>();
 		int cantidad=0;
 		ProductoModel producto = null;
@@ -273,7 +276,8 @@ public class CarritoService implements ICarritoService{
 
 	@Override
 	public List<ProductoModel> carritosConPedidosEntreFechas(int idLocal, LocalDateTime desde, LocalDateTime hasta) {
-		List<Carrito> carritos=carritoRepository.findAllConPedidosEntreFechas(idLocal, desde, hasta);
+		List<Carrito> carritos=carritoRepository.findAllFacturadosEntreFechas(idLocal, desde, hasta);
+		for(Carrito c: carritos) c.setListaPedido(pedidoRepository.findAll(c.getIdCarrito()));
 		List<ProductoModel> productos = new ArrayList<ProductoModel>();
 		int cantidad=0;
 		ProductoModel producto = null;

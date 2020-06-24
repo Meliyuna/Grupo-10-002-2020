@@ -84,6 +84,9 @@ public class PedidoService implements IPedidoService {
 		return pedidoRepository.findAllConTodo();
 	}
 	
+	public List<Pedido> getAllFacturados() {
+		return pedidoRepository.findAllFacturadosConTodo();
+	}
 	
 	public PedidoModel getById(int idPedido) {
 		return pedidoConverter.entityToModel(pedidoRepository.findByIdPedido(idPedido));

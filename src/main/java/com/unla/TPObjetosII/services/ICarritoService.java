@@ -21,8 +21,8 @@ public interface ICarritoService {
 	public CarritoModel getByIdConTodo(int idCarrito);
 	
 	
-	public List<ProductoModel> carritosConPedidos();
-	public List<ProductoModel> carritosConPedidos(int idLocal);
+	public List<ProductoModel> carritosFacturadosConPedidos();
+	public List<ProductoModel> carritosFacturadosConPedidos(int idLocal);
 	public List<ProductoModel> carritosConPedidosEntreFechas(int idLocal, LocalDateTime desde, LocalDateTime hasta);
 
 }

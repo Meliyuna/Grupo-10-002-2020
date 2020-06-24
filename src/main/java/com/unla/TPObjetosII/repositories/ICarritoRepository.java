@@ -34,15 +34,18 @@ import com.unla.TPObjetosII.entities.Factura;
 	@Query("SELECT c from Carrito c where c.baja='0'")	
 	public abstract List<Carrito> findAllConTodo();
 	
+	@Query("SELECT c from Carrito c join fetch c.factura f where c.baja='0' and f is not null")	
+	public abstract List<Carrito> findAllFacturados();
+	
 	@Query("select c from Carrito c join fetch c.local l left join fetch c.listaPedido p left join fetch p.solicitudStock left join fetch c.factura f "
 			+ "where l.idLocal = (:idLocal) and c.baja='0' and f is NULL order by c.idCarrito")
 	public abstract Set<Carrito> findAllByIdLocalSinFacturar(int idLocal);
 	
 	
 	
-	@Query("SELECT c from Carrito c join fetch c.listaPedido l join fetch c.local lo where lo.idLocal = (:idLocal)")	
-	public abstract List<Carrito> findAllConPedidos(int idLocal);
+	@Query("SELECT c from Carrito c join fetch c.local lo join fetch c.factura f where lo.idLocal = (:idLocal) and f is not null")	
+	public abstract List<Carrito> findAllFacturados(int idLocal);
 	
-	@Query("SELECT c from Carrito c join fetch c.local lo where lo.idLocal = (:idLocal) and c.fecha BETWEEN (:fechaDesde) and (:fechaHasta)")	
-	public abstract List<Carrito> findAllConPedidosEntreFechas(int idLocal, LocalDateTime fechaDesde, LocalDateTime fechaHasta);
+	@Query("SELECT c from Carrito c join fetch c.local lo join fetch c.factura f where lo.idLocal = (:idLocal) and f is not null and f.fechaFacturado BETWEEN (:fechaDesde) and (:fechaHasta) ")	
+	public abstract List<Carrito> findAllFacturadosEntreFechas(int idLocal, LocalDateTime fechaDesde, LocalDateTime fechaHasta);
 }
