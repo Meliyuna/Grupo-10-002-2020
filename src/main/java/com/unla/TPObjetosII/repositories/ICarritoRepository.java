@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.repositories;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -39,4 +40,9 @@ import com.unla.TPObjetosII.entities.Factura;
 	
 	
 	
+	@Query("SELECT c from Carrito c join fetch c.listaPedido l join fetch c.local lo where lo.idLocal = (:idLocal)")	
+	public abstract List<Carrito> findAllConPedidos(int idLocal);
+	
+	@Query("SELECT c from Carrito c join fetch c.local lo where lo.idLocal = (:idLocal) and c.fecha BETWEEN (:fechaDesde) and (:fechaHasta)")	
+	public abstract List<Carrito> findAllConPedidosEntreFechas(int idLocal, LocalDateTime fechaDesde, LocalDateTime fechaHasta);
 }

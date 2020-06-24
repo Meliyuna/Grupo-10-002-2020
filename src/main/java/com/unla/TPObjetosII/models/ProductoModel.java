@@ -2,7 +2,7 @@ package com.unla.TPObjetosII.models;
 
 import java.time.LocalDate;
 
-public class ProductoModel {
+public class ProductoModel implements Comparable<ProductoModel>{
 	
 	private int idProducto;
 	private String nombre;
@@ -109,5 +109,10 @@ public class ProductoModel {
 				+ ", precio=" + precio + ", fechaAlta=" + fechaAlta + ", cantidad=" + cantidad + "]";
 	}
 	
+	@Override
+	 public int compareTo(ProductoModel o) {
+		Integer c= cantidad;
+		return c.compareTo(o.getCantidad());
+     }
 
 }

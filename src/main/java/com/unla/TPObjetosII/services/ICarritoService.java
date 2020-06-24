@@ -1,10 +1,13 @@
 package com.unla.TPObjetosII.services;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import com.unla.TPObjetosII.entities.Carrito;
 import com.unla.TPObjetosII.models.CarritoModel;
 import com.unla.TPObjetosII.models.FacturaModel;
+import com.unla.TPObjetosII.models.ProductoModel;
 
 
 public interface ICarritoService {
@@ -17,5 +20,9 @@ public interface ICarritoService {
 	public FacturaModel generarFactura(int idCarrito, int idCliente, int idEmpleado) throws Exception;
 	public CarritoModel getByIdConTodo(int idCarrito);
 	
+	
+	public List<ProductoModel> carritosConPedidos();
+	public List<ProductoModel> carritosConPedidos(int idLocal);
+	public List<ProductoModel> carritosConPedidosEntreFechas(int idLocal, LocalDateTime desde, LocalDateTime hasta);
 
 }
