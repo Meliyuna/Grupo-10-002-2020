@@ -17,4 +17,5 @@ public interface IEmpleadoService {
 	
 	public EmpleadoModel getEmpleado(long dni);
 	
+	public List<EmpleadoModel> traerEmpleadosPorIdDeLocal(int idLocal);
 }
