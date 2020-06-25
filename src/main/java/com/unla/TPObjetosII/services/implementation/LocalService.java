@@ -2,6 +2,7 @@ package com.unla.TPObjetosII.services.implementation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,19 +127,33 @@ public class LocalService implements ILocalService{
 			localesProd.add(localConverter.entityToModel(l));
 		}
 		double distancia = 0;
-		int cantidad=0;
+		int cantidad = 0;
 		for (LocalModel l : locales) {
-			distancia = l.getDistancia();	
+			distancia = l.getDistancia();
 			for (LocalModel loc : localesProd) {
 				if (loc.getIdLocal() == l.getIdLocal()) {
-					cantidad=loteService.ProductoXlocal(idProducto, loc.getIdLocal()).getCantidad();
-					loc.setCantidad(cantidad);
-					loc.setDistancia(distancia);
-					localesAMostrar.add(loc);
+						cantidad = loteService.ProductoXlocal(idProducto, loc.getIdLocal()).getCantidad();
+						loc.setCantidad(cantidad);
+						loc.setDistancia(distancia);
+						localesAMostrar.add(loc);	
 				}
+
 			}
 		}
-		return localesAMostrar;
+		return this.ordenarLocalesPorDistancia(localesAMostrar);
+	}
+	
+	public List<LocalModel> ordenarLocalesPorDistancia(List<LocalModel> listaLocales){
+		listaLocales.sort(Comparator.comparing(LocalModel::getDistancia));
+		List<LocalModel> locales= new ArrayList<LocalModel>();
+		int cantidadLocales=0;
+		for(LocalModel l: listaLocales) {
+			if(cantidadLocales<5) {
+				locales.add(l);
+				cantidadLocales++;
+			}
+		}
+		return locales;
 	}
 
 	@Override
