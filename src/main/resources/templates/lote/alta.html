@@ -21,7 +21,7 @@
 <script src="/js/cargarEstructura.js"></script>
 <script type="text/javascript">
 //Variables para mostrar el contenido de la pag
-var urlVista = "/lotes/nuevo"; //Vista a mostrar en el contenido de la pag
+var urlVista = "/lotes/nuevo/" + sessionStorage.getItem("idLocal"); //Vista a mostrar en el contenido de la pag
 var idDesplegable = "#nav-item-lote"; //Desplegable correspondiente a la vista cargada
 var idContenidoDesplegable = "#collapseLote"; //Contenido del desplegable
 var idOpcionSeleccionada = "#lote-alta"; //Opcion seleccionada del desplegable

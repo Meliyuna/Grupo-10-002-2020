@@ -51,13 +51,15 @@ public class LoteController {
 		return mAV;
 	}
 	
-	@GetMapping("/nuevo")
-	public ModelAndView nuevoLote() {
+	@GetMapping("/nuevo/{id}")
+	public ModelAndView nuevoLote(@PathVariable("id") int id) {
 		
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.LOTE_FORMULARIO);
-		mAV.addObject("lote", new LoteModel());
+		LoteModel lote = new LoteModel();
+		lote.setLocal(localService.getById(id));
+		mAV.addObject("lote", lote);
 		mAV.addObject("productos", productoService.getAll());
-		mAV.addObject("locales", localService.getAll());
+		
 		return mAV;
 	}
 	
@@ -65,6 +67,7 @@ public class LoteController {
 	public RedirectView nuevoLote(@ModelAttribute("lote") LoteModel loteModel) {
 		loteModel.setFechaIngreso(LocalDate.now());
 		loteModel.setEstado(true);
+		System.out.println(loteModel.getLocal().getIdLocal());
 		loteService.insertOrUpdate(loteModel);
 		return new RedirectView(ViewRouteHelper.LOTE_REDIRECT);
 	}
