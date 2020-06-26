@@ -44,10 +44,15 @@ public class LoteModel {
 
 
 
+	public LoteModel() {
+		super();
+	}
+
+
 	public int getIdLote() {
 		return idLote;
 	}
-	protected void setIdLote(int idLote) {
+	public void setIdLote(int idLote) {
 		this.idLote = idLote;
 	}
 	public int getCantidadInicial() {

@@ -57,7 +57,8 @@ public class PedidoService implements IPedidoService {
 	@Qualifier("solicitudStockConverter")
 	private SolicitudStockConverter solicitudStockConverter;
 
-	public PedidoModel insert(PedidoModel pedidoModel) {
+	public PedidoModel insert(PedidoModel pedidoModel)throws Exception {
+		//TODO VERIFICAR SI EL CARRITO YA FUE FACTURADO
 		if(pedidoModel.getSolicitudStock()!=null) {
 			SolicitudStockModel solicitud = pedidoModel.getSolicitudStock();
 			pedidoModel.setSolicitudStock(null);
@@ -83,6 +84,9 @@ public class PedidoService implements IPedidoService {
 		return pedidoRepository.findAllConTodo();
 	}
 	
+	public List<Pedido> getAllFacturados() {
+		return pedidoRepository.findAllFacturadosConTodo();
+	}
 	
 	public PedidoModel getById(int idPedido) {
 		return pedidoConverter.entityToModel(pedidoRepository.findByIdPedido(idPedido));
@@ -95,7 +99,8 @@ public class PedidoService implements IPedidoService {
 			listaPedido.add(pedido);
 			if(pedido.getSolicitudStock()==null) this.loteService.devolverStockPedidosCancelados(listaPedido);
 			//crear nuevo lote
-			pedidoRepository.deleteById(idPedido);
+			pedido.setBaja(true);
+			pedidoRepository.save(pedido);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

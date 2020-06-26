@@ -1,0 +1,17 @@
+
+<table  class="table table-hover">
+	<thead class="thead-dark">
+		<tr>
+			<th>Producto</th>
+			<th>Cantidad Vendida</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="producto : ${productos}">
+			<td><span th:text="${producto.nombre}" /></td>
+			<td><span th:text="${producto.cantidad}" /></td>
+
+		</tr>
+	</tbody>
+</table>

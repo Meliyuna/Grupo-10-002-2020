@@ -1,0 +1,30 @@
+<h2>Eliminar o Actualizar Lote</h2>
+
+<select id="select-lote">
+	<option value="">--</option>
+		<option th:each="lote : ${lotes}"
+		th:value="${lote.idLote}" 
+		th:text="${lote.idLote}" />
+</select>
+<p></p>
+<div id="div-select-lote" class="row"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+		$("#select-lote").change(function() {	
+			var id = $("#select-lote").val();
+			if($.isNumeric(id)){
+				$.ajax({ 
+					method: "GET",
+				 	url: "/lotes/actualizar/" + id,
+				})
+				.done(function(result) {
+					$("#div-select-lote").html(result);
+				})
+				.fail(function() {
+					alert("error");
+				});
+			}else $("#div-select-lote").html();
+		});
+</script>
+

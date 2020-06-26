@@ -54,6 +54,7 @@ public class SolicitudStock {
 		this.fechaAbierta = fechaAbierta;
 		this.fechaCerrada= fechaCerrada;
 		this.aceptado = aceptado;
+		this.pendiente = pendiente;
 		this.pedido = pedido;
 		this.local = local;
 	}
@@ -63,6 +64,7 @@ public class SolicitudStock {
 		this.fechaAbierta = fechaAbierta;
 		this.fechaCerrada= fechaCerrada;
 		this.aceptado = aceptado;
+		this.pendiente = pendiente;
 		this.pedido = pedido;
 		this.local = local;
 	}

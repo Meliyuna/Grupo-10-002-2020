@@ -64,16 +64,16 @@ class TpObjetosIiApplicationTests {
 
 	@Test
 	void testLote() {
-	//	lRepo.save(new Lote(200,100,LocalDate.now(),pRepo.findByIdProducto(7),true,locRepo.findByIdLocal(7)));
+		lRepo.save(new Lote(200,100,LocalDate.now(),pRepo.findByIdProducto(2),true,locRepo.findByIdLocal(7)));
 	//	System.out.println(lRepo.lotesXlocal(8));
 	//	System.out.println(lRepo.lotesXproducto(8));
 	//	List<Lote> lotes= lRepo.lotesXproducto(8);
 //		System.out.println(lotes.get(0).getProducto());
 //		System.out.println(lotes);
 	//	System.out.println(lRepo.lotesXproductoXlocal(8, 8)==null);
-		System.out.println(loteService.ProductosXlocal(7));
-		System.out.println(loteService.ProductoXlocal(7,7));
-		System.out.println(loteService. CantidadProductoXlocal(7));
+//		System.out.println(loteService.ProductosXlocal(7));
+//		System.out.println(loteService.ProductoXlocal(7,7));
+//		System.out.println(loteService. CantidadProductoXlocal(7));
 	}
 //	@Test
 //	void testSolicitudesStock() {

@@ -1,0 +1,35 @@
+<h2>Ranking de los productos mas vendidos del local entre fechas</h2>
+
+<div>
+<table>
+  <tr>
+    <th><p>Desde: <input id="desde" name=fechaDesde type="datetime-local" /></p></th>
+    <th><p>Hasta: <input id="hasta" name="fechaHasta" type="datetime-local" ></p></th>
+  </tr>
+	<p></p>
+	<th><button id="filtrar" class="btn btn-primary">Filtrar</button></th>
+</table>
+</div>
+ <p></p>
+<div id="div-select-fechas" class="row"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+		$("#filtrar").click(function() {	
+			var id = sessionStorage.getItem("idLocal");
+			if($.isNumeric(id)){
+				$.ajax({ 
+					method: "POST",
+				 	url: "/rankings/tabla/" + id,
+				 	data:{"desde":$("#desde").val(),"hasta":$("#hasta").val()}
+				})
+				.done(function(result) {
+					$("#div-select-fechas").html(result);
+				})
+				.fail(function() {
+					alert("error");
+				});
+			}else $("#div-select-fechas").html();
+		});
+</script>
+ 

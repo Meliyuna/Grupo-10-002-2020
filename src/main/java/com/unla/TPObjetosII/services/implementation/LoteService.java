@@ -136,10 +136,13 @@ public class LoteService implements ILoteService{
 	}
 	
 	@Override
-	public List<Lote> modificacionStockPrevio(int idLocal, int idProducto,int cantidadProd) {
+	public List<Lote> modificacionStockPrevio(int idLocal, int idProducto,int cantidadProd) throws Exception {
 		List<Lote> lotes= loteRepository.lotesXproductoXlocal(idProducto, idLocal);
 		if(!lotes.isEmpty()) {
+		int cantidadDisp=0;
 		int cantRestante=cantidadProd;
+		for(Lote l: lotes) cantidadDisp+= l.getCantidadActual();
+		if(cantidadDisp<cantidadProd) throw new Exception("No hay Stock suficiente");
 		for(Lote l: lotes) {	
 			int cantNuevaLote = l.getCantidadActual()-cantRestante;
 		    if(cantNuevaLote<0){
@@ -217,7 +220,7 @@ public class LoteService implements ILoteService{
     }
 	
 	@Override
-	public boolean devolverStockPedidoModificado(Pedido pedidoAnterior, Pedido pedidoNuevo) {
+	public boolean devolverStockPedidoModificado(Pedido pedidoAnterior, Pedido pedidoNuevo) throws Exception {
 		boolean cambiado = false;
 		Pedido viejo = pedidoAnterior;
 		Pedido nuevo = pedidoNuevo;
@@ -239,8 +242,7 @@ public class LoteService implements ILoteService{
 	
 	@Override
 	public List<Lote> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return loteRepository.findAll();
 	}
 
 	

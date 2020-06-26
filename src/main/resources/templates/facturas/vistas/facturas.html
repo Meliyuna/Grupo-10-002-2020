@@ -1,0 +1,206 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	verFacturas();
+	
+	
+});
+
+velAnim = 250;
+carritoSeleccionado= 0;
+productoSeleccionado = 0;
+idLocal=sessionStorage.getItem("idLocal");
+idEmpleado=sessionStorage.getItem("idEmpleado");
+pedidosDeCarrito = null;
+
+
+function verFacturas(){
+	json={"idLocal":idLocal};
+	$("#tbody-tabla-facturas").html("");
+	$.ajax({
+		url: '/api/factura/traerFacturas',
+		type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(facturas){
+    		console.log(facturas);
+    		$.each(facturas,function(index,factura){
+        		
+    			$("#tbody-tabla-facturas").append('<tr><th scope="row">'+index+'</th>'+
+    				'<td>'+factura.fechaFacturado+'</td>'+
+    				'<td>'+factura.cliente.apellido+","+factura.cliente.nombre+", "+factura.cliente.dni+'</td>'+
+    				'<td>'+factura.carrito.idCarrito+'</td>'+
+    				'<td>'+factura.empleado.apellido+","+factura.empleado.nombre+", "+factura.empleado.dni+'</td>'+
+    				'<td><button type="button" class="btn btn-success" onclick="verFacturaDetalle('+factura.idFactura+')">Ver detalle</button></td>'+
+    				'</tr>');
+     			
+         	});		
+     		
+   			$("#factura").show();
+   			
+	},
+	error: function(response){
+		console.log(response);
+	}	
+});
+	
+}
+
+
+function verFacturaDetalle(idFactura){
+	json={"idFactura":idFactura};
+	$.ajax({
+		url: '/api/factura/verFacturaDetalle',
+		type: 'POST',
+    	dataType: 'json',
+    	data: JSON.stringify(json),
+    	contentType: "application/json",
+    	success: function(factura){
+    		$("#factura").hide(velAnim);
+    		//carrito
+    		$.each(factura.carrito.listaPedido,function(index,pedido){
+    		$("#tbody-tabla-factura").append('<tr><th scope="row">'+index+'</th>'+
+    				'<td>'+pedido.producto.nombre+'</td>'+
+    				'<td>'+pedido.producto.precio+'</td>'+
+    				'<td>'+pedido.cantidad+'</td>'+
+    				'<td>'+pedido.subtotal+'</td>'+
+    				'</tr>');
+     			
+    		});	
+    		//fecha
+    		$("#tbody-tabla-fecha").append('<tr><th scope="row">'+factura.fechaFacturado+'</th></tr>'); 
+    		
+    		//total
+    		$("#tbody-tabla-factura-2").append('<tr><th scope="row">'+factura.carrito.total+'</th></tr>'); 
+    		//cliente
+    		$("#apellidoCli").val(factura.cliente.apellido);
+    		$("#nombreCli").val(factura.cliente.nombre);
+    		$("#dni").val(factura.cliente.dni);
+    		$("#fechaNacimientoCli").val(factura.cliente.fechaNacimiento);
+    		$("#emailCli").val(factura.cliente.email);
+    		//empleado
+    		$("#apellidoEmp").val(factura.empleado.apellido);
+    		$("#nombreEmp").val(factura.empleado.nombre);
+    		//mostrar
+    		$("#tabla-fecha").show();
+    		$("#datos-carrito").show();
+    		$("#tabla-factura-total").show();
+    		$("#tabla-barra-1").show();
+    		$("#mostrar-cliente").show();
+    		$("#tabla-barra-2").show();
+    		$("#mostrar-empleado-factura").show();
+    		$("#atras").show();	
+	},
+	error: function(response){
+		console.log(response);
+	}	
+});
+}
+
+
+
+</script>
+<table id="tabla-fecha" class="table table-hover" style="display:none">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Fecha</th>   
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-fecha">
+		  </tbody>
+		</table>
+
+<div id="factura" class="vista" style="display: none">
+		<h1>Factura</h1>
+		<table id="tabla-factura" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Fecha facturado</th>
+		      <th scope="col">Datos del cliente</th>
+		      <th scope="col">Id del carrito</th>
+		      <th scope="col">Datos del empleado</th>
+		      <th scope="col">Detalle</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-facturas">
+		  </tbody>
+		</table>
+
+	</div>
+
+<div id="datos-carrito"  style="display:none">
+	<h1>Datos carrito</h1>
+<table id="tabla-factura-produtos" class="table table-hover">
+				
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Nombre del Producto</th>
+		      <th scope="col">Precio unitario</th>
+		      <th scope="col">Cantidad</th>
+		      <th scope="col">Subtotal</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-factura">
+		  </tbody>
+		</table>
+</div>		
+		<table id="tabla-factura-total" class="table table-hover" style="display:none">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Total</th>   
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-factura-2">
+		  </tbody>
+		</table>
+		
+	
+		<table id="tabla-barra-1" class="table table-hover" style="display:none">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Cliente</th>   
+		    </tr>
+		  </thead>  
+		</table>
+		
+
+		<div id="mostrar-cliente" class="form-fow" style="display:none">
+				<input type="hidden" id="idCli" name="id" > 	
+			<div class="form-group col-md-6">       
+			      <p>Apellido: <input class="form-control" id="apellidoCli" type="text" name="apellido" disabled></p>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombreCli" type="text" name="nombre" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Dni: <input id="dni" class="form-control" type="number" name="dni" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Fecha de Nacimiento: <input id="fechaNacimientoCli" class="form-control" type="date" name="fechaNacimiento" disabled></p> 
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Email: <input id="emailCli" class="form-control" type="text" name="emailCli" disabled></p> 
+			    </div>
+		</div>
+		
+		<table id="tabla-barra-2" class="table table-hover" style="display:none">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Empleado en factura</th>   
+		    </tr>
+		  </thead>  
+		</table>
+		
+		<div id="mostrar-empleado-factura" class="form-fow" style="display:none">
+			<div class="form-group col-md-6">
+			      <p>Apellido: <input class="form-control" id="apellidoEmp" type="text" name="apellido" disabled></p>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <p>Nombre: <input class="form-control" id="nombreEmp" type="text" name="nombre" disabled></p> 
+			    </div>
+		</div>
+		
+				<button id="atras" type="button" class="btn btn-success" onclick="window.location.reload();" style="display:none;">Atras</button>
+		

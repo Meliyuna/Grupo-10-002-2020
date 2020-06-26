@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Local;
 import com.unla.TPObjetosII.models.EmpleadoModel;

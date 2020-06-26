@@ -102,7 +102,8 @@ function aceptarSolicitud(){
      		verSolicitudes();
      	},
      	error: function(response){
-     		console.log(response);
+    		$("#error").html("Error aceptanto solicitud: " + response.responseJSON.message);
+    		$("#error").show();
      	}
 	});
 }
@@ -119,7 +120,8 @@ function rechazarSolicitud(){
      		verSolicitudes();
      	},
      	error: function(response){
-     		console.log(response);
+     		$("#error").html("Error rechazando solicitud: " + response.responseJSON.message);
+    		$("#error").show();
      	}
 	});
 }
@@ -190,4 +192,5 @@ function rechazarSolicitud(){
 			<button id="rechazarButton" type="button" class="btn btn-danger" onclick="rechazarSolicitud()">Rechazar</button>
 		</div>
 	</div>
+	<div id="error" class="vista" style="display: none"></div>
 </div>

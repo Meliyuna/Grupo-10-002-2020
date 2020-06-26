@@ -82,15 +82,17 @@
 		</div>
 		<div id="formularios">
 			<div id="formularioSelectEmpleados">
-				<p>Seleccione Empleado: <select id="empleados">
+				<p>Seleccione Empleado: <select id="empleados" class="form-control">
 		<!--  		<option>Elija una opcion </option>   -->
 				</select>
 				</p>
 			</div>
-			<button id="borrar" type="button">Borrar</button>
+			<p></p>
+			<button id="borrar" class="btn btn-primary">Borrar</button>
 			</div>
 			
 			<div  id="exitoBorrar" style="display: none;">
 			<h1>Empleado borrado</h1>
+			<button onClick="window.location.reload();" class="btn btn-primary">Recargar</button>
 		</div>
 

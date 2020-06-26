@@ -1,0 +1,152 @@
+<script>
+$(document).ready(function(){
+	verEmpleados();
+});
+
+velAnim = 250;
+listaEmpleados = null;
+function verEmpleados(){
+	$("#contenido").hide(velAnim,function(){
+		$("#tbody-tabla-empleados").html("");
+		json={"idPersona":idPersona};
+		$.ajax({
+        	url: '/api/empleado/mostrarSueldos',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(empleados){
+        		listaEmpleados=empleados;
+        		console.log(empleados);        		
+            	$.each(empleados,function(index,empleado){
+            		
+            		$("#tbody-tabla-empleados").append('<tr><th scope="row">'+empleado.idPersona+'</th>'+
+							'<td>'+empleado.apellido+'</td>'+
+							'<td>'+empleado.nombre+'</td>'+
+							'<td>'+empleado.sueldo+'</td>'+
+							'<td>'+empleado.comOriginal+'</td>'+
+							'<td>'+empleado.comAuxiliar+'</td>'+
+							'<td><button type="button" class="btn btn-success" onclick="detEmpleado('+empleado.idPersona+')">Detalle</button></td>'+	
+							'</tr>');							
+            	});            	
+            	$(".vista").hide();
+        		$("#empleados").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#empleados").show();
+        		$("#error").html("Error en empleados");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
+		
+	});
+}
+
+
+function detEmpleado(idPersona){
+	var fecha = new Date();
+	fecha.setFullYear(fecha.getFullYear()-18);
+	var fechaString=(fecha.toISOString()).substring(0,10);
+	$("#fechaNacimiento").attr("max",fechaString);	
+	
+	
+	$("#contenido").hide(velAnim,function(){
+		json={"idEmpleado":idPersona};
+		$.ajax({
+        	url: '/api/empleado/traerEmpleado',
+        	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
+        	success: function(empleado){       		
+            	console.log(empleado);
+               	$("#apellido").val(empleado.apellido);
+        		$("#nombre").val(empleado.nombre);
+        		$("#dni").val(empleado.dni);
+        		$("#franjaHoraria").val(empleado.franjaHoraria);        		
+        		$("#fechaNacimiento").val(empleado.fechaNacimiento);
+        		$("#local").val(empleado.local.direccion);        		
+            	$(".vista").hide();
+        		$("#detalle").show();
+        		$("#contenido").show(velAnim);
+        	},
+        	error: function(response){
+        		console.log(response);
+        		$(".vista").hide();
+        		$("#detalle").show();
+        		$("#error").html("Error detalle de empleado");
+        		$("#error").show();
+        		$("#contenido").show(velAnim);
+        	}
+    	})
+		
+	});
+}
+
+</script>
+
+
+<div id="contenido">
+	<div id="empleados" class="vista" style="display: none">
+		<h1>Sueldos de Empleados</h1>
+
+		<table id="tabla-empleados" class="table table-hover">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">idEmpleado</th>
+		      <th scope="col">Apellido</th>
+		      <th scope="col">Nombre</th>
+		      <th scope="col">Salario</th>
+		      <th scope="col">Comision Local</th>
+		      <th scope="col">Comision Aux</th>
+		      <th scope="col"> </th>  
+		      
+		    </tr>
+		  </thead>
+		  <tbody id="tbody-tabla-empleados">
+		  </tbody>
+		</table>
+	</div>	
+	<div id="detalle" class="vista" style="display: none">
+		<h1>Detalle Empleado</h1>
+		<form>
+			<div class="form-row">			    
+			    <div class="form-group col-md-6">
+			      <label for="apellido">Apellido</label>
+			      <input type="text" class="form-control" id="apellido" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="nombre">Nombre</label>
+			      <input type="text" class="form-control" id="nombre" disabled>
+			    </div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+			      <label for="dni">DNI</label>
+			      <input type="text" class="form-control" id="dni" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="franjaHoraria">Franja Horaria</label>
+			      <input type="text" class="form-control" id="franjaHoraria" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="fechaNacimiento">Fecha de Nacimiento</label>
+			      <input type="date" class="form-control" id="fechaNacimiento" disabled>
+			    </div>
+			    <div class="form-group col-md-6">
+			    	<label for="local">Local</label>
+					<input type="text" class="form-control" id="local" disabled>
+				</div>
+			</div>			
+			<input id="idPersona" type="text" hidden="true" />
+			<p></p>
+			<button id="atras" class="btn btn-primary">Atras</button>
+		</form>
+		
+	</div>
+	<div id="error" class="vista" style="display: none"></div>
+</div>

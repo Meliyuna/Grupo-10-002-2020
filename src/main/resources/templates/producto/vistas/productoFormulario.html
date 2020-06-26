@@ -1,8 +1,23 @@
 <h2>Nuevo Producto</h2>
 
-<form action="#" th:action="@{/productos/}" th:object="${producto}" method="post">
-	<p>Nombre: <input type="text" th:field="*{nombre}" /></p>
-	<p>Descripcion: <input type="text" th:field="*{descripcion}" /></p>
-	<p>Precio: <input type="number" step="0.01" th:field="*{precio}" /></p>
-	<input type="submit" value="subir"/>
-</form>
+<div class="row">
+		<div class="col-6">
+		<form action="#" th:action="@{/productos/}" th:object="${producto}" method="post" >
+		<div class="form-group row">
+			<label class="col-2 col-form-label">Nombre</label>
+			<input type="text" th:field="*{nombre}" class="form-control col-10" />
+		</div>
+		<div class="form-group row">
+			<label class="col-2 col-form-label">Descripcion</label>
+			<input type="text" th:field="*{descripcion}" class="form-control col-10"/>
+		</div>
+		<div class="form-group row">
+			<label class="col-2 col-form-label">Precio</label>
+			<input type="number" step="0.01" th:field="*{precio}" class="form-control col-10"/>
+		</div>
+		<div class="form-group">
+			<input class="btn btn-primary"type="submit" value="agregar"/>
+		</div>
+		</form>
+	</div>
+</div>

@@ -28,5 +28,20 @@ public class ClienteController {
 	public String baja() {
 		return "/cliente/baja";
 	}
+	
+	@GetMapping("/vistaAlta")
+	public String vistaAlta() {
+		return "/cliente/vistas/alta";
+	}
+	
+	@GetMapping("/vistaModificacion")
+	public String vistaModificacion(){
+		return "/cliente/vistas/modificacion";
+	}
+	
+	@GetMapping("/vistaBaja")
+	public String vistaBaja(){
+		return "/cliente/vistas/baja";
+	}
 
 }

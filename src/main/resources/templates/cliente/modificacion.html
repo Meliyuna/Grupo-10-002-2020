@@ -1,107 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script>
-	$(document).ready(function() {
-		//Traigo los Clientes de la Base
-		$.ajax({
-        	url: '/api/cliente/traerClientes',
-        	type: 'POST',
-        	success: function(response){
-            	console.log(response);
-            	$.each(response,function(index,cliente){
-            		$("#clientes").append(new Option(cliente.apellido + ", " + cliente.nombre + " - DNI:" + cliente.dni, cliente.idPersona));
-            	});
-        	},
-        	error: function(response){
-        		console.log(response);
-        	}
-        });
-		
-		//Selecciono El Cliente a Modificar
-		$("#clientes").change(function(){
-			$(".error").css("display", "none");
-			json={"idPersona":$("#clientes").val()};
-			$("#formularioCliente").hide(1000, function(){
-				$.ajax({
-		        	url: '/api/cliente/traerCliente',
-		        	type: 'POST',
-	            	dataType: 'json',
-	            	data: JSON.stringify(json),
-	            	contentType: "application/json",
-		        	success: function(cliente){
-		        		console.log(cliente)
-	                	$("#apellido").val(cliente.apellido);
-		        		$("#nombre").val(cliente.nombre);
-		        		$("#dni").val(cliente.dni);
-		        		$("#email").val(cliente.email);
-		        		$("#formularioCliente").show(1000);      		
-		        		
-		        	},
-		        	error: function(response){
-		        		console.log(response);
-		        	}
-		        });
-			});
-		});
-		
-		//Modifico el Cliente 
-		$("#modificar").click(function() {
-			$(".error").css("display", "none");
-			json = {
-					"apellido": $("#apellido").val(),
-					"nombre": $("#nombre").val(),
-					"dni": $("#dni").val(),
-					"email": $("#email").val(),
-					"idPersona": $("#clientes").val()
-			};
-			$.ajax({
-            	url: '/api/cliente/alta',
-            	type: 'POST',
-            	dataType: 'json',
-            	data: JSON.stringify(json),
-            	contentType: "application/json",
-            	success: function(response){
-                	$("#formularios").hide(1000,function(){$("#exitoModificar").show(1000)});
-            	},
-            	error: function(response){
-            		console.log(response);
-            		if(response.responseJSON.message.includes("dni")){
-            			 $("#errorDNI").css("display", "block");
-            			 $("#errorDNI").html(response.responseJSON.message);
-            		}
-            	}
-        	});
-		});
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin 2 - Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<!-- <script src="/js/cargarEstructura.js" type="text/javascript"></script> -->
+<script src="/js/cargarEstructura.js"></script>
+<script type="text/javascript">
+//Variables para mostrar el contenido de la pag
+var urlVista = "/cliente/vistaModificacion"; //Vista a mostrar en el contenido de la pag
+var idDesplegable = "#nav-item-cliente"; //Desplegable correspondiente a la vista cargada
+var idContenidoDesplegable = "#collapseCliente"; //Contenido del desplegable
+var idOpcionSeleccionada = "#cliente-modificacion"; //Opcion seleccionada del desplegable
+
+$(document).ready(function(){
+	cargarEstructura(urlVista, function(){
+		$(idDesplegable + " .nav-link").removeClass('collapsed');
+		$(idDesplegable + " .nav-link").attr('aria-expanded','true');
+		$(idContenidoDesplegable).addClass('show');
+		$(idOpcionSeleccionada).addClass('active');
 	});
+});
 </script>
-<meta charset="ISO-8859-1">
+
 </head>
-<body>
-	<div>
-			<h1>Modificar Cliente:</h1>
-		</div>
-		<div id="formularios">
-			<div id="formularioSelectCliente">
-				<p>Seleccione Cliente: <select id="clientes">
-				</select>
-				</p>
-			</div>
-			<div id="formularioCliente" style="display: none;">
-				<p>Apellido: <input id="apellido" type="text"></p>
-				<p>Nombre: <input id="nombre" type="text"><span id="errorDNI" class="error" style="display: none;"></span></p>
-				<p>DNI: <input id="dni" type="number"></p>
-				<p>Email: <input id="email" type="text"></p>
-				<button id="modificar" type="button">MODIFICAR</button>
-			</div>
-		</div>
-		
-		<div  id="exitoModificar" style="display: none;">
-			<h1>Cliente Modificado</h1>
-		</div>
-		<div>
-			<a href="/cliente">ATRAS</a>
-		</div>
+
+<body id="page-top">
+
+
 </body>
+  
+    <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
 </html>
