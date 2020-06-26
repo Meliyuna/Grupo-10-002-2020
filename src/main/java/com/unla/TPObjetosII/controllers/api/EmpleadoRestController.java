@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +41,7 @@ public class EmpleadoRestController {
 	@Qualifier("pedidoService")
 	private IPedidoService pedidoService;
 	
-	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/alta")
 	@ResponseBody
 	public EmpleadoModel alta(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
@@ -54,7 +55,7 @@ public class EmpleadoRestController {
 	
 	}
 	
-	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/traerEmpleados")
 	@ResponseBody
 	public List<Empleado> traerEmpleados() throws Exception{
@@ -64,6 +65,7 @@ public class EmpleadoRestController {
 	
 	
 	//hace lo mismo que alta pero para que quede mas claro en html se agrega modificar
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/modificar")
 	@ResponseBody
 	public EmpleadoModel modificar(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
@@ -107,6 +109,7 @@ public class EmpleadoRestController {
 		return empleadoNode;
 	}
 	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/baja")
 	@ResponseBody
 	public Boolean baja(@RequestBody ObjectNode o) throws Exception{
@@ -114,6 +117,7 @@ public class EmpleadoRestController {
 		return true;
 	}
 	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/mostrarSueldos") //Calcula el sueldo del empleado usando una base de 30k
 	@ResponseBody
 	public List<EmpleadoModel> mostrarSueldos () throws Exception {

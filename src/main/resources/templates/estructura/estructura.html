@@ -9,18 +9,11 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Proyecto OO2 <sup>pro</sup></div>
+        <div class="sidebar-brand-text mx-3">Democratizacion de Stock <sup>pro</sup></div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -29,40 +22,59 @@
       <div class="sidebar-heading">
         ABMs
       </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li id="nav-item-local" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLocal" aria-expanded="true" aria-controls="collapseLocal">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Local</span>
-        </a>
-        <div id="collapseLocal" class="collapse" aria-labelledby="headingLocal" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">ABM Local</h6>
-            <a id="local-alta" class="collapse-item" href="/local/alta">Alta</a>
-            <a id="local-modificacion"class="collapse-item" href="/local/modificacion">Baja o Modificacion</a>
-          </div>
-        </div>
-      </li>
-      
-
-       <!-- Empleados -->
-
-      <li id="nav-item-empleado" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmpleado" aria-expanded="true" aria-controls="collapseEmpleado">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Empleado</span>
-        </a>
-        <div id="collapseEmpleado" class="collapse" aria-labelledby="headingEmpleado" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">ABM Empleado</h6>
-            <a id="empleado-alta" class="collapse-item" href="/empleado/alta">Alta</a>
-            <a id="empleado-modificacion"class="collapse-item" href="/empleado/modificar">Modificacion</a>
-            <a id="empleado-baja"class="collapse-item" href="/empleado/baja">Baja</a>
-          </div>
-        </div>
-      </li>
-      
+		<div class="gerente">
+	      <!-- Nav Item - Pages Collapse Menu -->
+	      <li id="nav-item-local" class="nav-item">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLocal" aria-expanded="true" aria-controls="collapseLocal">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>Local</span>
+	        </a>
+	        <div id="collapseLocal" class="collapse" aria-labelledby="headingLocal" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">ABM Local</h6>
+	            <a id="local-alta" class="collapse-item" href="/local/alta">Alta</a>
+	            <a id="local-modificacion"class="collapse-item" href="/local/modificacion">Baja o Modificacion</a>
+	          </div>
+	        </div>
+	      </li>
+	      
+	
+	       <!-- Empleados -->
+	
+	      <li id="nav-item-empleado" class="nav-item">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmpleado" aria-expanded="true" aria-controls="collapseEmpleado">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>Empleado</span>
+	        </a>
+	        <div id="collapseEmpleado" class="collapse" aria-labelledby="headingEmpleado" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">ABM Empleado</h6>
+	            <a id="empleado-alta" class="collapse-item" href="/empleado/alta">Alta</a>
+	            <a id="empleado-modificacion"class="collapse-item" href="/empleado/modificar">Modificacion</a>
+	            <a id="empleado-baja"class="collapse-item" href="/empleado/baja">Baja</a>
+	          </div>
+	        </div>
+	      </li>
+	      
+	      <!-- Productos -->
+	
+		 <!-- productos -->
+	
+	      <li id="nav-item-producto" class="nav-item">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducto" aria-expanded="true" aria-controls="collapseProducto">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>Producto</span>
+	        </a>
+	        <div id="collapseProducto" class="collapse" aria-labelledby="headingProducto" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">ABM Producto</h6>
+	            <a id="producto-listado" class="collapse-item" href="/productos/listado">Listado</a>
+	            <a id="producto-alta" class="collapse-item" href="/productos/alta">Alta</a>
+	            <a id="producto-modificacion"class="collapse-item" href="/productos/modificacion">Baja o Modificacion</a>
+	          </div>
+	        </div>
+	      </li>
+      </div>
       <!-- Clientes -->
       
       <li id="nav-item-cliente" class="nav-item">
@@ -80,24 +92,7 @@
         </div>
       </li>
       
-      <!-- Productos -->
-
-	 <!-- productos -->
-
-      <li id="nav-item-producto" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducto" aria-expanded="true" aria-controls="collapseProducto">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Producto</span>
-        </a>
-        <div id="collapseProducto" class="collapse" aria-labelledby="headingProducto" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">ABM Producto</h6>
-            <a id="producto-listado" class="collapse-item" href="/productos/listado">Listado</a>
-            <a id="producto-alta" class="collapse-item" href="/productos/alta">Alta</a>
-            <a id="producto-modificacion"class="collapse-item" href="/productos/modificacion">Baja o Modificacion</a>
-          </div>
-        </div>
-      </li>
+      
 
 	 <!-- lotes -->
 	 
@@ -145,11 +140,14 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Facturas</span></a>
 		</li>
-
+	<div class="gerente">
+		<hr class="sidebar-divider"/>
+	
       <div class="sidebar-heading">
         Sueldos
       </div>
 
+		
       <li id="nav-item-sueldos" class="nav-item">
         <a class="nav-link" href="/sueldos">
           <i class="fas fa-fw fa-chart-area"></i>
@@ -179,7 +177,7 @@
         </div>
 		</li>
 
-  
+  		</div>
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -257,7 +255,9 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; Democratizacion de Stock</span><br><br>
+            <span>Obaya Guillermo - Ramos Damian - Romero Melisa - Turkula Claudio</span><br><br>
+            <span>Grupo 10</span>
           </div>
         </div>
       </footer>
@@ -315,5 +315,12 @@ $(document).ready(function(){
         });
    
 	});
+	
+	ocultarOpciones();
 });
+function ocultarOpciones(){
+	if(sessionStorage.getItem("tipoEmpleado")=='false'){
+		$(".gerente").hide();
+	}
+}
 </script>

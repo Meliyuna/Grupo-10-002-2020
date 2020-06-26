@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,7 @@ public class LocalRestController {
 	@Qualifier("solicitudStockService")
 	private ISolicitudStockService solicitudStockService;
 	
-	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/alta")
 	@ResponseBody
 	public LocalModel alta(@RequestBody LocalModel local) throws Exception{//@RequestBody setea auto los atributos a local
@@ -62,6 +63,7 @@ public class LocalRestController {
 		return localService.getAll();
 	}
 	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/baja")
 	@ResponseBody
 	public Boolean baja(@RequestBody ObjectNode o) throws Exception{
@@ -113,14 +115,4 @@ public class LocalRestController {
 		return listaNode;
 	}
 	
-	
-	
-//	@PostMapping("/alta2")
-//	public ResponseEntity<LocalModel> alta2(@RequestBody ObjectNode o) throws Exception{
-//		Gson gson = new Gson();
-//		String local = o.get("local").toString();
-//		LocalModel lc = gson.fromJson(local, LocalModel.class);
-//		System.out.println(lc);
-//		return ResponseEntity.badRequest().build();
-//	}
 }

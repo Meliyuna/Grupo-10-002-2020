@@ -50,6 +50,7 @@
 	                		sessionStorage.setItem("idEmpleado",empleado.idPersona);
 	                		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
 	                		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
+	                		sessionStorage.setItem("tipoEmpleado", empleado.tipoEmpleado);
 	                		sessionStorage.setItem("Authorization",jqXHR.getResponseHeader("Authorization"));
 	                		$(location).attr('href','/pedido/carritos');
 	                	},
