@@ -147,7 +147,7 @@ CREATE TABLE `local` (
   `longitud` double DEFAULT NULL,
   `baja` bit(1) DEFAULT b'0',
   PRIMARY KEY (`idLocal`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `local` (
 
 LOCK TABLES `local` WRITE;
 /*!40000 ALTER TABLE `local` DISABLE KEYS */;
-INSERT INTO `local` VALUES (1,'Valentin Vergara 1531',-34.742726,42423734,-58.394499,_binary '\0'),(2,'Italia 406',-34.765325,55307000,-58.401792,_binary '\0'),(3,'Av Espora 3306',-34.82799,42998496,-58.388335,_binary '\0'),(7,'Montevideo 1802',-34.721214,42523006,-58.310765,_binary '\0'),(8,'Juan Domingo Peron 3096',-34.670928,42086419,-58.409735,_binary '\0'),(9,'',0,0,0,_binary '');
+INSERT INTO `local` VALUES (1,'Valentin Vergara 1531',-34.742726,42423734,-58.394499,_binary '\0'),(2,'Italia 406',-34.765325,55307000,-58.401792,_binary '\0'),(3,'Av Espora 3306',-34.82799,42998496,-58.388335,_binary '\0'),(7,'Montevideo 1802',-34.721214,42523006,-58.310765,_binary '\0'),(8,'Juan Domingo Peron 3096',-34.670928,42086419,-58.409735,_binary '\0'),(9,'Calle 44 5835',-34.783289,45213621,-58.173549,_binary '\0'),(14,'Valentin Vergara',-34.740637,43689563,-58.394217,_binary '\0');
 /*!40000 ALTER TABLE `local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-26  1:35:14
+-- Dump completed on 2020-06-26 17:49:43
