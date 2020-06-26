@@ -21,26 +21,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class HomeController {
 	
-	@Autowired
-	private BCryptPasswordEncoder encoder;
-	
-	@Autowired
-	private AuthenticationManager authManager;
 	
 	
 	@GetMapping("/")
 	public String home(HttpServletRequest req){
-	    try {
-	    	UsernamePasswordAuthenticationToken token
-		      = new UsernamePasswordAuthenticationToken("Marcelo", "123");
-	        token.setDetails(new WebAuthenticationDetails(req));
-	        Authentication authentication = this.authManager.authenticate(token);
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        HttpSession session = req.getSession(true);
-	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-	    } catch (Exception e) {
-	        SecurityContextHolder.getContext().setAuthentication(null);
-	    }
+//	    try {
+//	    	UsernamePasswordAuthenticationToken token
+//		      = new UsernamePasswordAuthenticationToken("Marcelo", "123");
+//	        token.setDetails(new WebAuthenticationDetails(req));
+//	        Authentication authentication = this.authManager.authenticate(token);
+//	        SecurityContextHolder.getContext().setAuthentication(authentication);
+//	        HttpSession session = req.getSession(true);
+//	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+//	    } catch (Exception e) {
+//	        SecurityContextHolder.getContext().setAuthentication(null);
+//	    }
 		return "/index";
 	}
 	

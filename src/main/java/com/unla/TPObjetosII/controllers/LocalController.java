@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@Secured("ROLE_GERENTE")
 @RequestMapping("/local")
 public class LocalController {
 	
@@ -22,13 +23,12 @@ public class LocalController {
 	
 	
 	@GetMapping("/alta")
-	@Secured("ROLE_EMPLEADO")
 	public String alta() {
 		return "/local/alta";
 	}
 	
 	@GetMapping("/modificacion")
-	public String modificacion(HttpServletRequest req){
+	public String modificacion(){
 		return "/local/modificar";
 	}
 	

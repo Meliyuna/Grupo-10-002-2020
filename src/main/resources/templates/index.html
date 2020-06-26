@@ -22,7 +22,7 @@
   <script type="text/javascript">
   $(document).ready(function() {
 	$("#login").click(function(){
-		json={"nombre":$("#nombreUsuario").val(),"password":$("#password").val()};
+		json={"username":$("#nombreUsuario").val(),"password":$("#password").val()};
 		$.ajax({
         	url: '/login',
         	type: 'POST',
@@ -34,26 +34,32 @@
         		$(location).attr('href','/pedido/carritos');
         	},
         	error: function(jqXHR){
-        		json={"nombre":$("#nombreUsuario").val()};
-        		$.ajax({
-                	url: '/api/empleado/traerEmpleadoPorNombre',
-                	type: 'POST',
-                	dataType: 'json',
-                	data: JSON.stringify(json),
-                	contentType: "application/json",
-                	success: function(empleado){
-                		sessionStorage.setItem("idLocal",empleado.local.idLocal);
-                		sessionStorage.setItem("direccionLocal",empleado.local.direccion);
-                		sessionStorage.setItem("idEmpleado",empleado.idPersona);
-                		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
-                		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
-                		sessionStorage.setItem("Authorization",jqXHR.getResponseHeader("Authorization"));
-                		$(location).attr('href','/pedido/carritos');
-                	},
-                	error: function(response){
-                		console.log(response);
-                	}
-        		});	
+        		$("#passerror").hide(200);
+        		console.log(jqXHR);
+        		if(jqXHR.status==200){
+	        		json={"username":$("#nombreUsuario").val()};
+	        		$.ajax({
+	                	url: '/api/empleado/traerEmpleadoPorNombre',
+	                	type: 'POST',
+	                	dataType: 'json',
+	                	data: JSON.stringify(json),
+	                	contentType: "application/json",
+	                	success: function(empleado){
+	                		sessionStorage.setItem("idLocal",empleado.local.idLocal);
+	                		sessionStorage.setItem("direccionLocal",empleado.local.direccion);
+	                		sessionStorage.setItem("idEmpleado",empleado.idPersona);
+	                		sessionStorage.setItem("nombreEmpleado",empleado.nombre);
+	                		sessionStorage.setItem("apellidoEmpleado",empleado.apellido);
+	                		sessionStorage.setItem("Authorization",jqXHR.getResponseHeader("Authorization"));
+	                		$(location).attr('href','/pedido/carritos');
+	                	},
+	                	error: function(response){
+	                		console.log(response);
+	                	}
+	        		});	
+	        	}else if(jqXHR.status==403){
+	        		$("#passerror").show(200);
+	        	}
         	}
         });
 	});
@@ -91,6 +97,7 @@
                       Login
                     </a>
                     <hr>
+                    <p id="passerror" style="display: none" class="text-center text-danger">USUARIO O PASSWORD INCORRECTOS!<p>
                   </form>
                   <hr>
 <!--                   <div class="text-center"> -->

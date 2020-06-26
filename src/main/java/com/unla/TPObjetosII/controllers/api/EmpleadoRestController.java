@@ -97,7 +97,7 @@ public class EmpleadoRestController {
 	@ResponseBody
 	public ObjectNode traerEmpleadoPorNombre(@RequestBody ObjectNode o) throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
-		EmpleadoModel e=empleadoService.getEmpleadoPorNombre(o.get("nombre").asText());
+		EmpleadoModel e=empleadoService.getEmpleado(o.get("username").asLong());
 		ObjectNode empleadoNode=mapper.convertValue(e, ObjectNode.class);// empleado que tiene todos menos el local
 		ObjectNode localNode = null;
 		System.out.println(e);
