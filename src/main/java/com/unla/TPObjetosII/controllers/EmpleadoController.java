@@ -1,6 +1,7 @@
 package com.unla.TPObjetosII.controllers;
 
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@Secured("ROLE_GERENTE")
 @RequestMapping("/empleado")
 public class EmpleadoController {
 	
@@ -15,7 +17,7 @@ public class EmpleadoController {
 	
 	@GetMapping("")
 	public String empleados(){
-		return "/empleado/index";
+		return "/empleado/alta";
 		
 	}
 	

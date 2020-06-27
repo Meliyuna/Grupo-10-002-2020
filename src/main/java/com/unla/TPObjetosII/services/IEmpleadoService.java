@@ -16,5 +16,8 @@ public interface IEmpleadoService {
 	public boolean remove(int idEmpleado);
 	
 	public EmpleadoModel getEmpleado(long dni);
+
+	public EmpleadoModel getEmpleadoPorNombre(String nombre);
 	
+	public List<EmpleadoModel> traerEmpleadosPorIdDeLocal(int idLocal);
 }

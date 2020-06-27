@@ -51,6 +51,7 @@ public class TPObjetosIITest2 {
 			for(Producto p:productos) {
 				Random r = new Random(System.currentTimeMillis());
 				int inicial = r.nextInt(100);
+				if(inicial==0)inicial=1;
 				int actual = r.nextInt(inicial);
 				Lote lote = new Lote(inicial,actual, LocalDate.now(), p,true,l);
 				loteRepo.save(lote);

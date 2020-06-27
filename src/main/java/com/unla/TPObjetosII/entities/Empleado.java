@@ -29,6 +29,7 @@ public class Empleado extends Persona{
 	private Local local;
 	
 	
+	
 	public Empleado(){
 		
 	}
@@ -74,6 +75,9 @@ public class Empleado extends Persona{
 	public void setLocal(Local local) {
 		this.local = local;
 	}
+	
+
+
 
 	@Override
 	public String toString() {

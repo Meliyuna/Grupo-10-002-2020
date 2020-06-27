@@ -5,22 +5,15 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/pedido/carritos">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Proyecto OO2 <sup>pro</sup></div>
+        <div class="sidebar-brand-text mx-3">Democratizacion de Stock <sup>pro</sup></div>
       </a>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -29,56 +22,75 @@
       <div class="sidebar-heading">
         ABMs
       </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li id="nav-item-local" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLocal" aria-expanded="true" aria-controls="collapseLocal">
+	      <!-- Nav Item - Pages Collapse Menu -->
+	      <li id="nav-item-local" class="nav-item gerente">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLocal" aria-expanded="true" aria-controls="collapseLocal">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>Local</span>
+	        </a>
+	        <div id="collapseLocal" class="collapse" aria-labelledby="headingLocal" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">ABM Local</h6>
+	            <a id="local-alta" class="collapse-item" href="/local/alta">Alta</a>
+	            <a id="local-modificacion"class="collapse-item" href="/local/modificacion">Baja o Modificacion</a>
+	          </div>
+	        </div>
+	      </li>
+	      
+	
+	       <!-- Empleados -->
+	
+	      <li id="nav-item-empleado" class="nav-item gerente">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmpleado" aria-expanded="true" aria-controls="collapseEmpleado">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>Empleado</span>
+	        </a>
+	        <div id="collapseEmpleado" class="collapse" aria-labelledby="headingEmpleado" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">ABM Empleado</h6>
+	            <a id="empleado-alta" class="collapse-item" href="/empleado/alta">Alta</a>
+	            <a id="empleado-modificacion"class="collapse-item" href="/empleado/modificar">Modificacion</a>
+	            <a id="empleado-baja"class="collapse-item" href="/empleado/baja">Baja</a>
+	          </div>
+	        </div>
+	      </li>
+	      
+	      <!-- Productos -->
+	
+		 <!-- productos -->
+	
+	      <li id="nav-item-producto" class="nav-item gerente">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducto" aria-expanded="true" aria-controls="collapseProducto">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>Producto</span>
+	        </a>
+	        <div id="collapseProducto" class="collapse" aria-labelledby="headingProducto" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">ABM Producto</h6>
+	            <a id="producto-listado" class="collapse-item" href="/productos/listado">Listado</a>
+	            <a id="producto-alta" class="collapse-item" href="/productos/alta">Alta</a>
+	            <a id="producto-modificacion"class="collapse-item" href="/productos/modificacion">Baja o Modificacion</a>
+	          </div>
+	        </div>
+	      </li>
+      <!-- Clientes -->
+      
+      <li id="nav-item-cliente" class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCliente" aria-expanded="true" aria-controls="collapseCliente">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Local</span>
+          <span>Cliente</span>
         </a>
-        <div id="collapseLocal" class="collapse" aria-labelledby="headingLocal" data-parent="#accordionSidebar">
+        <div id="collapseCliente" class="collapse" aria-labelledby="headingLocal" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">ABM Local</h6>
-            <a id="local-alta" class="collapse-item" href="/local/alta">Alta</a>
-            <a id="local-modificacion"class="collapse-item" href="/local/modificacion">Baja o Modificacion</a>
+            <h6 class="collapse-header">ABM Cliente</h6>           
+            <a id="cliente-alta" class="collapse-item" href="/cliente/alta">Alta</a>
+            <a id="cliente-modificacion"class="collapse-item" href="/cliente/modificacion">Modificacion</a>
+            <a id="cliente-modificacion"class="collapse-item" href="/cliente/baja">Baja</a>
           </div>
         </div>
       </li>
       
-
-       <!-- Empleados -->
-
-      <li id="nav-item-empleado" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmpleado" aria-expanded="true" aria-controls="collapseEmpleado">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Empleado</span>
-        </a>
-        <div id="collapseEmpleado" class="collapse" aria-labelledby="headingEmpleado" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">ABM Empleado</h6>
-            <a id="empleado-alta" class="collapse-item" href="/empleado/alta">Alta</a>
-            <a id="empleado-modificacion"class="collapse-item" href="/empleado/modificar">Modificacion</a>
-            <a id="empleado-baja"class="collapse-item" href="/empleado/baja">Baja</a>
-          </div>
-        </div>
-      </li>
-
-	 <!-- productos -->
-
-      <li id="nav-item-producto" class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducto" aria-expanded="true" aria-controls="collapseProducto">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Producto</span>
-        </a>
-        <div id="collapseProducto" class="collapse" aria-labelledby="headingProducto" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">ABM Producto</h6>
-            <a id="producto-listado" class="collapse-item" href="/productos/listado">Listado</a>
-            <a id="producto-alta" class="collapse-item" href="/productos/alta">Alta</a>
-            <a id="producto-modificacion"class="collapse-item" href="/productos/modificacion">Baja o Modificacion</a>
-          </div>
-        </div>
-      </li>
+      
 
 	 <!-- lotes -->
 	 
@@ -93,20 +105,6 @@
             <a id="lote-listado" class="collapse-item" href="/lotes/listado">Listado</a>
             <a id="lote-alta" class="collapse-item" href="/lotes/alta">Alta</a>
             <a id="lote-modificacion"class="collapse-item" href="/lotes/modificacion">Baja o Modificacion</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Otros</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Abm Otros:</h6>
-            <a class="collapse-item" href="/cliente">Clientes</a>
           </div>
         </div>
       </li>
@@ -132,6 +130,29 @@
           <span>Solicitudes</span></a>
       </li>
       
+
+
+        <!-- Nav Item - Charts -->
+      <li id="nav-item-facturas" class="nav-item">
+        <a class="nav-link" href="/facturas">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Facturas</span></a>
+		</li>
+	<div class="gerente">
+		<hr class="sidebar-divider"/>
+	
+      <div class="sidebar-heading">
+        Sueldos
+      </div>
+
+		
+      <li id="nav-item-sueldos" class="nav-item">
+        <a class="nav-link" href="/sueldos">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Sueldos</span></a>
+
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider">
       
@@ -152,8 +173,9 @@
             <a id="Ranking-fechas" class="collapse-item" href="/rankings/fechas">Productos entre fechas</a>
           </div>
         </div>
+		</li>
 
-  
+  		</div>
       
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -194,22 +216,9 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  Cerrar Sesion
                 </a>
               </div>
             </li>
@@ -231,7 +240,9 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; Democratizacion de Stock</span><br><br>
+            <span>Obaya Guillermo - Ramos Damian - Romero Melisa - Turkula Claudio</span><br><br>
+            <span>Grupo 10</span>
           </div>
         </div>
       </footer>
@@ -253,15 +264,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Te vas tan pronto?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true"></span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Selecciona "Cerrar Sesion" abajo si estas listo para terminar con la sesion actual.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <button id="botonLogout" class="btn btn-primary">Cerrar Sesion</button>
         </div>
       </div>
     </div>
@@ -272,5 +283,29 @@
 $(document).ready(function(){
 	$("#nombreUsuario").html(sessionStorage.getItem("apellidoEmpleado")+ " " + sessionStorage.getItem("nombreEmpleado") + " | " + sessionStorage.getItem("direccionLocal"));
 	$("#linkrank").attr("href","/ranking/"+sessionStorage.getItem("idLocal"));
+	
+	$("#botonLogout").click(function(){
+		$.ajax({
+        	url: '/logout',
+        	type: 'GET',
+        	success: function(data,status){
+        		console.log(data);
+        	},
+        	error: function(jqXHR){
+        		console.log(jqXHR);
+        		if(jqXHR.status=404){
+        			$(location).attr('href','/');
+        		}
+        	}
+        });
+   
+	});
+	
+	ocultarOpciones();
 });
+function ocultarOpciones(){
+	if(sessionStorage.getItem("tipoEmpleado")=='false'){
+		$(".gerente").hide();
+	}
+}
 </script>

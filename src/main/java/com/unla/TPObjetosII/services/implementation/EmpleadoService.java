@@ -1,6 +1,9 @@
 package com.unla.TPObjetosII.services.implementation;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.models.EmpleadoModel;
+import com.unla.TPObjetosII.models.PedidoModel;
 import com.unla.TPObjetosII.repositories.IEmpleadoRepository;
 import com.unla.TPObjetosII.services.IEmpleadoService;
 
@@ -49,6 +53,16 @@ public class EmpleadoService implements IEmpleadoService {
 	}
 
 	@Override
+	public List<EmpleadoModel> traerEmpleadosPorIdDeLocal(int idLocal) {
+		List<EmpleadoModel> empleados= new ArrayList<EmpleadoModel>();
+		for(Empleado e: empleadoRepository.traerEmpleadosPorIdDeLocal(idLocal)) {
+			empleados.add(empleadoConverter.entityToModel(e));
+		}
+		return empleados;
+	}
+	
+	
+	@Override
 	public EmpleadoModel getEmpleado(int id) {
 		return empleadoConverter.entityToModel(empleadoRepository.findByIdEmpleado(id));
 	}
@@ -56,6 +70,11 @@ public class EmpleadoService implements IEmpleadoService {
 	@Override
 	public EmpleadoModel getEmpleado(long dni) {
 		return empleadoConverter.entityToModel(empleadoRepository.traerEmpleadoPorDni(dni));
+	}
+
+	@Override
+	public EmpleadoModel getEmpleadoPorNombre(String nombre) {
+		return empleadoConverter.entityToModel(empleadoRepository.findByNombre(nombre));
 	}
 	
 

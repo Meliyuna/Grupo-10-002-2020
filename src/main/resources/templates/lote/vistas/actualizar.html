@@ -1,11 +1,14 @@
 <h2>Eliminar o Actualizar Lote</h2>
-
-<select id="select-lote">
-	<option value="">--</option>
-		<option th:each="lote : ${lotes}"
-		th:value="${lote.idLote}" 
-		th:text="${lote.idLote}" />
-</select>
+<div class="row">
+	<div class="col-6" >
+		<select id="select-lote" class="form-control">
+			<option value="">--</option>
+				<option th:each="lote : ${lotes}"
+				th:value="${lote.idLote}" 
+				th:text="${lote.idLote} + ' - ' + ${lote.producto.nombre}" />
+		</select>
+	</div>
+</div>
 <p></p>
 <div id="div-select-lote" class="row"></div>
 

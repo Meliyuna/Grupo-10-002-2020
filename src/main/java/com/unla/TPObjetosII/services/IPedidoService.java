@@ -12,6 +12,7 @@ import com.unla.TPObjetosII.models.SolicitudStockModel;
 public interface IPedidoService {
 	
 	public List<Pedido> getAll();
+	public List<Pedido> getAllFacturados();
 	public PedidoModel getById(int idPedido);
 	public PedidoModel insert(PedidoModel pedidoModel) throws Exception;
 	public PedidoModel update(PedidoModel pedidoModel) throws Exception;

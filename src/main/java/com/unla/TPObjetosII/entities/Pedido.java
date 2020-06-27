@@ -52,6 +52,8 @@ public class Pedido {
 
 	private boolean aceptado;
 	
+	private boolean baja;
+	
 	public Pedido(){
 		
 	}
@@ -142,6 +144,14 @@ public class Pedido {
 
 	public void setSolicitudStock(SolicitudStock solicitudStock) {
 		this.solicitudStock = solicitudStock;
+	}
+
+	public boolean isBaja() {
+		return baja;
+	}
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 
 	@Override

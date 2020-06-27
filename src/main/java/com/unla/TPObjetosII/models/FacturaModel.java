@@ -1,21 +1,51 @@
 package com.unla.TPObjetosII.models;
 
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 public class FacturaModel {
 	 
 	private int idFactura;
 	
 	@JsonIgnore
-	private LocalModel local;
+	private ClienteModel cliente;
+	
+
 	
 	@JsonIgnore
 	private CarritoModel carrito;
 	
-	public FacturaModel(LocalModel local, CarritoModel carrito) {
+	@JsonIgnore
+	private EmpleadoModel empleado;
+	
+	
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy' 'HH:mm:ss")
+	private LocalDateTime fechaFacturado;
+	
+	public FacturaModel() {
+	}
+	
+	public FacturaModel(int idFactura,CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado,LocalDateTime fecha) {
 		super();
-		this.local = local;
+		this.idFactura=idFactura;
 		this.carrito = carrito;
+		this.cliente=cliente;
+		this.empleado=empleado;
+		this.setFechaFacturado(fecha);
+	}
+	
+	public FacturaModel(LocalModel local, CarritoModel carrito,ClienteModel cliente,EmpleadoModel empleado) {
+		super();
+		this.carrito = carrito;
+		this.cliente=cliente;
+		this.empleado=empleado;
 	}
 
 	public int getIdFactura() {
@@ -26,13 +56,7 @@ public class FacturaModel {
 		this.idFactura = idFactura;
 	}
 
-	public LocalModel getLocal() {
-		return local;
-	}
-
-	public void setLocal(LocalModel local) {
-		this.local = local;
-	}
+	
 
 	public CarritoModel getCarrito() {
 		return carrito;
@@ -41,11 +65,45 @@ public class FacturaModel {
 	public void setCarrito(CarritoModel carrito) {
 		this.carrito = carrito;
 	}
+	
+	
+
+	public ClienteModel getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteModel cliente) {
+		this.cliente = cliente;
+	}
+
+	
+	
+	public EmpleadoModel getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(EmpleadoModel empleado) {
+		this.empleado = empleado;
+	}
+
+	public LocalDateTime getFechaFacturado() {
+		return fechaFacturado;
+	}
+
+	public void setFechaFacturado(LocalDateTime fechaFacturado) {
+		this.fechaFacturado = fechaFacturado;
+	}
 
 	@Override
 	public String toString() {
-		return "Factura [idFactura=" + idFactura + ", local=" + local + ", carrito=" + carrito + "]";
+		return "FacturaModel [idFactura=" + idFactura + ", cliente=" + cliente + ", carrito=" + carrito + ", empleado="
+				+ empleado + ", fechaFacturado=" + fechaFacturado + "]";
 	}
+
+	
+
+	
+
 	
 	
 	

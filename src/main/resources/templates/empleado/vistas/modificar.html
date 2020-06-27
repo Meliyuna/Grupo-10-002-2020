@@ -6,10 +6,17 @@
 		var fechaString=(fecha.toISOString()).substring(0,10);
 		$("#fechaNacimiento").attr("max",fechaString);
 		
+		
+idLocal=sessionStorage.getItem("idLocal");
+		
 		//Empleados
+		json={"idLocal":idLocal};
 		$.ajax({
-        	url: '/api/empleado/traerEmpleados',
+        	url: '/api/empleado/traerEmpleadosPorIdLocal',
         	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
         	success: function(response){
             	console.log(response);
             	var stringTipo;
@@ -126,7 +133,7 @@
 			   tipoEmpleado = false;
 			}
 			if(error==false){
-			json = {
+			jsonEmpleado = {
 					"apellido": $("#apellido").val(),
 					"nombre": $("#nombre").val(),
 					"dni": $("#dni").val(),
@@ -137,6 +144,13 @@
 					"local": {
 						"idLocal":$("#locales").val()
 					}
+			};
+			jsonUsuario = {
+					"password":$("#password").val()
+			};
+			json={
+					"empleado":jsonEmpleado,
+					"usuario":jsonUsuario
 			};
 			$.ajax({
             	url: '/api/empleado/modificar',
@@ -208,11 +222,22 @@
 			</div>
 			
           	
-       		 
-       		 <div id="formulario">
-			<select id="locales" class="form-control">
-			</select>
-		</div>
+       		 <div class="form-row">
+			<div class="form-group col-md-6">
+				<div>
+					<h4>Locales :</h4>
+				</div>
+				<select id="locales" class="form-control">
+				</select>
+			</div>
+			<div class="form-group col-md-6">
+				<div>
+					<h4>Password :</h4>
+				</div>
+				 <input id="password" class="form-control" type="password" required="required" placeholder="Ingrese solo si desea cambiar la clave actual">
+					<label id="passwordError" class="ERROR" style="display: none;">Ingrese una clave</label>
+			</div>
+		</div> 
 			<p></p>
 			<button id="modificar" class="btn btn-primary">MODIFICAR</button>
 			</div>

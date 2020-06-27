@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+	$(document).ready(function() {
+		//Clientes
+		$.ajax({
+        	url: '/api/cliente/traerClientes',
+        	type: 'POST',
+        	success: function(response){
+            	console.log(response);
+            	$.each(response,function(index,cliente){
+            		
+            		$("#clientes").append(new Option(cliente.apellido+" "+ cliente.nombre+" "+cliente.dni, cliente.idPersona));
+            	});
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
+	
+		
+		//Seleccionar Cliente a borrar 
+		$("#clientes").change(function(){
+			$(".error").css("display", "none");
+			json={"idPersona":$("#clientes").val()};
+			$("#formularioCliente").hide(1000, function(){
+				$.ajax({
+		        	url: '/api/cliente/traerCliente',
+		        	type: 'POST',
+	            	dataType: 'json',
+	            	data: JSON.stringify(json),
+	            	contentType: "application/json",
+		        	success: function(empleado){
+		        		console.log(cliente)
+	                	$("#apellido").val(cliente.apellido);
+		        		$("#nombre").val(cliente.nombre);
+		        		$("#dni").val(cliente.dni);
+		        		$("#email").val(cliente.email);
+		        				        		
+		        		$("#formularioCliente").show(1000);
+		        	},
+		        	error: function(response){
+		        		console.log(response);
+		        	}
+		        });
+			});
+		});
+		
+			
+		//Borrar un cliente seleccionado
+		$("#borrar").click(function(){
+			json={"idPersona":$("#clientes").val()};
+			$.ajax({
+            	url: '/api/cliente/baja',
+            	type: 'POST',
+            	dataType: 'json',
+            	data: JSON.stringify(json),
+            	contentType: "application/json",
+            	success: function(response){
+                	$("#formularios").hide(1000,function(){$("#exitoBorrar").show(1000)});
+            	},
+            	error: function(response){
+            		console.log(response);	
+            	}
+        	});
+		});
+	});
+</script>
+</head>
+<body>
+		<div>
+			<h1>Borrar Clientes:</h1>
+		</div>
+		<div id="formularios">
+			<div id="formularioSelectClientes">
+				<p>Seleccione Cliente: <select id="clientes" class="form-control">
+				</select>
+				</p>
+			</div>
+			<button id="borrar" class="btn btn-primary">Borrar</button>
+			</div>
+			
+			<div  id="exitoBorrar" style="display: none;">
+			<h1>Cliente borrado</h1>
+			<button onClick="window.location.reload();" class="btn btn-primary">Recargar</button>
+		</div>
+		
+</body>
+</html>

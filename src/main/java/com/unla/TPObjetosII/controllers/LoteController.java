@@ -72,11 +72,11 @@ public class LoteController {
 		return new RedirectView(ViewRouteHelper.LOTE_REDIRECT);
 	}
 	
-	@GetMapping("/actualizar")
-	public ModelAndView actualizarLote() {
+	@GetMapping("/actualizar/local/{id}")
+	public ModelAndView actualizarLote(@PathVariable("id") int id) {
 		ModelAndView mAV =new ModelAndView(ViewRouteHelper.LOTE_ACTUALIZAR);
 		List<Lote> lotes = new ArrayList<Lote>();
-		lotes = loteService.getAll();
+		lotes = loteService.getAllPorLocal(id);
 		mAV.addObject("lotes",lotes);
 		return mAV;
 	}

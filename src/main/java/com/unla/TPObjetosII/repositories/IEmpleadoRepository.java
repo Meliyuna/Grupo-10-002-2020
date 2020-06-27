@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.unla.TPObjetosII.entities.Empleado;
+import com.unla.TPObjetosII.models.EmpleadoModel;
 
 
 
@@ -26,10 +27,11 @@ public interface IEmpleadoRepository extends JpaRepository<Empleado, Serializabl
 	
 	@Query("Select e from Empleado e where e.dni=(:dni) and e.baja='0'")
 	public abstract Empleado traerEmpleadoPorDni(long dni);
- 	
+	
 	
 	public abstract Empleado findByNombre(String nombre);
 	
-	
 
+	@Query("select e from Empleado e join fetch e.local l where l.idLocal=(:idLocal) and e.baja='0'")
+	public abstract List<Empleado> traerEmpleadosPorIdDeLocal(int idLocal);
 }
