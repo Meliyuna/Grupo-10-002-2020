@@ -31,7 +31,7 @@ CREATE TABLE `carrito` (
   `idLocal` int(11) DEFAULT NULL,
   `baja` bit(1) DEFAULT b'0',
   PRIMARY KEY (`idCarrito`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1 COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1 COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `carrito` (
 
 LOCK TABLES `carrito` WRITE;
 /*!40000 ALTER TABLE `carrito` DISABLE KEYS */;
-INSERT INTO `carrito` VALUES (1,NULL,0,2,_binary '\0'),(2,NULL,0,7,_binary '\0'),(3,NULL,0,7,_binary '\0'),(4,NULL,0,8,_binary '\0'),(5,NULL,0,1,_binary '\0'),(6,NULL,0,1,_binary '\0'),(7,NULL,0,2,_binary '\0'),(8,NULL,0,7,_binary '\0'),(9,NULL,0,7,_binary ''),(10,NULL,0,8,_binary '\0'),(11,NULL,0,3,_binary '\0'),(13,NULL,0,1,_binary '\0'),(14,'2020-06-17 18:00:00',0,1,_binary '\0'),(15,'2020-06-17 18:00:00',0,7,_binary '\0'),(24,NULL,0,7,_binary ''),(29,NULL,0,7,_binary ''),(31,NULL,0,7,_binary ''),(32,NULL,0,7,_binary ''),(33,NULL,0,7,_binary ''),(34,NULL,0,7,_binary ''),(35,NULL,0,2,_binary '\0'),(36,NULL,0,3,_binary '\0'),(37,NULL,0,7,_binary ''),(38,NULL,0,7,_binary ''),(39,NULL,0,7,_binary ''),(40,'2020-06-24 14:32:03',0,7,_binary '\0'),(41,'2020-06-24 17:19:19',0,7,_binary '\0'),(42,'2020-06-24 17:22:08',0,7,_binary '\0'),(43,'2020-06-24 17:39:49',0,7,_binary '\0'),(44,'2020-06-24 17:40:34',0,7,_binary '\0'),(45,'2020-06-24 17:44:03',0,2,_binary '\0'),(46,'2020-06-24 17:47:03',0,2,_binary '\0'),(47,'2020-06-24 18:30:10',0,2,_binary '\0'),(48,'2020-06-24 18:30:11',0,2,_binary '\0'),(49,'2020-06-24 18:34:17',0,2,_binary '\0');
+INSERT INTO `carrito` VALUES (53,'2020-06-27 03:01:42',0,1,_binary '\0'),(54,'2020-06-27 03:07:00',0,1,_binary '\0'),(55,'2020-06-27 03:07:00',0,1,_binary '\0'),(56,'2020-06-27 03:07:00',0,1,_binary '\0'),(57,'2020-06-27 03:07:01',0,1,_binary '\0'),(58,'2020-06-27 03:10:03',0,1,_binary '\0'),(59,'2020-06-27 03:12:37',0,2,_binary '\0'),(60,'2020-06-27 03:13:13',0,2,_binary '\0'),(61,'2020-06-27 03:14:02',0,2,_binary '\0');
 /*!40000 ALTER TABLE `carrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +65,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (25,'martinp@facebook.com'),(26,'meliyunis@facebook.com'),(27,'meliyunis@facebook.com'),(33,''),(34,'rrrrrrrrrrrrrrrr'),(35,'enzord07@gmail.com'),(36,'enzord07@gmail.com'),(37,'carlosss@mail.com');
+INSERT INTO `cliente` VALUES (68,'gonzalezSamara@gmail.com'),(69,'perezromina@gmail.com'),(70,'kpedro@gmail.com'),(71,'lunarocio@gmail.com'),(72,'ferngaston@gmail.com'),(73,'sanchezadrian@gmail.com'),(74,'garciakaren@gmail.com'),(75,'pedrazamarcos@gmail.com'),(76,'alvarezcristian@gmail.com'),(77,'suarezcarla@gmail.com'),(78,'ortizgabriela@gmail.com'),(79,'silvajuliana@gmail.com'),(80,'enzord07@gmail.com');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +81,6 @@ CREATE TABLE `empleado` (
   `tipoEmpleado` bit(1) DEFAULT NULL,
   `idLocal` int(11) DEFAULT NULL,
   `franjaHoraria` varchar(40) DEFAULT NULL,
-  `password` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`idEmpleado`),
   KEY `perteneceaolcal_idx` (`idLocal`),
   CONSTRAINT `herencia_persona` FOREIGN KEY (`idEmpleado`) REFERENCES `persona` (`idPersona`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -95,7 +94,7 @@ CREATE TABLE `empleado` (
 
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` VALUES (28,_binary '\0',7,'tarde','$2a$10$hqom0e7qydsiH8HQo4la0.BFK6N9U.FqtC2pLyyrBr3W8BqlJhypy'),(29,_binary '\0',8,'maÃ±ana',NULL),(30,_binary '',1,'noche',NULL),(31,_binary '\0',2,'tarde',NULL),(32,_binary '',3,'noche',NULL);
+INSERT INTO `empleado` VALUES (46,_binary '',1,'Noche'),(47,_binary '',2,'tarde'),(48,_binary '',3,'noche'),(49,_binary '',7,'tarde'),(50,_binary '',8,'noche'),(51,_binary '',9,'tarde'),(52,_binary '',14,'noche'),(53,_binary '\0',1,'tarde'),(54,_binary '\0',1,'tarde'),(55,_binary '\0',2,'noche'),(56,_binary '\0',2,'tarde'),(57,_binary '\0',3,'noche'),(58,_binary '\0',3,'tarde'),(59,_binary '\0',7,'tarde'),(60,_binary '\0',7,'tarde'),(61,_binary '\0',8,'noche'),(62,_binary '\0',8,'tarde'),(63,_binary '\0',9,'tarde'),(64,_binary '\0',9,'tarde'),(65,_binary '\0',14,'noche'),(66,_binary '\0',14,'noche');
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +118,7 @@ CREATE TABLE `factura` (
   CONSTRAINT `fk_clienteee` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkcarrito4` FOREIGN KEY (`idCarrito`) REFERENCES `carrito` (`idCarrito`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkempleadofactira` FOREIGN KEY (`idEmpleadoFactura`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +127,7 @@ CREATE TABLE `factura` (
 
 LOCK TABLES `factura` WRITE;
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (1,46,'2020-06-24 17:47:58',36,31),(2,2,'2020-06-24 18:31:55',37,28),(3,8,'2020-06-24 18:32:10',37,28),(4,15,'2020-06-24 18:47:01',36,28),(5,49,'2020-06-24 18:49:21',36,31);
+INSERT INTO `factura` VALUES (8,53,'2020-06-27 03:08:28',70,46),(9,54,'2020-06-27 03:09:34',80,46),(10,58,'2020-06-27 03:10:26',80,46);
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +146,7 @@ CREATE TABLE `local` (
   `longitud` double DEFAULT NULL,
   `baja` bit(1) DEFAULT b'0',
   PRIMARY KEY (`idLocal`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +155,7 @@ CREATE TABLE `local` (
 
 LOCK TABLES `local` WRITE;
 /*!40000 ALTER TABLE `local` DISABLE KEYS */;
-INSERT INTO `local` VALUES (1,'Valentin Vergara 1531',-34.742726,42423734,-58.394499,_binary '\0'),(2,'Italia 406',-34.765325,55307000,-58.401792,_binary '\0'),(3,'Av Espora 3306',-34.82799,42998496,-58.388335,_binary '\0'),(7,'Montevideo 1802',-34.721214,42523006,-58.310765,_binary '\0'),(8,'Juan Domingo Peron 3096',-34.670928,42086419,-58.409735,_binary '\0'),(9,'Calle 44 5835',-34.783289,45213621,-58.173549,_binary '\0'),(14,'Valentin Vergara',-34.740637,43689563,-58.394217,_binary '\0');
+INSERT INTO `local` VALUES (1,'Valentin Vergara 1531',-34.742726,42423734,-58.394499,_binary '\0'),(2,'Italia 406',-34.765325,55307000,-58.401792,_binary '\0'),(3,'Av Espora 3306',-34.82799,42998496,-58.388335,_binary '\0'),(7,'Montevideo 1802',-34.721214,4252300,-58.310765,_binary '\0'),(8,'Juan Domingo Peron 3096',-34.670928,42086419,-58.409735,_binary '\0'),(9,'Calle 44 5835',-34.783289,45213621,-58.173549,_binary '\0'),(14,'Valentin Vergara 1700',-34.740637,43689563,-58.394217,_binary '\0');
 /*!40000 ALTER TABLE `local` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +179,7 @@ CREATE TABLE `lote` (
   KEY `fkproducto_idx` (`idProducto`),
   CONSTRAINT `fklocal` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkproducto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +188,7 @@ CREATE TABLE `lote` (
 
 LOCK TABLES `lote` WRITE;
 /*!40000 ALTER TABLE `lote` DISABLE KEYS */;
-INSERT INTO `lote` VALUES (1,86,33,'2020-06-06',5,_binary '',1),(2,86,7,'2020-06-06',7,_binary '',1),(3,94,42,'2020-06-06',8,_binary '',1),(4,48,0,'2020-06-06',11,_binary '',1),(5,41,38,'2020-06-06',12,_binary '',1),(6,66,47,'2020-06-06',13,_binary '',1),(7,79,0,'2020-06-06',14,_binary '',1),(8,5,2,'2020-06-06',15,_binary '',1),(9,15,0,'2020-06-06',5,_binary '',2),(10,58,0,'2020-06-06',7,_binary '',2),(11,38,35,'2020-06-06',8,_binary '',2),(12,16,0,'2020-06-06',11,_binary '',2),(13,1,0,'2020-06-06',12,_binary '',2),(14,19,8,'2020-06-06',13,_binary '',2),(15,5,4,'2020-06-06',14,_binary '',2),(16,21,0,'2020-06-06',15,_binary '',2),(17,30,21,'2020-06-06',5,_binary '',3),(18,74,66,'2020-06-06',7,_binary '',3),(19,71,18,'2020-06-06',8,_binary '',3),(20,63,0,'2020-06-06',11,_binary '',3),(21,83,30,'2020-06-06',12,_binary '',3),(22,27,15,'2020-06-06',13,_binary '',3),(23,46,2,'2020-06-06',14,_binary '',3),(24,43,28,'2020-06-06',15,_binary '',3),(25,92,35,'2020-06-06',5,_binary '',7),(26,71,36,'2020-06-06',7,_binary '',7),(27,19,0,'2020-06-06',8,_binary '',7),(28,37,14,'2020-06-06',11,_binary '',7),(29,92,44,'2020-06-06',12,_binary '',7),(30,59,40,'2020-06-06',13,_binary '',7),(31,26,16,'2020-06-06',14,_binary '',7),(32,60,12,'2020-06-06',15,_binary '',7),(33,25,8,'2020-06-06',5,_binary '',8),(34,86,4,'2020-06-06',7,_binary '',8),(35,57,33,'2020-06-06',8,_binary '',8),(36,97,0,'2020-06-06',11,_binary '',8),(37,18,13,'2020-06-06',12,_binary '',8),(38,75,8,'2020-06-06',13,_binary '',8),(39,51,36,'2020-06-06',14,_binary '',8),(40,5,3,'2020-06-06',15,_binary '',8),(41,5,0,'2020-06-18',5,_binary '',1),(42,51,22,'2020-06-18',7,_binary '',1),(43,6,5,'2020-06-18',8,_binary '',1),(44,36,23,'2020-06-18',11,_binary '',1),(45,57,14,'2020-06-18',12,_binary '',1),(46,49,39,'2020-06-18',13,_binary '',1),(47,12,4,'2020-06-18',14,_binary '',1),(48,73,40,'2020-06-18',15,_binary '',1),(49,84,24,'2020-06-18',16,_binary '',1),(50,41,14,'2020-06-18',17,_binary '',1),(51,83,59,'2020-06-18',18,_binary '',1),(52,46,30,'2020-06-18',19,_binary '',1),(53,66,16,'2020-06-18',20,_binary '',1),(54,93,62,'2020-06-18',21,_binary '',1),(55,38,19,'2020-06-18',5,_binary '',2),(56,44,3,'2020-06-18',7,_binary '',2),(57,32,6,'2020-06-18',8,_binary '',2),(58,16,13,'2020-06-18',11,_binary '',2),(59,93,11,'2020-06-18',12,_binary '',2),(60,95,10,'2020-06-18',13,_binary '',2),(61,84,37,'2020-06-18',14,_binary '',2),(62,63,0,'2020-06-18',15,_binary '',2),(63,88,68,'2020-06-18',16,_binary '',2),(64,39,10,'2020-06-18',17,_binary '',2),(65,34,18,'2020-06-18',18,_binary '',2),(66,67,59,'2020-06-18',19,_binary '',2),(67,70,47,'2020-06-18',20,_binary '',2),(68,15,10,'2020-06-18',21,_binary '',2),(69,85,80,'2020-06-18',5,_binary '',3),(70,53,18,'2020-06-18',7,_binary '',3),(71,45,11,'2020-06-18',8,_binary '',3),(72,64,50,'2020-06-18',11,_binary '',3),(73,6,5,'2020-06-18',12,_binary '',3),(74,91,59,'2020-06-18',13,_binary '',3),(75,10,7,'2020-06-18',14,_binary '',3),(76,89,33,'2020-06-18',15,_binary '',3),(77,81,28,'2020-06-18',16,_binary '',3),(78,64,41,'2020-06-18',17,_binary '',3),(79,37,31,'2020-06-18',18,_binary '',3),(80,46,10,'2020-06-18',19,_binary '',3),(81,67,8,'2020-06-18',20,_binary '',3),(82,50,36,'2020-06-18',21,_binary '',3),(83,95,23,'2020-06-18',5,_binary '',7),(84,8,7,'2020-06-18',7,_binary '',7),(85,3,0,'2020-06-18',8,_binary '',7),(86,11,9,'2020-06-18',11,_binary '',7),(87,32,29,'2020-06-18',12,_binary '',7),(88,18,14,'2020-06-18',13,_binary '',7),(89,12,11,'2020-06-18',14,_binary '',7),(90,91,57,'2020-06-18',15,_binary '',7),(91,35,18,'2020-06-18',16,_binary '',7),(92,40,2,'2020-06-18',17,_binary '',7),(93,34,22,'2020-06-18',18,_binary '',7),(94,54,53,'2020-06-18',19,_binary '',7),(95,26,21,'2020-06-18',20,_binary '',7),(96,83,24,'2020-06-18',21,_binary '',7),(97,91,70,'2020-06-18',5,_binary '',8),(98,41,5,'2020-06-18',7,_binary '',8),(99,61,58,'2020-06-18',8,_binary '',8),(100,83,14,'2020-06-18',11,_binary '',8),(101,66,33,'2020-06-18',12,_binary '',8),(102,86,55,'2020-06-18',13,_binary '',8),(103,28,4,'2020-06-18',14,_binary '',8),(104,60,2,'2020-06-18',15,_binary '',8),(105,20,6,'2020-06-18',16,_binary '',8),(106,39,10,'2020-06-18',17,_binary '',8),(107,82,10,'2020-06-18',18,_binary '',8),(108,74,26,'2020-06-18',19,_binary '',8),(109,83,7,'2020-06-18',20,_binary '',8),(110,62,38,'2020-06-18',21,_binary '',8);
+INSERT INTO `lote` VALUES (1,82,20,'2020-06-27',7,_binary '',1),(2,78,28,'2020-06-27',8,_binary '',1),(3,47,34,'2020-06-27',11,_binary '',1),(4,68,21,'2020-06-27',12,_binary '',1),(5,15,2,'2020-06-27',13,_binary '',1),(6,98,49,'2020-06-27',14,_binary '',1),(7,94,35,'2020-06-27',15,_binary '',1),(8,21,9,'2020-06-27',22,_binary '',1),(9,87,16,'2020-06-27',23,_binary '',1),(10,92,28,'2020-06-27',24,_binary '',1),(11,47,32,'2020-06-27',25,_binary '',1),(12,94,52,'2020-06-27',26,_binary '',1),(13,73,60,'2020-06-27',27,_binary '',1),(14,93,10,'2020-06-27',28,_binary '',1),(15,9,6,'2020-06-27',29,_binary '',1),(16,56,49,'2020-06-27',30,_binary '',1),(17,43,14,'2020-06-27',31,_binary '',1),(18,17,11,'2020-06-27',32,_binary '',1),(19,72,65,'2020-06-27',33,_binary '',1),(20,21,5,'2020-06-27',34,_binary '',1),(21,2,1,'2020-06-27',7,_binary '',2),(22,80,63,'2020-06-27',8,_binary '',2),(23,89,31,'2020-06-27',11,_binary '',2),(24,59,51,'2020-06-27',12,_binary '',2),(25,80,10,'2020-06-27',13,_binary '',2),(26,48,23,'2020-06-27',14,_binary '',2),(27,66,57,'2020-06-27',15,_binary '',2),(28,28,6,'2020-06-27',22,_binary '',2),(29,32,14,'2020-06-27',23,_binary '',2),(30,17,10,'2020-06-27',24,_binary '',2),(31,67,5,'2020-06-27',25,_binary '',2),(32,50,33,'2020-06-27',26,_binary '',2),(33,71,57,'2020-06-27',27,_binary '',2),(34,13,0,'2020-06-27',28,_binary '',2),(35,57,12,'2020-06-27',29,_binary '',2),(36,66,49,'2020-06-27',30,_binary '',2),(37,26,15,'2020-06-27',31,_binary '',2),(38,42,34,'2020-06-27',32,_binary '',2),(39,39,33,'2020-06-27',33,_binary '',2),(40,22,1,'2020-06-27',34,_binary '',2),(41,2,1,'2020-06-27',7,_binary '',3),(42,63,61,'2020-06-27',8,_binary '',3),(43,48,41,'2020-06-27',11,_binary '',3),(44,62,38,'2020-06-27',12,_binary '',3),(45,46,26,'2020-06-27',13,_binary '',3),(46,41,23,'2020-06-27',14,_binary '',3),(47,51,4,'2020-06-27',15,_binary '',3),(48,1,0,'2020-06-27',22,_binary '',3),(49,20,5,'2020-06-27',23,_binary '',3),(50,40,20,'2020-06-27',24,_binary '',3),(51,1,0,'2020-06-27',25,_binary '',3),(52,78,47,'2020-06-27',26,_binary '',3),(53,59,47,'2020-06-27',27,_binary '',3),(54,25,13,'2020-06-27',28,_binary '',3),(55,21,18,'2020-06-27',29,_binary '',3),(56,40,17,'2020-06-27',30,_binary '',3),(57,91,45,'2020-06-27',31,_binary '',3),(58,10,7,'2020-06-27',32,_binary '',3),(59,29,1,'2020-06-27',33,_binary '',3),(60,74,63,'2020-06-27',34,_binary '',3),(61,93,57,'2020-06-27',7,_binary '',7),(62,74,11,'2020-06-27',8,_binary '',7),(63,27,11,'2020-06-27',11,_binary '',7),(64,47,44,'2020-06-27',12,_binary '',7),(65,91,36,'2020-06-27',13,_binary '',7),(66,52,44,'2020-06-27',14,_binary '',7),(67,47,26,'2020-06-27',15,_binary '',7),(68,46,6,'2020-06-27',22,_binary '',7),(69,71,45,'2020-06-27',23,_binary '',7),(70,65,9,'2020-06-27',24,_binary '',7),(71,85,41,'2020-06-27',25,_binary '',7),(72,28,4,'2020-06-27',26,_binary '',7),(73,20,8,'2020-06-27',27,_binary '',7),(74,40,35,'2020-06-27',28,_binary '',7),(75,43,12,'2020-06-27',29,_binary '',7),(76,37,5,'2020-06-27',30,_binary '',7),(77,23,8,'2020-06-27',31,_binary '',7),(78,73,32,'2020-06-27',32,_binary '',7),(79,2,1,'2020-06-27',33,_binary '',7),(80,52,48,'2020-06-27',34,_binary '',7),(81,93,5,'2020-06-27',7,_binary '',8),(82,74,41,'2020-06-27',8,_binary '',8),(83,93,48,'2020-06-27',11,_binary '',8),(84,72,34,'2020-06-27',12,_binary '',8),(85,31,5,'2020-06-27',13,_binary '',8),(86,94,24,'2020-06-27',14,_binary '',8),(87,48,20,'2020-06-27',15,_binary '',8),(88,74,49,'2020-06-27',22,_binary '',8),(89,21,11,'2020-06-27',23,_binary '',8),(90,15,0,'2020-06-27',24,_binary '',8),(91,24,5,'2020-06-27',25,_binary '',8),(92,37,5,'2020-06-27',26,_binary '',8),(93,63,9,'2020-06-27',27,_binary '',8),(94,43,42,'2020-06-27',28,_binary '',8),(95,29,4,'2020-06-27',29,_binary '',8),(96,8,2,'2020-06-27',30,_binary '',8),(97,68,9,'2020-06-27',31,_binary '',8),(98,12,4,'2020-06-27',32,_binary '',8),(99,74,63,'2020-06-27',33,_binary '',8),(100,47,41,'2020-06-27',34,_binary '',8),(101,65,35,'2020-06-27',7,_binary '',9),(102,96,62,'2020-06-27',8,_binary '',9),(103,63,61,'2020-06-27',11,_binary '',9),(104,49,10,'2020-06-27',12,_binary '',9),(105,67,17,'2020-06-27',13,_binary '',9),(106,87,65,'2020-06-27',14,_binary '',9),(107,25,23,'2020-06-27',15,_binary '',9),(108,43,9,'2020-06-27',22,_binary '',9),(109,65,27,'2020-06-27',23,_binary '',9),(110,14,11,'2020-06-27',24,_binary '',9),(111,23,20,'2020-06-27',25,_binary '',9),(112,7,0,'2020-06-27',26,_binary '',9),(113,98,65,'2020-06-27',27,_binary '',9),(114,63,1,'2020-06-27',28,_binary '',9),(115,48,2,'2020-06-27',29,_binary '',9),(116,51,5,'2020-06-27',30,_binary '',9),(117,38,0,'2020-06-27',31,_binary '',9),(118,62,37,'2020-06-27',32,_binary '',9),(119,6,1,'2020-06-27',33,_binary '',9),(120,8,0,'2020-06-27',34,_binary '',9),(121,39,6,'2020-06-27',7,_binary '',14),(122,46,6,'2020-06-27',8,_binary '',14),(123,56,17,'2020-06-27',11,_binary '',14),(124,72,47,'2020-06-27',12,_binary '',14),(125,55,41,'2020-06-27',13,_binary '',14),(126,35,27,'2020-06-27',14,_binary '',14),(127,18,14,'2020-06-27',15,_binary '',14),(128,94,48,'2020-06-27',22,_binary '',14),(129,3,0,'2020-06-27',23,_binary '',14),(130,98,44,'2020-06-27',24,_binary '',14),(131,93,73,'2020-06-27',25,_binary '',14),(132,13,2,'2020-06-27',26,_binary '',14),(133,34,0,'2020-06-27',27,_binary '',14),(134,36,2,'2020-06-27',28,_binary '',14),(135,76,44,'2020-06-27',29,_binary '',14),(136,42,14,'2020-06-27',30,_binary '',14),(137,25,11,'2020-06-27',31,_binary '',14),(138,45,6,'2020-06-27',32,_binary '',14),(139,23,10,'2020-06-27',33,_binary '',14),(140,15,8,'2020-06-27',34,_binary '',14);
 /*!40000 ALTER TABLE `lote` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +218,7 @@ CREATE TABLE `pedido` (
   CONSTRAINT `fkproducto2` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkvendedorauxoloar` FOREIGN KEY (`idVendedorAuxiliar`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkvendedororigianl` FOREIGN KEY (`idVendedorOriginal`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +227,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (1,5,4,31,NULL,6000,_binary '',1,_binary '\0'),(2,11,7,31,NULL,14000,_binary '',1,_binary '\0'),(3,7,7,31,NULL,28000,_binary '',1,_binary '\0'),(4,5,8,28,NULL,12000,_binary '',2,_binary '\0'),(5,12,14,28,NULL,14000,_binary '',2,_binary '\0'),(6,15,16,28,NULL,63888,_binary '',NULL,_binary ''),(7,8,11,28,NULL,49500,_binary '',2,_binary '\0'),(8,7,15,28,NULL,60000,_binary '',2,_binary '\0'),(9,7,1,28,NULL,4000,_binary '',3,_binary '\0'),(10,5,8,29,NULL,12000,_binary '',4,_binary '\0'),(11,8,10,29,NULL,45000,_binary '',4,_binary '\0'),(12,13,11,29,NULL,33000,_binary '',4,_binary '\0'),(13,13,8,30,NULL,24000,_binary '',5,_binary '\0'),(14,13,7,30,NULL,21000,_binary '',6,_binary '\0'),(15,7,9,31,NULL,36000,_binary '',7,_binary '\0'),(16,5,4,31,NULL,6000,_binary '',7,_binary '\0'),(17,13,6,31,NULL,18000,_binary '',7,_binary '\0'),(18,11,30,28,NULL,60000,_binary '',NULL,_binary ''),(19,7,14,28,NULL,56000,_binary '',NULL,_binary ''),(20,5,7,28,31,10500,_binary '',8,_binary '\0'),(21,5,15,28,NULL,22500,_binary '',NULL,_binary ''),(22,11,28,29,NULL,56000,_binary '',4,_binary '\0'),(23,11,31,30,NULL,62000,_binary '',5,_binary '\0'),(24,11,31,32,NULL,62000,_binary '',11,_binary '\0'),(25,7,10,30,NULL,40000,_binary '',6,_binary '\0'),(26,7,1,30,NULL,4000,_binary '',14,_binary '\0'),(27,13,6,28,NULL,18000,_binary '',8,_binary '\0'),(28,12,7,28,NULL,7000,_binary '',8,_binary '\0'),(29,7,6,28,NULL,24000,_binary '',15,_binary '\0'),(30,13,6,28,NULL,18000,_binary '',15,_binary '\0'),(31,12,6,28,NULL,6000,_binary '',15,_binary '\0'),(32,8,4,28,NULL,18000,_binary '',15,_binary '\0'),(33,14,6,28,NULL,12000,_binary '',15,_binary '\0'),(34,14,10,28,NULL,20000,_binary '',NULL,_binary ''),(35,5,1,28,NULL,1500,_binary '',29,_binary ''),(36,7,1,28,NULL,4000,_binary '',29,_binary ''),(37,8,1,28,NULL,4500,_binary '',29,_binary ''),(38,11,1,28,NULL,2000,_binary '',29,_binary ''),(39,12,1,28,NULL,1000,_binary '',29,_binary ''),(40,13,1,28,NULL,3000,_binary '',29,_binary ''),(41,15,1,28,NULL,3993,_binary '',29,_binary ''),(42,14,1,28,NULL,2000,_binary '',29,_binary ''),(43,16,1,28,NULL,3514,_binary '',29,_binary ''),(44,17,1,28,NULL,316,_binary '',29,_binary ''),(45,18,1,28,NULL,5723,_binary '',29,_binary ''),(46,19,1,28,NULL,4453,_binary '',29,_binary ''),(47,20,1,28,NULL,355,_binary '',29,_binary ''),(48,21,1,28,NULL,7347,_binary '',29,_binary ''),(49,5,7,28,NULL,10500,_binary '',NULL,_binary ''),(50,20,2,28,NULL,710,_binary '',29,_binary ''),(51,11,9,28,NULL,18000,_binary '',NULL,_binary ''),(52,11,1,28,31,2000,_binary '',NULL,_binary ''),(53,11,1,28,NULL,2000,_binary '',NULL,_binary ''),(54,5,1,31,NULL,1500,_binary '',35,_binary '\0'),(55,5,1,32,NULL,1500,_binary '',11,_binary ''),(56,5,3,28,NULL,4500,_binary '',37,_binary ''),(57,7,2,28,NULL,8000,_binary '',37,_binary ''),(58,5,1,28,NULL,1500,_binary '',NULL,_binary ''),(59,5,1,28,NULL,1500,_binary '',NULL,_binary ''),(60,5,1,28,NULL,1500,_binary '',NULL,_binary ''),(61,5,1,28,NULL,1500,_binary '',NULL,_binary ''),(62,5,1,28,NULL,1500,_binary '',9,_binary ''),(63,5,12,28,NULL,18000,_binary '',32,_binary ''),(64,7,10,30,28,40000,_binary '',5,_binary '\0'),(65,5,13,30,28,19500,_binary '',5,_binary '\0'),(66,11,9,28,NULL,18000,_binary '',15,_binary '\0'),(67,5,10,28,NULL,15000,_binary '',40,_binary '\0'),(68,7,9,28,NULL,36000,_binary '',40,_binary '\0'),(69,11,8,28,NULL,16000,_binary '',40,_binary '\0'),(70,5,8,28,NULL,12000,_binary '',34,_binary ''),(71,5,10,28,NULL,15000,_binary '',38,_binary ''),(72,5,5,28,NULL,7500,_binary '',NULL,_binary ''),(73,8,6,28,NULL,27000,_binary '',39,_binary ''),(74,7,6,28,NULL,24000,_binary '',41,_binary '\0'),(75,8,1,28,NULL,4500,_binary '',41,_binary '\0'),(76,5,1,28,NULL,1500,_binary '',42,_binary '\0'),(77,5,1,28,NULL,1500,_binary '',3,_binary '\0'),(78,5,1,31,NULL,1500,_binary '',45,_binary '\0'),(79,7,1,31,NULL,4000,_binary '',45,_binary '\0'),(80,8,1,31,NULL,4500,_binary '',45,_binary '\0'),(81,11,1,31,NULL,2000,_binary '',45,_binary '\0'),(82,15,14,31,28,55902,_binary '',45,_binary '\0'),(83,13,1,31,28,3000,_binary '',46,_binary '\0'),(84,7,9,31,NULL,36000,_binary '',47,_binary '\0'),(85,5,7,31,NULL,10500,_binary '',47,_binary '\0'),(86,15,8,31,NULL,31944,_binary '',47,_binary '\0'),(87,7,8,31,NULL,32000,_binary '',48,_binary '\0'),(88,8,6,31,28,27000,_binary '',49,_binary '\0');
+INSERT INTO `pedido` VALUES (94,7,8,46,NULL,32000,_binary '',53,_binary '\0'),(95,14,4,46,NULL,34960,_binary '',53,_binary '\0'),(96,22,1,46,NULL,3500,_binary '',53,_binary '\0'),(97,7,1,46,NULL,4000,_binary '',54,_binary '\0'),(98,13,1,46,NULL,3000,_binary '',54,_binary '\0'),(99,22,1,46,NULL,3500,_binary '',54,_binary '\0'),(100,13,1,46,NULL,3000,_binary '',58,_binary '\0'),(101,8,1,46,NULL,4199,_binary '',58,_binary '\0'),(102,7,1,46,NULL,4000,_binary '',58,_binary '\0'),(103,8,3,46,NULL,12597,_binary '',55,_binary '\0'),(104,11,3,46,NULL,5247,_binary '',55,_binary '\0'),(105,34,4,46,NULL,7596,_binary '',55,_binary '\0'),(106,7,4,46,NULL,16000,_binary '',56,_binary '\0'),(107,28,7,46,NULL,20895,_binary '',56,_binary '\0'),(108,7,4,47,NULL,16000,_binary '',59,_binary '\0'),(109,14,9,47,NULL,78660,_binary '',60,_binary '\0'),(110,13,7,47,NULL,21000,_binary '',60,_binary '\0'),(111,7,3,47,NULL,12000,_binary '',61,_binary '\0'),(112,11,5,47,NULL,8745,_binary '',61,_binary '\0');
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +246,7 @@ CREATE TABLE `persona` (
   `dni` bigint(20) DEFAULT NULL,
   `baja` bit(1) DEFAULT b'0',
   PRIMARY KEY (`idPersona`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,7 +255,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (25,'Martin','Perez',NULL,1111111,_binary '\0'),(26,'eaegag','fdgafgfg',NULL,23233333,_binary ''),(27,'Melisa','Romero',NULL,35719592,_binary '\0'),(28,'Marcelo','Gomez',NULL,35754872,_binary '\0'),(29,'Ezequiel','Martinez',NULL,5242222,_binary '\0'),(30,'Jose','Aguirre',NULL,2365288,_binary '\0'),(31,'Carlos','Null','2002-06-01',40553765,_binary '\0'),(32,'Luis','pellegrio','2001-01-16',332214525,_binary '\0'),(33,'','',NULL,0,_binary ''),(34,'aaaaaaaaa','aaaaaaaaaaaa','2020-06-09',1111111111111111111,_binary ''),(35,'Damian','Ramos','2020-06-15',3425135,_binary ''),(36,'Damian','Ramos','2020-01-27',39926758,_binary '\0'),(37,'Carlos','Fernandez','2020-06-10',35773235,_binary '\0');
+INSERT INTO `persona` VALUES (46,'Jose','Gutierrez','2020-06-27',24543643,_binary '\0'),(47,'Carlos','Null','2002-06-02',35256363,_binary '\0'),(48,'Pedro','Pellegrio','2002-06-03',35335323,_binary '\0'),(49,'Carla','Cortez','2002-02-12',54333212,_binary '\0'),(50,'Fernando','Fernandez','2001-02-11',45332253,_binary '\0'),(51,'Agustin','Quizor','2001-12-04',46433643,_binary '\0'),(52,'Gustavo','Martinez','1998-06-09',33333222,_binary '\0'),(53,'Damian','Santos','1998-02-27',25363356,_binary '\0'),(54,'Ernesto','Baez','1999-02-27',32363312,_binary '\0'),(55,'Alejandro','Muniz','1998-06-08',32456322,_binary '\0'),(56,'Joaquin','Perez','1991-03-19',43323234,_binary '\0'),(57,'Teresa','Reina','2002-06-05',32356323,_binary '\0'),(58,'Guillermo','Obaya','2001-12-10',262644223,_binary '\0'),(59,'Gonzalo','Silva','2001-11-11',32352355,_binary '\0'),(60,'Lucila','Ortiz','2001-05-13',453353632,_binary '\0'),(61,'Diego','Torres','2001-11-12',43424644,_binary '\0'),(62,'Cristina','Gonzales','2002-02-11',43423532,_binary '\0'),(63,'Enzo','Romero','2000-10-16',44323523,_binary '\0'),(64,'Pedro','Perez','2001-11-12',23452642,_binary '\0'),(65,'Lucia','Ortiz','2001-09-09',43466423,_binary '\0'),(66,'Hernan','Merlino','2001-08-12',12342221,_binary '\0'),(68,'Samara','Gonzalez','1993-06-03',36821900,_binary '\0'),(69,'Romina','Perez','1993-04-23',37584120,_binary '\0'),(70,'Pedro','Korsa','2002-06-23',32101251,_binary '\0'),(71,'Rocio','Luna','1980-10-07',25896321,_binary '\0'),(72,'Gaston','Fernandez','1987-08-30',21542369,_binary '\0'),(73,'Adrian','Sanchez','1992-06-13',12365412,_binary '\0'),(74,'Karen','Garcia','1964-02-13',18965230,_binary '\0'),(75,'Marcos','Pedraza','1984-06-03',24156321,_binary '\0'),(76,'Cristian','Alvarez','1979-06-06',25841230,_binary '\0'),(77,'Carla','Suarez','1972-07-22',25693124,_binary '\0'),(78,'Gabriela','Ortiz','1981-02-17',17589412,_binary '\0'),(79,'Juliana','Silva','1990-01-25',28598712,_binary '\0'),(80,'Damian','Ramos','2020-06-02',39926758,_binary '\0');
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,8 +272,9 @@ CREATE TABLE `producto` (
   `descripcion` varchar(200) DEFAULT NULL,
   `precio` float DEFAULT NULL,
   `fechaAlta` date DEFAULT NULL,
+  `baja` bit(1) DEFAULT b'0',
   PRIMARY KEY (`idProducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (5,'pelota','pelota adidas de futbol 5',1500,'2020-05-20'),(7,'zapatillas nike','zapatillas nike de correr',4000,'2020-05-21'),(8,'zapatillas adidas','zapatillas adidas para correr',4500,'2020-05-21'),(11,'ojotas reebook','ojotas para correr muy bien',2000,'2020-05-21'),(12,'pelota de tenis','pelota de tenis para jugar tenis',1000,'2020-05-20'),(13,'raqueta de tenis ','raqueta de tenis para jugar tenis, no sirve para otra cosa',3000,'2020-05-22'),(14,'anteojos de futbolista','anteojos que mejoran la vision a larga distancia, pero empeora a corta distancia',2000,'2020-05-22'),(15,'sombrero de basquet','sombrero para jugar al basquet y distraer al rival',3993,'2020-01-22'),(16,'productox1','desc',3514,NULL),(17,'productox2','desc',316,NULL),(18,'productox3','desc',5723,NULL),(19,'productox4','desc',4453,NULL),(20,'productox5','desc',355,NULL),(21,NULL,NULL,7347,NULL);
+INSERT INTO `producto` VALUES (5,'pelota','pelota adidas de futbol 5',1500,'2020-05-20',_binary ''),(7,'zapatillas Nike','zapatillas Nike de correr Revolution',4000,'2020-05-21',_binary '\0'),(8,'zapatillas Adidas para correr ','zapatillas Adidas para correr Altrun',4199,'2020-05-21',_binary '\0'),(11,'Ojotas Reebook','Ojotas Rebok Classic Slide color negro con gris',1749,'2020-05-21',_binary '\0'),(12,'Pelota de tenis','Pelota de tenis para jugar tenis',1000,'2020-05-20',_binary '\0'),(13,'Raqueta de tenis ','Raqueta de tenis color rojo autografiada',3000,'2020-05-22',_binary '\0'),(14,'Guantes Adidas de Futbol','Guantes Adidas de Futbol Predator Training',8740,'2020-05-22',_binary '\0'),(15,'Mochila Rebbok','Mochila Rebbok Active Core  color azul',3993,'2020-01-22',_binary '\0'),(22,'Zapatilla Topper','Zapatilla Topper casual',3500,'2020-06-27',_binary '\0'),(23,'Zapatilla reebok busquet','Zapatilla rebok para jugar al busquet',5000,'2020-06-27',_binary '\0'),(24,'Pantalón corto Adidas futbol River','Pantalón corto Adidas de fubol d River Plate',949,'2020-06-27',_binary '\0'),(25,'Pantalón corto Adidas futbol Boca','Pantalón corto Adidas de fubol de Boja Junior',949,'2020-06-27',_binary '\0'),(26,'Campera Puma ','Campera Puuma Urban Mujer ',5549,'2020-06-27',_binary '\0'),(27,'Remera Adidas niño','Remera Adidas Uban Favorite kids',1699,'2020-06-27',_binary '\0'),(28,'Skate','Skate doble cola',2985,'2020-06-27',_binary '\0'),(29,'Colchoneta Merco','Colchoneta deportiva Merco',1260,'2020-06-27',_binary '\0'),(30,'Mancuerna Atletic','Mancuerna Atletic Deluxe 5kg',4430,'2020-06-27',_binary '\0'),(31,'Guantin R2F','Guantin de box R2F',4430,'2020-06-27',_binary '\0'),(32,'Bolsa box R2F','Bolsa de box R2F vinilica',3470,'2020-06-27',_binary '\0'),(33,'Gorra X Capslab','Gorra X Capslab Sylvester',3299,'2020-06-27',_binary '\0'),(34,'Mochila Reebbok','Mochila Reebbok Active Core color negra',1899,'2020-06-27',_binary '\0');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +307,7 @@ CREATE TABLE `solicitudstock` (
   KEY `fklocal3_idx` (`idLocal`),
   CONSTRAINT `fklocal3` FOREIGN KEY (`idLocal`) REFERENCES `local` (`idLocal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fkpedido2` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +316,7 @@ CREATE TABLE `solicitudstock` (
 
 LOCK TABLES `solicitudstock` WRITE;
 /*!40000 ALTER TABLE `solicitudstock` DISABLE KEYS */;
-INSERT INTO `solicitudstock` VALUES (1,'2020-06-06',NULL,_binary '\0',_binary '',2,8),(2,'2020-06-06','2020-06-18',_binary '\0',_binary '\0',7,2),(3,'2020-06-06','2020-06-18',_binary '\0',_binary '\0',8,2),(4,'2020-06-06',NULL,_binary '\0',_binary '',12,3),(5,'2020-06-06',NULL,_binary '\0',_binary '',14,8),(6,'2020-06-10',NULL,_binary '\0',_binary '',16,3),(7,'2020-06-10',NULL,_binary '\0',_binary '',19,1),(8,'2020-06-10','2020-06-10',_binary '',_binary '\0',20,2),(9,'2020-06-19',NULL,_binary '\0',_binary '',51,2),(10,'2020-06-19','2020-06-19',_binary '',_binary '\0',52,2),(11,'2020-06-19',NULL,_binary '\0',_binary '',53,2),(12,'2020-06-24','2020-06-24',_binary '',_binary '\0',64,7),(13,'2020-06-24','2020-06-24',_binary '',_binary '\0',65,7),(14,'2020-06-24',NULL,_binary '\0',_binary '',77,2),(15,'2020-06-24',NULL,_binary '\0',_binary '',78,7),(16,'2020-06-24',NULL,_binary '\0',_binary '',79,7),(17,'2020-06-24',NULL,_binary '\0',_binary '',80,7),(18,'2020-06-24',NULL,_binary '\0',_binary '',81,7),(19,'2020-06-24','2020-06-24',_binary '',_binary '\0',82,7),(20,'2020-06-24','2020-06-24',_binary '',_binary '\0',83,7),(21,'2020-06-24','2020-06-24',_binary '',_binary '\0',88,7);
+INSERT INTO `solicitudstock` VALUES (25,'2020-06-27',NULL,_binary '\0',_binary '',104,2),(26,'2020-06-27',NULL,_binary '\0',_binary '',108,1),(27,'2020-06-27',NULL,_binary '\0',_binary '',111,1);
 /*!40000 ALTER TABLE `solicitudstock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,7 +335,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idUsuario`),
   KEY `idempleadofk_idx` (`idEmpleado`),
   CONSTRAINT `idempleadofk` FOREIGN KEY (`idEmpleado`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +344,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (28,'$2a$10$NNuKeNoiIUVAnhjeKKaWyuwJ7Btb9cgbiDD0CG0t0oS0OEOBAN1f2',1,'35754872'),(29,'$2a$10$ooyGSSSC6P9DP8M2pM5LgeWnqHrJv80nJFs3gC/wJtN69kxBf.3sy',2,'5242222'),(30,'$2a$10$EZ6hmzfkB3cDZxS1.lln4O.FAaeBe1nWJbQKFCkU2ns56PBXmWI0W',3,'2365288'),(31,'$2a$10$TqJm.XJLnt5bEFCkleGfHuO.BJSr4rZBD59K4GQ.1rQFnkkEsr42O',4,'40553765'),(32,'$2a$10$hhgvHEIy1zKYYSUtBfiWWuPSnw2E1WISxL9VANovCOf0c5l96hpyO',5,'332214525');
+INSERT INTO `usuario` VALUES (46,'$2a$10$b/8e/FGd/ZVpYDdFO5hIhOcqQJEl/SkOXj/CcdnEhrTtKeiqkeCNC',10,'24543643'),(47,'$2a$10$TV9eJgKU7OVaNscAmRyvPeOZPBO4akTzh2VPOhfXzwa.GmWfmdv2W',11,'35256363'),(48,'$2a$10$tOmM2cMe7PqwVvxnd80Uie.FB9jz1bpEgvlj/EWgv40dqGqrB8vTK',12,'35335323'),(49,'$2a$10$in.JQ4mRK4E5b4JsR./bhujtIIkesxCKL3UsAssTkZjRoHKD8uOxC',13,'54333212'),(50,'$2a$10$08u6TUn6fCKLHzcKRuMvHO9A4dqyHAActakNG72p3EklhLPMN01Ve',14,'45332253'),(51,'$2a$10$wKumujM837RyaUZolNwLVufssVQQGOz60WoZr8.BekF/DOlu47lT.',15,'46433643'),(52,'$2a$10$aVqfmr7fLqgAPXBrOOpJ2OllaQSkHMXAVFw7UzJwsk4CxRZ.T45mi',16,'33333222'),(53,'$2a$10$pVip0B8s.0a9WqV4I9Hqve./LtDlWfMz1lxt1AQHMWswbIqeYrS0e',17,'25363356'),(54,'$2a$10$sX/vUye2syqwkUxeRN1tjuS5V7tUW8rBjTMqkS3AGiQS0cM41f0Vy',18,'32363312'),(55,'$2a$10$KnXX/6buPIkiUAl/oY8xOO0..LcZiCRkDcT6hWLVYS6NK9lMDWrOK',19,'32456322'),(56,'$2a$10$zkh16SB8Nyp8qtkyPNLWcuC8cXpJyilFN0Cn.PCQHrVzNZWJogbWe',20,'43323234'),(57,'$2a$10$62kx8lYObrlNnXNRZer/lujW2P2BJKNO16RwRywC7fmtlSvzFn4/O',21,'32356323'),(58,'$2a$10$IHtdsvKil.uz4WV7niyBQ.L9Q3dWAQhHyZKNFqmtMs7D92o/rEpki',22,'262644223'),(59,'$2a$10$lkGYwzzyo7v/6RqctxcyH.XegCjFMgaMdO9BdzVaNgqaNvYNeqGqO',23,'32352355'),(60,'$2a$10$RzzlonqvtefWbOVdfuiHqeF9rJI.gIwd7GtkgZBBHU125MHCPrVQO',24,'453353632'),(61,'$2a$10$GIolfmgO7ciC5ZyPr9yzv.ahKe1NyQLe.Z0rhOjvCLo.E4nxu5GC6',25,'43424644'),(62,'$2a$10$lpPwFiYVr/BgefqjYUy9AuWyYGMuE122ZYnsg7aTlB7hZRBMTOcfu',26,'43423532'),(63,'$2a$10$DAEJUOIcUv5k3vsH5RD8WuuAMjBw.t2/gxhfxDT9hKSDFrUKpns3u',27,'44323523'),(64,'$2a$10$k2ZgIXUb/gKs46lLjn8TxeRTDuYZF.28ZobZccehZGUjri/RvYHwu',28,'23452642'),(65,'$2a$10$h1e4ASrzXCcHdlNAleMSU.YpIwbAmeldvn9DvWL61IV7jSzAbIVla',29,'43466423'),(66,'$2a$10$p2pFwBjQkiPuj9GLYEtzqujWAy34IsV2f6DXuL6xY9Hfx/.feIqgm',30,'12342221');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-26 17:49:43
+-- Dump completed on 2020-06-27  3:40:48

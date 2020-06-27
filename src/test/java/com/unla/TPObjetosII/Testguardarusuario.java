@@ -2,6 +2,7 @@ package com.unla.TPObjetosII;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Usuario;
 import com.unla.TPObjetosII.repositories.IEmpleadoRepository;
+import com.unla.TPObjetosII.repositories.ILocalRepository;
 import com.unla.TPObjetosII.repositories.IUsuarioRepository;
 
 @SpringBootTest
@@ -23,6 +25,10 @@ class Testguardarusuario {
 	private IEmpleadoRepository empleadoRepository;
 	
 	@Autowired
+	@Qualifier("localRepository")
+	private ILocalRepository localRepository;
+	
+	@Autowired
 	@Qualifier("usuarioRepository")
 	private IUsuarioRepository usuarioRepository;
 	
@@ -31,12 +37,20 @@ class Testguardarusuario {
 	
 	@Test
 	void test() {
-		List<Usuario> us = usuarioRepository.findAllConEmpleado();
-		for(Usuario u: us) {
-			Empleado e = u.getEmpleado();
-			u.setUsername(String.valueOf(e.getDni()));
-			usuarioRepository.save(u);
-		}
+		Empleado e = new Empleado();
+		e.setApellido("Gutierrez");
+		e.setNombre("Jose");
+		e.setDni(24543643);
+		e.setFechaNacimiento(LocalDate.now());
+		e.setTipoEmpleado(true);
+		e.setFranjaHoraria("Noche");
+		e.setLocal(localRepository.findByIdLocal(1));
+		e = empleadoRepository.save(e);
+		Usuario u = new Usuario();
+		u.setUsername(String.valueOf(e.getDni()));
+		u.setPassword(encoder.encode("123"));
+		u.setEmpleado(e);
+		usuarioRepository.save(u);
 	}
 
 }
