@@ -25,4 +25,7 @@ public interface ILoteRepository extends JpaRepository<Lote, Serializable>{
 	
 	@Query("select l from Lote l join fetch l.producto p join fetch l.local loc where p.idProducto = (:idProducto) and loc.idLocal = (:idLocal)" )
 	public abstract List<Lote> lotesXproductoXlocal(@Param("idProducto")int idProducto, @Param("idLocal")int idLocal);
+	
+	@Query("select l from Lote l join fetch l.local loc where loc.idLocal=(:idLocal)")
+	public abstract List<Lote> findAllPorLocal(int idLocal);
 }

@@ -17,13 +17,13 @@
 			<input type="number" step="0.01" th:field="*{precio}" class="form-control col-10"/>
 			</div>
 			<input type="hidden" th:field="*{fechaAlta}">
-			<input class="btn btn-success" type="submit" value="modificar" />
+			<input class="btn btn-success" type="submit" value="Modificar" />
 		</form>
 
 		<p></p>
 			
 		<form action="#" th:action="@{/productos/eliminar/{id}(id=${producto.idProducto})}" method="post">
-			<input class="btn btn-danger" type="submit" value="eliminar" />
+			<input class="btn btn-danger" type="submit" value="Eliminar" />
 		</form>
 
 </div>

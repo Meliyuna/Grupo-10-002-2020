@@ -133,7 +133,7 @@ idLocal=sessionStorage.getItem("idLocal");
 			   tipoEmpleado = false;
 			}
 			if(error==false){
-			json = {
+			jsonEmpleado = {
 					"apellido": $("#apellido").val(),
 					"nombre": $("#nombre").val(),
 					"dni": $("#dni").val(),
@@ -144,6 +144,13 @@ idLocal=sessionStorage.getItem("idLocal");
 					"local": {
 						"idLocal":$("#locales").val()
 					}
+			};
+			jsonUsuario = {
+					"password":$("#password").val()
+			};
+			json={
+					"empleado":jsonEmpleado,
+					"usuario":jsonUsuario
 			};
 			$.ajax({
             	url: '/api/empleado/modificar',
@@ -215,11 +222,22 @@ idLocal=sessionStorage.getItem("idLocal");
 			</div>
 			
           	
-       		 
-       		 <div id="formulario">
-			<select id="locales" class="form-control">
-			</select>
-		</div>
+       		 <div class="form-row">
+			<div class="form-group col-md-6">
+				<div>
+					<h4>Locales :</h4>
+				</div>
+				<select id="locales" class="form-control">
+				</select>
+			</div>
+			<div class="form-group col-md-6">
+				<div>
+					<h4>Password :</h4>
+				</div>
+				 <input id="password" class="form-control" type="password" required="required" placeholder="Ingrese solo si desea cambiar la clave actual">
+					<label id="passwordError" class="ERROR" style="display: none;">Ingrese una clave</label>
+			</div>
+		</div> 
 			<p></p>
 			<button id="modificar" class="btn btn-primary">MODIFICAR</button>
 			</div>

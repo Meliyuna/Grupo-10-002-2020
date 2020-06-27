@@ -27,12 +27,12 @@
 					</div>
 		
 			<input type="hidden" th:field="*{fechaIngreso}">
-			<input type="submit" value="modificar" class="btn btn-success"/>
+			<input type="submit" value="Modificar" class="btn btn-success"/>
 	</form>
 	
 	<br>
 	
 	<form action="#" th:action="@{/lotes/eliminar/{id}(id=${lote.idLote})}" method="post">
-		<input type="submit" value="eliminar" class="btn btn-danger"/>
+		<input type="submit" value="Eliminar" class="btn btn-danger"/>
 	</form>
 </div>

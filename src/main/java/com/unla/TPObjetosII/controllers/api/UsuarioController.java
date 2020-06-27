@@ -27,12 +27,6 @@ import com.unla.TPObjetosII.services.implementation.EmpleadoService;
 		@Autowired
 		private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-		@PostMapping("/users/")
-		public void saveUsuario(@RequestBody Empleado user) {
-			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			empleadoRepository.save(user);
-		}
-	
 		@GetMapping("/users/")
 		public List<Empleado> getAllUsuarios() {
 			return empleadoRepository.findAll();

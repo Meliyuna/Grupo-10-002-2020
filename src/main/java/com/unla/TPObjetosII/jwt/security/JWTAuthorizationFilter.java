@@ -35,20 +35,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			throws IOException, ServletException {
 		String header = req.getHeader(HEADER_AUTHORIZACION_KEY);
 		if(header==null) header = (String) req.getSession().getAttribute(HEADER_AUTHORIZACION_KEY);
-		System.out.println("doFilterInternal");
-		System.out.println(header);
 		if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX)) {
 			chain.doFilter(req, res);
 			return;
 		}
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		chain.doFilter(req, res);
 	}
 
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-		System.out.println("getAuthenticatio");
 		String token = request.getHeader(HEADER_AUTHORIZACION_KEY);
 		if(token==null) token=(String) request.getSession().getAttribute(HEADER_AUTHORIZACION_KEY);
 		if (token != null) {

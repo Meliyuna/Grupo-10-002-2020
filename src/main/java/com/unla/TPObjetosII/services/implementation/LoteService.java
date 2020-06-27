@@ -244,6 +244,11 @@ public class LoteService implements ILoteService{
 	public List<Lote> getAll() {
 		return loteRepository.findAll();
 	}
+	
+	@Override
+	public List<Lote> getAllPorLocal(int idLocal) {
+		return loteRepository.findAllPorLocal(idLocal);
+	}
 
 	
 

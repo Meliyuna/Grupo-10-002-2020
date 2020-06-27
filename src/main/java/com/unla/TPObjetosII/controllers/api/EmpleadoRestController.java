@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +22,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.unla.TPObjetosII.converters.EmpleadoConverter;
 import com.unla.TPObjetosII.entities.Empleado;
 import com.unla.TPObjetosII.entities.Pedido;
+import com.unla.TPObjetosII.entities.Usuario;
 import com.unla.TPObjetosII.models.EmpleadoModel;
 import com.unla.TPObjetosII.models.LocalModel;
 import com.unla.TPObjetosII.services.IEmpleadoService;
 import com.unla.TPObjetosII.services.IPedidoService;
+import com.unla.TPObjetosII.services.implementation.UserService;
 
 
 
@@ -32,6 +35,13 @@ import com.unla.TPObjetosII.services.IPedidoService;
 @Controller
 @RequestMapping("/api/empleado")
 public class EmpleadoRestController {
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
+	@Autowired
+	@Qualifier("userService")
+	private UserService userService;
 	
 	@Autowired	
 	@Qualifier("empleadoService")
@@ -41,16 +51,23 @@ public class EmpleadoRestController {
 	@Qualifier("pedidoService")
 	private IPedidoService pedidoService;
 	
+	@Autowired
+	@Qualifier("empleadoConverter")
+	private EmpleadoConverter empleadoConverter;
+	
 	@Secured("ROLE_GERENTE")
 	@PostMapping("/alta")
 	@ResponseBody
 	public EmpleadoModel alta(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
 		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
-		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
-		e.setLocal(mapper.treeToValue(empleadoNode.get("local"),LocalModel.class));
+		EmpleadoModel e= mapper.treeToValue(empleadoNode.get("empleado"), EmpleadoModel.class);	//convierte el object node a empleadoModel
+		e.setLocal(mapper.treeToValue(empleadoNode.get("empleado").get("local"),LocalModel.class));
 		long dni=e.getDni();
 		if(empleadoService.getEmpleado(dni)!=null)throw new Exception("Ya existe empleado con ese dni");
-		System.out.println(empleadoService.insertOrUpdate(e));
+		Usuario u = mapper.treeToValue(empleadoNode.get("usuario"), Usuario.class);
+		u.setPassword(encoder.encode(u.getPassword()));
+		u.setEmpleado(empleadoConverter.modelToEntity(empleadoService.insertOrUpdate(e)));
+		userService.save(u);
 		return e;
 	
 	}
@@ -62,6 +79,7 @@ public class EmpleadoRestController {
 		return empleadoService.getAll();
 	}
 	
+	@Secured("ROLE_GERENTE")
 	@PostMapping("/traerEmpleadosPorIdLocal")
 	@ResponseBody
 	public List<EmpleadoModel> traerEmpleadosPorIdLocal(@RequestBody ObjectNode o) throws Exception{
@@ -74,14 +92,20 @@ public class EmpleadoRestController {
 	@ResponseBody
 	public EmpleadoModel modificar(@RequestBody ObjectNode empleadoNode) throws Exception{  //RequestBody setea todos los atributos a empleado
 		ObjectMapper mapper = new ObjectMapper(); //un objeto que me ayuda a mapear o crear el json
-		EmpleadoModel e= mapper.treeToValue(empleadoNode, EmpleadoModel.class);	//convierte el object node a empleadoModel
-		e.setLocal(mapper.treeToValue(empleadoNode.get("local"), LocalModel.class));
+		EmpleadoModel e= mapper.treeToValue(empleadoNode.get("empleado"), EmpleadoModel.class);	//convierte el object node a empleadoModel
+		e.setLocal(mapper.treeToValue(empleadoNode.get("empleado").get("local"), LocalModel.class));
 		long dni=e.getDni();
 		if(empleadoService.getEmpleado(dni)!=null)if(empleadoService.getEmpleado(dni).getIdPersona()!=e.getIdPersona()) throw new Exception("Ya existe empleado con ese dni");
-			
+		Usuario u = userService.traerPorIdEmpledo(e.getIdPersona());
+		if(!u.getUsername().equalsIgnoreCase(String.valueOf(e.getDni()))) {
+			u.setUsername(String.valueOf(e.getDni()));
+		}
+		if(!empleadoNode.get("usuario").get("password").asText().equalsIgnoreCase("")) {
+			u.setPassword(encoder.encode(empleadoNode.get("usuario").get("password").asText()));
+		}
+		userService.save(u);
 		System.out.println(empleadoService.insertOrUpdate(e));
 		return e;
-	
 	}
 	
 	

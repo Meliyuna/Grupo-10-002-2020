@@ -38,13 +38,10 @@ public class ProductoService implements IProductoService{
 		}
 		
 		@Override
-		public boolean remove(int id) {
-			try {
-				productoRepository.deleteById(id);
-				return true;
-			}catch (Exception e) {
-				return false;
-			}
+		public Producto remove(int id) {
+			Producto p = productoRepository.findByIdProducto(id);
+			p.setBaja(true);
+			return productoRepository.save(p);
 		}
 	
 		@Override

@@ -15,6 +15,7 @@
 			var franjaHoraria= $("#franjaHoraria").val();
 			var tipoEmpleado;
 			var idLocal=$("#locales").val();
+			var password=$("#password").val();
 			
 			var error=false;
 			
@@ -22,7 +23,12 @@
 		    //  $("#apellido").focus();			// Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
 		        $("#displayApellidoError").css("display", "block");
 		    	error=true;
-		    }	
+		    }
+			if($("#password").val() == ""){
+			    //  $("#apellido").focus();			// Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
+			        $("#passwordError").css("display", "block");
+			    	error=true;
+			    }	
 			if($("#nombre").val() == ""){    
 		    //    $("#nombre").focus();			
 				  $("#displayNombreError").css("display", "block");
@@ -56,7 +62,7 @@
 			   tipoEmpleado = false;
 			}
 			if(error==false){
-			json = {
+			jsonEmpleado = {
 					"apellido": apellido,
 					"nombre": nombre,
 					"dni": dni,
@@ -67,6 +73,14 @@
 						"idLocal":idLocal
 					}
 					};
+			jsonUsuario={
+				"password":password,
+				"username":dni
+			};
+			json={
+					"empleado":jsonEmpleado,
+					"usuario":jsonUsuario
+			}
 			console.log(json);
 			$.ajax({
             	url: '/api/empleado/alta',
@@ -151,12 +165,22 @@
 			
 					
 		
-        <div>
-			<h1>Locales :</h1>
-		</div>
-		<div id="formulario">
-			<select id="locales" class="form-control">
-			</select>
+        
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<div>
+					<h4>Locales :</h4>
+				</div>
+				<select id="locales" class="form-control">
+				</select>
+			</div>
+			<div class="form-group col-md-6">
+				<div>
+					<h4>Password :</h4>
+				</div>
+				 <input id="password" class="form-control" type="password" required="required">
+					<label id="passwordError" class="ERROR" style="display: none;">Ingrese una clave</label>
+			</div>
 		</div>    	
 			<p></p>
 			<button id="guardar" class="btn btn-primary">Guardar</button>

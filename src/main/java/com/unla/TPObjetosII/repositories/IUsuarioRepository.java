@@ -18,4 +18,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Serializable>
 	
 	@Query("Select u from Usuario u join fetch u.empleado e where e.baja='0'")
 	public abstract List<Usuario> findAllConEmpleado();
+	
+	@Query("select u from Usuario u join fetch u.empleado e where e.idPersona=(:idEmpleado)")
+	public abstract Usuario findByIdEmpleado(int idEmpleado);
 }

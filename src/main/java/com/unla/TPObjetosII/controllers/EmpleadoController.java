@@ -17,7 +17,7 @@ public class EmpleadoController {
 	
 	@GetMapping("")
 	public String empleados(){
-		return "/empleado/index";
+		return "/empleado/alta";
 		
 	}
 	

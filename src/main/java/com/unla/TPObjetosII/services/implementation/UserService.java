@@ -29,10 +29,8 @@ public class UserService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("UserService");
 		Usuario u = usuarioRepository.findByUsername(username);
 		if(u==null) throw new UsernameNotFoundException("Usuario o Password incorrectos/s");
-		System.out.print("Encontrado usuario!!!");
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		if(u.getEmpleado().isTipoEmpleado()) {
 			roles.add(new SimpleGrantedAuthority("ROLE_GERENTE"));
@@ -40,5 +38,12 @@ public class UserService implements UserDetailsService{
 		UserDetails ud = new User(u.getEmpleado().getNombre(),u.getPassword(),roles);
 		return ud;
 	}
-
+	
+	public Usuario save(Usuario usuario) {
+		return usuarioRepository.save(usuario);
+	}
+	
+	public Usuario traerPorIdEmpledo(int idEmpleado) {
+		return usuarioRepository.findByIdEmpleado(idEmpleado);
+	}
 }

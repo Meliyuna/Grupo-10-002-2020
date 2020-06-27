@@ -9,6 +9,7 @@ import com.unla.TPObjetosII.models.ProductoModel;
 
 public interface ILoteService {
 	public List<Lote> getAll();
+	public List<Lote> getAllPorLocal(int idLocal);
 	public LoteModel findByIdLote(int idLote);
 	public LoteModel insertOrUpdate(LoteModel loteModel);
 	public boolean remove(int idLote);

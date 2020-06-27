@@ -27,6 +27,7 @@ public class Producto {
 	private LocalDate fechaAlta;
 	@Transient
 	private int cantidad;
+	private boolean baja;
 	
 	public Producto() {}
 	
@@ -89,6 +90,16 @@ public class Producto {
 
 	public void setFechaAlta(LocalDate fechaAlta) {
 		this.fechaAlta = fechaAlta;
+	}
+
+
+	public boolean isBaja() {
+		return baja;
+	}
+
+
+	public void setBaja(boolean baja) {
+		this.baja = baja;
 	}
 
 
