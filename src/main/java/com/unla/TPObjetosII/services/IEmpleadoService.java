@@ -19,4 +19,5 @@ public interface IEmpleadoService {
 
 	public EmpleadoModel getEmpleadoPorNombre(String nombre);
 	
+	public List<EmpleadoModel> traerEmpleadosPorIdDeLocal(int idLocal);
 }

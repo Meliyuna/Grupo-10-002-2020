@@ -62,7 +62,11 @@ public class EmpleadoRestController {
 		return empleadoService.getAll();
 	}
 	
-	
+	@PostMapping("/traerEmpleadosPorIdLocal")
+	@ResponseBody
+	public List<EmpleadoModel> traerEmpleadosPorIdLocal(@RequestBody ObjectNode o) throws Exception{
+		return empleadoService.traerEmpleadosPorIdDeLocal(o.get("idLocal").asInt());
+	}
 	
 	//hace lo mismo que alta pero para que quede mas claro en html se agrega modificar
 	@Secured("ROLE_GERENTE")

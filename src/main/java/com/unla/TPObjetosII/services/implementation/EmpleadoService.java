@@ -1,5 +1,6 @@
 package com.unla.TPObjetosII.services.implementation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,6 +52,16 @@ public class EmpleadoService implements IEmpleadoService {
 		}
 	}
 
+	@Override
+	public List<EmpleadoModel> traerEmpleadosPorIdDeLocal(int idLocal) {
+		List<EmpleadoModel> empleados= new ArrayList<EmpleadoModel>();
+		for(Empleado e: empleadoRepository.traerEmpleadosPorIdDeLocal(idLocal)) {
+			empleados.add(empleadoConverter.entityToModel(e));
+		}
+		return empleados;
+	}
+	
+	
 	@Override
 	public EmpleadoModel getEmpleado(int id) {
 		return empleadoConverter.entityToModel(empleadoRepository.findByIdEmpleado(id));

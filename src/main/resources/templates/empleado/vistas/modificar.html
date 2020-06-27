@@ -6,10 +6,17 @@
 		var fechaString=(fecha.toISOString()).substring(0,10);
 		$("#fechaNacimiento").attr("max",fechaString);
 		
+		
+idLocal=sessionStorage.getItem("idLocal");
+		
 		//Empleados
+		json={"idLocal":idLocal};
 		$.ajax({
-        	url: '/api/empleado/traerEmpleados',
+        	url: '/api/empleado/traerEmpleadosPorIdLocal',
         	type: 'POST',
+        	dataType: 'json',
+        	data: JSON.stringify(json),
+        	contentType: "application/json",
         	success: function(response){
             	console.log(response);
             	var stringTipo;
