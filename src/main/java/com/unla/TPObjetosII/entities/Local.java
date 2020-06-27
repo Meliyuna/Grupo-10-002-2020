@@ -31,8 +31,7 @@ public class Local {
 	private double telefono;
 	
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="IDLOCAL")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "local")
 	private Set<Empleado> listaEmpleado;
 	
 	@JsonIgnore
@@ -40,13 +39,11 @@ public class Local {
 	private Set<Factura> listaFactura;
 	
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn (name="IDLOCAL")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "local")
 	private Set<SolicitudStock> listaSolicitudStock;
 	
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="IDLOCAL")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "local")
 	private Set<Lote> listaLote;
 	
 	private boolean baja;

@@ -1,11 +1,14 @@
 <h2>Eliminar o Actualizar Producto</h2>
-
-<select id="select-producto">
-	<option value="">--</option>
-		<option th:each="producto : ${productos}"
-		th:value="${producto.idProducto}" 
-		th:text="${producto.nombre}" />
-</select>
+<div class="row">
+	<div class="col-6" >
+		<select id="select-producto" class="form-control">
+			<option value="">--</option>
+				<option th:each="producto : ${productos}"
+				th:value="${producto.idProducto}" 
+				th:text="${producto.nombre}" />
+		</select>
+	</div>
+</div>
 <p></p>
 <div id="div-select-producto" class="row"></div>
 

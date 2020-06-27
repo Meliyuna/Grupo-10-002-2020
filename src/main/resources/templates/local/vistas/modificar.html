@@ -20,7 +20,7 @@
 		$("#locales").change(function(){
 			$(".error").css("display", "none");
 			json={"idLocal":$("#locales").val()};
-			$("#formularioLocal").hide(1000, function(){
+			$("#formularioLocal").hide(200, function(){
 				$.ajax({
 		        	url: '/api/local/traerLocal',
 		        	type: 'POST',
@@ -33,7 +33,7 @@
 		        		$("#telefono").val(local.telefono);
 		        		$("#latitud").val(local.latitud);
 		        		$("#longitud").val(local.longitud);
-		        		$("#formularioLocal").show(1000);
+		        		$("#formularioLocal").show(200);
 		        	},
 		        	error: function(response){
 		        		console.log("error al traer local" + response);
@@ -53,7 +53,7 @@
             	contentType: "application/json",
 	        	success: function(response){
 	        		console.log(response)
-                	$("#formularios").hide(1000,function(){$("#exito").show(1000)});
+                	$("#formularios").hide(200,function(){$("#exito").show(200)});
 	        	},
 	        	error: function(response){
 	        		console.log(response);
@@ -78,7 +78,7 @@
             	data: JSON.stringify(json),
             	contentType: "application/json",
             	success: function(response){
-                	$("#formularios").hide(1000,function(){$("#exitoModificar").show(1000)});
+                	$("#formularios").hide(200,function(){$("#exitoModificar").show(200)});
             	},
             	error: function(response){
             		console.log(response);
@@ -95,22 +95,28 @@
 			<h1>MODIFICAR O ELIMINAR:</h1>
 		</div>
 		<div id="formularios">
-			<div id="formularioSelectLocal">
-				<p>Seleccione Local: <select id="locales">
-				</select>
-				</p>
+			<div class="row">
+				<div class="col-6" id="formularioSelectLocal">
+					<p>Seleccione Local: <select class="form-control" id="locales">
+					</select>
+					</p>
+				</div>
 			</div>
-			<div id="formularioLocal" style="display: none;">
-				Direccion: <input id="direccion" type="text">
-				<p>Telefono: <input id="telefono" type="number"><span id="errorTelefono" class="error" style="display: none;"></span></p>
-				<p>latitud: <input id="latitud" type="number"></p>
-				<p>longitud: <input id="longitud" type="number"></p>
-				<button id="eliminar" type="button">ELIMINAR</button><button id="modificar" type="button">MODIFICAR</button>
+			<div class="row">
+				<div class="col-6" id="formularioLocal" style="display: none;">
+					Direccion: <input id="direccion" type="text" class="form-control">
+					<p>Telefono: <input id="telefono" type="number" class="form-control"><span id="errorTelefono" class="error" style="display: none;"></span></p>
+					<p>latitud: <input id="latitud" type="number" class="form-control"></p>
+					<p>longitud: <input id="longitud" type="number" class="form-control"></p>
+					<button id="eliminar" class="btn btn-danger" type="button">ELIMINAR</button><button id="modificar" class="btn btn-primary" type="button">MODIFICAR</button>
+				</div>
 			</div>
 		</div>
 		<div  id="exito" style="display: none;">
 			<h1>Local Eliminado</h1>
+			<button id="recargar" onClick="window.location.reload();" class="btn btn-primary">Volver</button>
 		</div>
 		<div  id="exitoModificar" style="display: none;">
 			<h1>Local Modificado</h1>
+			<button id="recargar" onClick="window.location.reload();" class="btn btn-primary">Volver</button>
 		</div>

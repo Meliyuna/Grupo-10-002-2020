@@ -3,7 +3,7 @@
 <script>
 	$(document).ready(function() {
 		$("#subir").click(function() {
-			$(".error").css("display", "none");
+			$(".errorInput").css("display", "none");
 			json = {
 					"direccion": $("#direccion").val(),
 					"telefono": $("#telefono").val(),
@@ -20,7 +20,7 @@
             	contentType: "application/json",
             	success: function(response){
                 	console.log(response)
-                	$("#formulario").hide(1000,function(){$("#exito").show(1000)});
+                	$("#formulario").hide(200,function(){$("#exito").show(200)});
             	},
             	error: function(response){
             		console.log(response);
@@ -37,14 +37,17 @@
 		<div>
 		<h1>Alta Local:</h1>
 		</div>
-		<div id="formulario">
-			<p>Direccion: <input id="direccion" type="text"></p>
-			<p>Telefono: <input id="telefono" type="number"><span id="errorTelefono" class="error" style="display: none;"></span></p>
-			<p>latitud: <input id="latitud" type="number"></p>
-			<p>longitud: <input id="longitud" type="number"></p>
-			<button id="subir" type="button">Agregar</button>
+		<div class="row">
+			<div class="col-6" id="formulario">
+				<p>Direccion: <input id="direccion" class="form-control" type="text"></p>
+				<p>Telefono: <input id="telefono" class="form-control" type="number"><label id="errorTelefono" class="errorInput text-danger" style="display: none;"></label></p>
+				<p>latitud: <input id="latitud" class="form-control" type="number"></p>
+				<p>longitud: <input id="longitud" class="form-control" type="number"></p>
+				<button id="subir" class="btn btn-primary" type="button">Agregar</button>
+			</div>
 		</div>
 		<div  id="exito" style="display: none;">
 			<h1>Local Agregado</h1>
+			<button id="recargar" onClick="window.location.reload();" class="btn btn-primary">Agregar Nuevo</button>	
 		</div>
 	</div>

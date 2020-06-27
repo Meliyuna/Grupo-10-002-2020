@@ -18,7 +18,7 @@ public class LocalController {
 	
 	@GetMapping("")
 	public String index() {
-		return "/local/index";
+		return "/local/alta";
 	}
 	
 	
